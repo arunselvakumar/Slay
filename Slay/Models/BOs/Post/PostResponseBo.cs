@@ -2,7 +2,7 @@
 
 namespace Slay.Models.BOs.Post
 {
-    public class CreatePostResponseBo
+    public class PostResponseBo
     {
         public string Title { get; set; }
 

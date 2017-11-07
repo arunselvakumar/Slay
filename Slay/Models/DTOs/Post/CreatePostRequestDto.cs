@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using AutoMapper.Attributes;
-using Slay.Models.BOs.Post;
 
 namespace Slay.Models.DTOs.Post
 {
-    [MapsTo(typeof(CreatePostRequestBo))]
     public sealed class CreatePostRequestDto
     {
         public string Title { get; set; }

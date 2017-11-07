@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using AutoMapper.Attributes;
+using Slay.Models.BOs.Post;
+using Slay.Models.DTOs.Post;
 
 namespace Slay.Configuration
 {
@@ -7,6 +8,14 @@ namespace Slay.Configuration
     {
         public AutoMapperProfile()
         {
+            this.ConfigurePostMappers();
+        }
+
+        private void ConfigurePostMappers()
+        {
+            this.CreateMap<CreatePostRequestDto, CreatePostRequestBo>();
+
+            this.CreateMap<PostResponseBo, PostResponseDto>();
         }
     }
 }

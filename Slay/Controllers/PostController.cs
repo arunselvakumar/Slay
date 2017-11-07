@@ -9,7 +9,7 @@ namespace Slay.Controllers
 {
     [Produces("application/json")]
     [Route("api/Post")]
-    public class PostController : Controller
+    public class PostController : ControllerBase
     {
         private readonly IPostService postService;
 
@@ -22,9 +22,27 @@ namespace Slay.Controllers
             this.postService = postService;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPostByIdAsync(string id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            var result = await this.postService.GetPostByIdAsync(id);
+
+            return new OkObjectResult(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreatePostAsync([FromBody]CreatePostRequestDto createPostDto)
         {
+            if (createPostDto == null)
+            {
+                return BadRequest();
+            }
+
             var createPostBo = this.mapper.Map<CreatePostRequestBo>(createPostDto);
 
             var result = await this.postService.CreatePostAsync(createPostBo);
