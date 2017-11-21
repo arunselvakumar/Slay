@@ -11,15 +11,9 @@ namespace Slay.Host.Controllers.Client
     [Route("api/Post")]
     public class PostController : ControllerBase
     {
-        #region Fields
-
         private readonly IPostService _postService;
 
         private readonly IMapper _mapper;
-
-        #endregion
-
-        #region Constructors
 
         public PostController(IMapper mapper, IPostService postService)
         {
@@ -27,10 +21,6 @@ namespace Slay.Host.Controllers.Client
 
             this._postService = postService;
         }
-
-        #endregion
-
-        #region Methods
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPostByIdAsync(string id)
@@ -59,7 +49,5 @@ namespace Slay.Host.Controllers.Client
 
             return CreatedAtRoute(string.Empty, result);
         }
-
-        #endregion
     }
 }
