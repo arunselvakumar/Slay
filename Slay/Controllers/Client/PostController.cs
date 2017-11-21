@@ -5,22 +5,32 @@ using Slay.Models.BOs.Post;
 using Slay.Models.DTOs.Post;
 using Slay.Services.Interfaces;
 
-namespace Slay.Controllers
+namespace Slay.Host.Controllers.Client
 {
     [Produces("application/json")]
     [Route("api/Post")]
     public class PostController : ControllerBase
     {
-        private readonly IPostService postService;
+        #region Fields
 
-        private readonly IMapper mapper;
+        private readonly IPostService _postService;
+
+        private readonly IMapper _mapper;
+
+        #endregion
+
+        #region Constructors
 
         public PostController(IMapper mapper, IPostService postService)
         {
-            this.mapper = mapper;
+            this._mapper = mapper;
 
-            this.postService = postService;
+            this._postService = postService;
         }
+
+        #endregion
+
+        #region Methods
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPostByIdAsync(string id)
@@ -30,7 +40,7 @@ namespace Slay.Controllers
                 return BadRequest();
             }
 
-            var result = await this.postService.GetPostByIdAsync(id);
+            var result = await this._postService.GetPostByIdAsync(id);
 
             return new OkObjectResult(result);
         }
@@ -43,11 +53,13 @@ namespace Slay.Controllers
                 return BadRequest();
             }
 
-            var createPostBo = this.mapper.Map<CreatePostRequestBo>(createPostDto);
+            var createPostBo = this._mapper.Map<CreatePostRequestBo>(createPostDto);
 
-            var result = await this.postService.CreatePostAsync(createPostBo);
+            var result = await this._postService.CreatePostAsync(createPostBo);
 
-            return CreatedAtRoute(string.Empty, null);
+            return CreatedAtRoute(string.Empty, result);
         }
+
+        #endregion
     }
 }
