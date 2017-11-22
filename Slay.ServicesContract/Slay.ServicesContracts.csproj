@@ -5,16 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="10.2.1" />
+    <PackageReference Include="System.Diagnostics.Contracts" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Aggregators\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="7.2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Slay.BusinessObjects\Slay.BusinessObjects.csproj" />
-    <ProjectReference Include="..\Slay.ServicesContract\Slay.ServicesContracts.csproj" />
     <ProjectReference Include="..\Slay.Utilities\Slay.Utilities.csproj" />
   </ItemGroup>
 

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Slay.Models.DTOs.Post
+namespace Slay.BusinessObjects.Post
 {
-    public sealed class PostResponseDto
+    public sealed class PostResponseBo
     {
         public string Title { get; set; }
 

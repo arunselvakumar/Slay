@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Slay.Models.BOs.Post;
-using Slay.Models.DTOs.Post;
-using Slay.Services.Interfaces;
+using Slay.BusinessObjects.Post;
+using Slay.DataTransferObjects.Post;
+using Slay.ServicesContracts.Services;
 
-namespace Slay.Host.Controllers.Client
+namespace Slay.Host.Controllers.ClientControllers
 {
     [Produces("application/json")]
     [Route("api/Post")]
@@ -25,12 +25,12 @@ namespace Slay.Host.Controllers.Client
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPostByIdAsync(string id)
         {
-            if (id == null)
-            {
-                return BadRequest();
-            }
-
             var result = await this._postService.GetPostByIdAsync(id);
+
+            if (result.HasErrors)
+            {
+                return NotFound();
+            }
 
             return new OkObjectResult(result);
         }
@@ -38,14 +38,14 @@ namespace Slay.Host.Controllers.Client
         [HttpPost]
         public async Task<IActionResult> CreatePostAsync([FromBody]CreatePostRequestDto createPostDto)
         {
-            if (createPostDto == null)
-            {
-                return BadRequest();
-            }
-
             var createPostBo = this._mapper.Map<CreatePostRequestBo>(createPostDto);
 
             var result = await this._postService.CreatePostAsync(createPostBo);
+
+            if (result.HasErrors)
+            {
+                return new BadRequestObjectResult(result.Errors);
+            }
 
             return CreatedAtRoute(string.Empty, result);
         }

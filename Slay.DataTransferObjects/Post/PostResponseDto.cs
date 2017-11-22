@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Slay.Models.DTOs.Post
+namespace Slay.DataTransferObjects.Post
 {
-    public sealed class CreatePostRequestDto
+    public sealed class PostResponseDto
     {
         public string Title { get; set; }
 

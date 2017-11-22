@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using Slay.BusinessObjects.Enums;
 
-namespace Slay.Models.BOs.Post
+namespace Slay.BusinessObjects.Post
 {
-    public class PostResponseBo
+    public sealed class CreatePostRequestBo
     {
         public string Title { get; set; }
 
-        public string Type { get; set; }
+        public PostTypeEnum Type { get; set; }
 
         public string Content { get; set; }
 

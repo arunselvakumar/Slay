@@ -4,9 +4,16 @@ using System.Linq;
 
 namespace Slay.Utilities.Extensions
 {
-    public static class EnumExtensions
+	public static class EnumExtensions
     {
-        public static TEnum ToEnum<TEnum>(string value)
+		/// <summary>
+		/// Converts String to Enum.
+		/// </summary>
+		/// <typeparam name="TEnum">The type of the enum.</typeparam>
+		/// <param name="value">The value.</param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentNullException">value</exception>
+		public static TEnum ToEnum<TEnum>(string value)
         {
             if (value == null)
             {
@@ -16,7 +23,14 @@ namespace Slay.Utilities.Extensions
             return (TEnum)Enum.Parse(typeof(TEnum), value);
         }
 
-        public static IEnumerable<T> ToEnums<T>(this IEnumerable<string> source)
+		/// <summary>
+		/// Converts Enumerable of Strings to Enumerable of Enums.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="source">The source.</param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentNullException">source</exception>
+		public static IEnumerable<T> ToEnums<T>(this IEnumerable<string> source)
         {
             if (source == null)
             {
