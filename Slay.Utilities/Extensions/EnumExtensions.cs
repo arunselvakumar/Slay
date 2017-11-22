@@ -6,7 +6,7 @@ namespace Slay.Utilities.Extensions
 {
     public static class EnumExtensions
     {
-        public static TEnum ToEnum<TEnum>(string value)
+        public static TEnum ToEnum<TEnum>(this string value)
         {
             if (value == null)
             {
