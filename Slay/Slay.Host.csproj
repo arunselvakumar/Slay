@@ -29,8 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Slay.BusinessObjects\Slay.BusinessObjects.csproj" />
-    <ProjectReference Include="..\Slay.DataTransferObjects\Slay.DataTransferObjects.csproj" />
+    <ProjectReference Include="..\Slay.Models\Slay.Models.csproj" />
     <ProjectReference Include="..\Slay.ServicesContract\Slay.ServicesContracts.csproj" />
     <ProjectReference Include="..\Slay.Services\Slay.Services.csproj" />
     <ProjectReference Include="..\Slay.Utilities\Slay.Utilities.csproj" />

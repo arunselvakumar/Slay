@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Slay.BusinessObjects.Post;
-using Slay.DataTransferObjects.Post;
+using Slay.Models.BusinessObjects.Post;
+using Slay.Models.DataTransferObjects.Post;
 using Slay.ServicesContracts.Services;
+using System.Threading.Tasks;
 
 namespace Slay.Host.Controllers.ClientControllers
 {
-    [Produces("application/json")]
+	[Produces("application/json")]
     [Route("api/Post")]
     public class PostController : ControllerBase
     {

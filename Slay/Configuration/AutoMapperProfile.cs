@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Slay.BusinessObjects.Post;
-using Slay.DataTransferObjects.Post;
+using Slay.Models.BusinessObjects.Post;
+using Slay.Models.DataTransferObjects.Post;
 
 namespace Slay.Host.Configuration
 {
-    public sealed class AutoMapperProfile : Profile
+	public sealed class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {

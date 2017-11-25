@@ -1,8 +1,6 @@
 ﻿using JetBrains.Annotations;
-
-using Slay.BusinessObjects.Post;
+using Slay.Models.BusinessObjects.Post;
 using Slay.Utilities.ServiceResult;
-
 using System.Threading.Tasks;
 
 namespace Slay.ServicesContracts.Services

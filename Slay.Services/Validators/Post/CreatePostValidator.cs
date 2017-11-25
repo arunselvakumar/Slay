@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
-
-using Slay.BusinessObjects.Post;
+using Slay.Models.BusinessObjects.Post;
 
 namespace Slay.Services.Validators.Post
 {

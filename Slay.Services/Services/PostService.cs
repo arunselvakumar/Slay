@@ -1,10 +1,8 @@
-﻿using Slay.BusinessObjects.Post;
-using Slay.Services.Validators.Post;
+﻿using FluentValidation;
+using Slay.Models.BusinessObjects.Post;
 using Slay.ServicesContracts.Services;
 using Slay.Utilities.ServiceResult;
-
 using System.Threading.Tasks;
-using FluentValidation;
 
 namespace Slay.Services.Services
 {
@@ -22,9 +20,14 @@ namespace Slay.Services.Services
             return null;
         }
 
-        public Task<ServiceResult<PostResponseBo>> CreatePostAsync(CreatePostRequestBo createPostRequestBo)
+        public async Task<ServiceResult<PostResponseBo>> CreatePostAsync(CreatePostRequestBo createPostRequestBo)
         {
-            var validationResult = this.createPostValidator.ValidateAsync(createPostRequestBo);
+            var validationResult = await this.createPostValidator.ValidateAsync(createPostRequestBo);
+
+	        if (!validationResult.IsValid)
+	        {
+		        return null;
+	        }
 
             return null;
         }
