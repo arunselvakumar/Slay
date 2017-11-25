@@ -12,15 +12,15 @@ namespace Slay.Services.Services
 {
 	public sealed class PostService : IPostService
     {
-	    private readonly IPostValidationsProvider _postValidationsProvider;
+	    private readonly IValidationsProvider _validationsProvider;
 
 		private readonly IPostRepository _postRepository;
 
 	    private readonly IMapper _mapper;
 
-	    public PostService(IPostValidationsProvider postValidationsProvider, IPostRepository postRepository, IMapper mapper)
+	    public PostService(IValidationsProvider validationsProvider, IPostRepository postRepository, IMapper mapper)
 	    {
-		    this._postValidationsProvider = postValidationsProvider;
+		    this._validationsProvider = validationsProvider;
 		    this._postRepository = postRepository;
 
 		    this._mapper = mapper;
@@ -42,7 +42,7 @@ namespace Slay.Services.Services
 
         public async Task<ServiceResult<PostResponseBo>> CreatePostAsync(CreatePostRequestBo createPostRequestBo)
         {
-            var validationResult = await this._postValidationsProvider.CreatePostValidator.ValidateAsync(createPostRequestBo);
+            var validationResult = await this._validationsProvider.CreatePostValidator.ValidateAsync(createPostRequestBo);
 
 	        if (!validationResult.IsValid)
 	        {

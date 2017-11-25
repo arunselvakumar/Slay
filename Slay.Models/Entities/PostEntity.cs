@@ -29,5 +29,8 @@ namespace Slay.Models.Entities
 
 		[JsonProperty(PropertyName = "tags")]
 		public IEnumerable<string> Tags { get; set; }
+
+		[JsonProperty(PropertyName = "comments")]
+		public IEnumerable<CommentEntity> Comments { get; set; }
 	}
 }

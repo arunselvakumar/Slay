@@ -22,32 +22,32 @@ namespace Slay.Host.Controllers.ClientControllers
             this._postService = postService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = Routes.GetPostById)]
         public async Task<IActionResult> GetPostByIdAsync(string id)
         {
-            var result = await this._postService.GetPostByIdAsync(id);
+            var serviceResult = await this._postService.GetPostByIdAsync(id);
 
-            if (result.HasErrors)
+            if (serviceResult.HasErrors)
             {
-                return NotFound();
-            }
+				return new BadRequestObjectResult(serviceResult.Errors);
+			}
 
-            return new OkObjectResult(this._mapper.Map<PostResponseDto>(result.Value));
+            return new OkObjectResult(this._mapper.Map<PostResponseDto>(serviceResult.Value));
         }
 
-        [HttpPost]
+        [HttpPost(Name = Routes.CreatePost)]
         public async Task<IActionResult> CreatePostAsync([FromBody]CreatePostRequestDto createPostDto)
         {
             var createPostBo = this._mapper.Map<CreatePostRequestBo>(createPostDto);
 
-            var result = await this._postService.CreatePostAsync(createPostBo);
+            var serviceResult = await this._postService.CreatePostAsync(createPostBo);
 
-            if (result.HasErrors)
+            if (serviceResult.HasErrors)
             {
-                return new BadRequestObjectResult(result.Errors);
+                return new BadRequestObjectResult(serviceResult.Errors);
             }
 
-            return CreatedAtRoute(string.Empty, this._mapper.Map<PostResponseDto>(result.Value));
+            return CreatedAtRoute(Routes.GetPostById, new { id = serviceResult.Value.Id }, this._mapper.Map<PostResponseDto>(serviceResult.Value));
         }
     }
 }
