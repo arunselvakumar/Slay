@@ -1,12 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using Slay.DalContracts.Repositories;
 using Slay.Models.Entities;
+using System;
+using System.Threading.Tasks;
 
 namespace Slay.Dal.Repositories
 {
-	public sealed class PostRepository : RepositoryBase<PostEntity>
+	public sealed class PostRepository : RepositoryBase<PostEntity>, IPostRepository
 	{
 		public PostRepository() : base("Slay", "Posts")
 		{
@@ -28,7 +29,7 @@ namespace Slay.Dal.Repositories
 			return await this.GetPostsByIdAsync(post.Id.ToString());
 		}
 
-		private async Task<PostEntity> GetPostsByIdAsync(string postId)
+		public async Task<PostEntity> GetPostsByIdAsync(string postId)
 		{
 			try
 			{

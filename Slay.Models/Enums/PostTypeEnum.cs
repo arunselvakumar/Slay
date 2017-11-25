@@ -10,8 +10,10 @@
 
 		Text = 3,
 
-		Video = 4,
+		Quote = 4,
 
-		YouTube = 5
+		Video = 5,
+
+		YouTube = 6
 	}
 }

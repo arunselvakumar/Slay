@@ -1,35 +1,59 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using Slay.DalContracts.Repositories;
 using Slay.Models.BusinessObjects.Post;
 using Slay.ServicesContracts.Services;
 using Slay.Utilities.ServiceResult;
 using System.Threading.Tasks;
+using Slay.Models.Entities;
+using Slay.ServicesContracts.Providers.ValidationsProviders;
+using Slay.Utilities.Extensions;
 
 namespace Slay.Services.Services
 {
 	public sealed class PostService : IPostService
     {
-	    private readonly IValidator<CreatePostRequestBo> createPostValidator;
+	    private readonly IPostValidationsProvider _postValidationsProvider;
 
-	    public PostService(IValidator<CreatePostRequestBo> createPostValidator)
+		private readonly IPostRepository _postRepository;
+
+	    private readonly IMapper _mapper;
+
+	    public PostService(IPostValidationsProvider postValidationsProvider, IPostRepository postRepository, IMapper mapper)
 	    {
-		    this.createPostValidator = createPostValidator;
+		    this._postValidationsProvider = postValidationsProvider;
+		    this._postRepository = postRepository;
+
+		    this._mapper = mapper;
 	    }
 
-        public Task<ServiceResult<PostResponseBo>> GetPostByIdAsync(string id)
+        public async Task<ServiceResult<PostResponseBo>> GetPostByIdAsync(string id)
         {
-            return null;
+	        if (string.IsNullOrEmpty(id))
+	        {
+				return new ServiceResult<PostResponseBo> { Errors = new[] { new Error { Code = "POSTID_MANDATORY_ERROR" } } };
+			}
+
+	        var repositoryResult = await this._postRepository.GetPostsByIdAsync(id);
+
+	        var mapperResult = this._mapper.Map<PostResponseBo>(repositoryResult);
+
+			return new ServiceResult<PostResponseBo> { Value = mapperResult };
         }
 
         public async Task<ServiceResult<PostResponseBo>> CreatePostAsync(CreatePostRequestBo createPostRequestBo)
         {
-            var validationResult = await this.createPostValidator.ValidateAsync(createPostRequestBo);
+            var validationResult = await this._postValidationsProvider.CreatePostValidator.ValidateAsync(createPostRequestBo);
 
 	        if (!validationResult.IsValid)
 	        {
-		        return null;
+		        return new ServiceResult<PostResponseBo> { Errors = validationResult.Errors.ToServiceResultErrors() };
 	        }
 
-            return null;
+	        var repositoryResult = await this._postRepository.CreatePostAsync(this._mapper.Map<PostEntity>(createPostRequestBo));
+
+	        var mapperResult = this._mapper.Map<PostResponseBo>(repositoryResult);
+
+			return new ServiceResult<PostResponseBo> { Value = mapperResult };
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Slay.Host.Controllers.ClientControllers
                 return NotFound();
             }
 
-            return new OkObjectResult(result);
+            return new OkObjectResult(this._mapper.Map<PostResponseDto>(result.Value));
         }
 
         [HttpPost]
@@ -47,7 +47,7 @@ namespace Slay.Host.Controllers.ClientControllers
                 return new BadRequestObjectResult(result.Errors);
             }
 
-            return CreatedAtRoute(string.Empty, result);
+            return CreatedAtRoute(string.Empty, this._mapper.Map<PostResponseDto>(result.Value));
         }
     }
 }

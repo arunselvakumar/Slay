@@ -9,10 +9,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="5.1.1" />
     <PackageReference Include="FluentValidation" Version="7.2.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Slay.DalContracts\Slay.DalContracts.csproj" />
+    <ProjectReference Include="..\Slay.Dal\Slay.Dal.csproj" />
     <ProjectReference Include="..\Slay.Models\Slay.Models.csproj" />
     <ProjectReference Include="..\Slay.ServicesContract\Slay.ServicesContracts.csproj" />
     <ProjectReference Include="..\Slay.Utilities\Slay.Utilities.csproj" />

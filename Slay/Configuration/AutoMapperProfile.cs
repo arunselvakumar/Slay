@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Slay.Models.BusinessObjects.Post;
 using Slay.Models.DataTransferObjects.Post;
+using Slay.Models.Entities;
 
 namespace Slay.Host.Configuration
 {
@@ -14,8 +15,10 @@ namespace Slay.Host.Configuration
         private void ConfigurePostMappers()
         {
 	        this.CreateMap<CreatePostRequestDto, CreatePostRequestBo>();
+	        this.CreateMap<CreatePostRequestBo, PostEntity>();
 
-            this.CreateMap<PostResponseBo, PostResponseDto>();
-        }
+	        this.CreateMap<PostEntity, PostResponseBo>();
+			this.CreateMap<PostResponseBo, PostResponseDto>();
+		}
     }
 }

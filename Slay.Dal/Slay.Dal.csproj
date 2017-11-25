@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Slay.DalContracts\Slay.DalContracts.csproj" />
     <ProjectReference Include="..\Slay.Models\Slay.Models.csproj" />
   </ItemGroup>
 

@@ -13,7 +13,7 @@ namespace Slay.Utilities.Extensions
 		/// <param name="value">The value.</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentNullException">value</exception>
-		public static TEnum ToEnum<TEnum>(string value)
+		public static TEnum ToEnum<TEnum>(this string value)
         {
             if (value == null)
             {
