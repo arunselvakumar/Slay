@@ -27,7 +27,7 @@ namespace Slay.Dal.Repositories
 				throw;
 			}
 
-			return await this.GetPostsByIdAsync(post.Id.ToString());
+			return await this.GetPostByIdAsync(post.Id.ToString());
 		}
 
 		public async Task<PostEntity> UpdatePostByIdAsync(string postId, PostEntity post)
@@ -42,10 +42,10 @@ namespace Slay.Dal.Repositories
 				throw;
 			}
 
-			return await this.GetPostsByIdAsync(postId);
+			return await this.GetPostByIdAsync(postId);
 		}
 
-		public async Task<PostEntity> GetPostsByIdAsync(string postId)
+		public async Task<PostEntity> GetPostByIdAsync(string postId)
 		{
 			try
 			{
@@ -65,7 +65,9 @@ namespace Slay.Dal.Repositories
 		{
 			try
 			{
-				var postEntity = await this.GetPostsByIdAsync(postId);
+				var filteredPostsCollection = await this.Collection.FindAsync(Builders<PostEntity>.Filter.Eq("_id", ObjectId.Parse(postId)));
+
+				var postEntity = await filteredPostsCollection.FirstOrDefaultAsync();
 
 				if (string.IsNullOrEmpty(commentId))
 				{

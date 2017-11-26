@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Slay.Models.BusinessObjects.Comment;
 
 namespace Slay.Models.BusinessObjects.Post
 {
@@ -15,5 +17,15 @@ namespace Slay.Models.BusinessObjects.Post
 		public string Category { get; set; }
 
 		public IEnumerable<string> Tags { get; set; }
+
+		public IEnumerable<string> SearchTags { get; set; }
+
+		public IEnumerable<CommentResponseBo> Comments { get; set; }
+
+		public bool IsAnonymous { get; set; }
+
+		public string CreatedBy { get; set; }
+
+		public DateTime CreatedOn { get; set; }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using Slay.Models.Enums;
@@ -30,7 +31,25 @@ namespace Slay.Models.Entities
 		[JsonProperty(PropertyName = "tags")]
 		public IEnumerable<string> Tags { get; set; }
 
+		[JsonProperty(PropertyName = "searchtags")]
+		public IEnumerable<string> SearchTags { get; set; }
+
 		[JsonProperty(PropertyName = "comments")]
 		public IEnumerable<CommentEntity> Comments { get; set; }
+
+		[JsonProperty(PropertyName = "isanonymous")]
+		public bool IsAnonymous { get; set; }
+
+		[JsonProperty(PropertyName = "createdby")]
+		public string CreatedBy { get; set; }
+
+		[JsonProperty(PropertyName = "modifiedby")]
+		public string ModifiedBy { get; set; }
+
+		[JsonProperty(PropertyName = "createdon")]
+		public DateTime CreatedOn { get; set; }
+
+		[JsonProperty(PropertyName = "modifiedon")]
+		public DateTime ModifiedOn { get; set; }
 	}
 }

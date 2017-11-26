@@ -25,9 +25,13 @@ namespace Slay.Host.Configuration
 		    this.CreateMap<CreatePostRequestDto, CreatePostRequestBo>()
 				.ForMember(postBo => postBo.Type, opt => opt.MapFrom(x => x.Type.ToEnum<PostTypeEnum>()));
 	        this.CreateMap<CreatePostRequestBo, PostEntity>()
-				.ForMember(postEntity => postEntity.Comments, opt => opt.UseValue(Enumerable.Empty<CommentEntity>()));
+				.ForMember(postEntity => postEntity.Comments, opt => opt.UseValue(Enumerable.Empty<CommentEntity>()))
+				.ForMember(postEntity => postEntity.CreatedOn, opt => opt.MapFrom(x => DateTime.UtcNow))
+				.ForMember(postEntity => postEntity.ModifiedOn, opt => opt.MapFrom(x => DateTime.UtcNow));
 
-	        this.CreateMap<PostEntity, PostResponseBo>();
+	        this.CreateMap<PostEntity, PostResponseBo>()
+				.ForMember(postEntity => postEntity.CreatedBy, opt => opt.MapFrom(x => x.IsAnonymous ? string.Empty : x.CreatedBy));
+
 			this.CreateMap<PostResponseBo, PostResponseDto>();
 		}
 

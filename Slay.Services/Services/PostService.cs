@@ -33,7 +33,7 @@ namespace Slay.Services.Services
 				return new ServiceResult<PostResponseBo> { Errors = new[] { new Error { Code = "POSTID_MANDATORY_ERROR" } } };
 			}
 
-	        var repositoryResult = await this._postRepository.GetPostsByIdAsync(id);
+	        var repositoryResult = await this._postRepository.GetPostByIdAsync(id);
 
 	        var mapperResult = this._mapper.Map<PostResponseBo>(repositoryResult);
 

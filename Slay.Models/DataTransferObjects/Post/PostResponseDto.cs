@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Slay.Models.DataTransferObjects.Comment;
 
 namespace Slay.Models.DataTransferObjects.Post
 {
@@ -15,5 +16,15 @@ namespace Slay.Models.DataTransferObjects.Post
 		public string Category { get; set; }
 
 		public IEnumerable<string> Tags { get; set; }
+
+		public IEnumerable<string> SearchTags { get; set; }
+
+		public IEnumerable<CommentResponseDto> Comments { get; set; }
+
+		public bool IsAnonymous { get; set; }
+
+		public string CreatedBy { get; set; }
+
+		public string CreatedOn { get; set; }
 	}
 }

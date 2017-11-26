@@ -20,7 +20,7 @@ namespace Slay.Utilities.Extensions
                 throw new ArgumentNullException(nameof(value));
             }
 
-	        return Enum.TryParse<TEnum>(value, out var result) ? result : default(TEnum);
+	        return Enum.TryParse<TEnum>(value, true, out var result) ? result : default(TEnum);
 		}
 
 		/// <summary>

@@ -8,7 +8,7 @@ namespace Slay.DalContracts.Repositories
 	{
 		Task<PostEntity> CreatePostAsync([NotNull] PostEntity post);
 
-		Task<PostEntity> GetPostsByIdAsync([NotNull] string postId);
+		Task<PostEntity> GetPostByIdAsync([NotNull] string postId);
 
 		Task<PostEntity> UpdatePostByIdAsync([NotNull] string postId, [NotNull] PostEntity post);
 
