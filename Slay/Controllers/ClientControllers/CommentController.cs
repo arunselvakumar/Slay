@@ -36,5 +36,20 @@ namespace Slay.Host.Controllers.ClientControllers
 
 			return new OkObjectResult(this._mapper.Map<CommentResponseDto>(serviceResult.Value));
 		}
+
+	    [HttpPost("{commentId}")]
+	    public async Task<IActionResult> CreateNestedCommentAsync(string postId, string commentId, [FromBody] CreateCommentRequestDto createCommentRequestDto)
+	    {
+			var createCommentBo = this._mapper.Map<CreateCommentRequestBo>(createCommentRequestDto);
+
+		    var serviceResult = await this._commentService.CreateCommentAsync(postId, commentId, createCommentBo);
+
+		    if (serviceResult.HasErrors)
+		    {
+			    return new BadRequestObjectResult(serviceResult.Errors);
+		    }
+
+		    return new OkObjectResult(this._mapper.Map<CommentResponseDto>(serviceResult.Value));
+		}
     }
 }

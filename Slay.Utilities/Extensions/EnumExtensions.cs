@@ -13,15 +13,15 @@ namespace Slay.Utilities.Extensions
 		/// <param name="value">The value.</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentNullException">value</exception>
-		public static TEnum ToEnum<TEnum>(this string value)
+		public static TEnum ToEnum<TEnum>(this string value) where TEnum : struct 
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            return (TEnum)Enum.Parse(typeof(TEnum), value);
-        }
+	        return Enum.TryParse<TEnum>(value, out var result) ? result : default(TEnum);
+		}
 
 		/// <summary>
 		/// Converts Enumerable of Strings to Enumerable of Enums.

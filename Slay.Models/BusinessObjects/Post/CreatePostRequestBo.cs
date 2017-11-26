@@ -13,6 +13,10 @@ namespace Slay.Models.BusinessObjects.Post
 
 		public string Category { get; set; }
 
+		public bool IsAnonymous { get; set; }
+
 		public IEnumerable<string> Tags { get; set; }
+
+		public IEnumerable<string> SearchTags { get; set; }
 	}
 }

@@ -73,7 +73,13 @@ namespace Slay.Dal.Repositories
 				}
 				else
 				{
-					postEntity.Comments.First(cmt => cmt.Id.ToString() == commentId).Comments.Append(comment);
+					foreach (var postComment in postEntity.Comments)
+					{
+						if (postComment.Id.ToString() == commentId)
+						{
+							postComment.Comments = postComment.Comments.Append(comment);
+						}
+					}
 				}
 
 				await this.UpdatePostByIdAsync(postId, postEntity);

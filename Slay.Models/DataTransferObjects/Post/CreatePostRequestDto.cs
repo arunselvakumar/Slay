@@ -12,6 +12,10 @@ namespace Slay.Models.DataTransferObjects.Post
 
 		public string Category { get; set; }
 
+		public string IsAnonymous { get; set; }
+
 		public IEnumerable<string> Tags { get; set; }
+
+		public IEnumerable<string> SearchTags { get; set; }
 	}
 }
