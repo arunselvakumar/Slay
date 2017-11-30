@@ -3,8 +3,10 @@ using MongoDB.Driver;
 using Slay.DalContracts.Repositories;
 using Slay.Models.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Slay.DalContracts.Options;
 
 namespace Slay.Dal.Repositories
 {
@@ -12,6 +14,51 @@ namespace Slay.Dal.Repositories
 	{
 		public PostRepository() : base("Slay", "Posts")
 		{
+		}
+
+		public async Task<PostEntity> GetPostByIdAsync(string postId)
+		{
+			try
+			{
+				var filteredPostsCollection = await this.Collection.FindAsync(Builders<PostEntity>.Filter.Eq("_id", ObjectId.Parse(postId)));
+
+				return await filteredPostsCollection.FirstOrDefaultAsync();
+			}
+
+			catch (Exception exception)
+			{
+				Console.WriteLine(exception);
+				throw;
+			}
+		}
+
+		public async Task<IEnumerable<PostEntity>> GetPosts(PagingOptions pagingOptions, IList<SortingOptions> sortingOptions)
+		{
+			var sortDefinitionBuilder = new SortDefinitionBuilder<PostEntity>();
+			var sortDefinitions = new List<SortDefinition<PostEntity>>();
+
+			if (sortingOptions.Any())
+			{
+				sortDefinitions.AddRange(sortingOptions.Select(sortingOption => sortingOption.SortingMode == SortingMode.Ascending
+														? sortDefinitionBuilder.Ascending(sortingOption.FieldName)
+														: sortDefinitionBuilder.Descending(sortingOption.FieldName)));
+			}
+
+			var sourceCollection = Collection.Find(_ => true);
+
+			sourceCollection.Sort(sortDefinitionBuilder.Combine(sortDefinitions));
+
+			if (pagingOptions.Skip != null)
+			{
+				sourceCollection = sourceCollection.Skip(pagingOptions.Skip);
+			}
+
+			if(pagingOptions.Limit != null)
+			{
+				sourceCollection = sourceCollection.Limit(pagingOptions.Limit);
+			}
+
+			return await sourceCollection.ToListAsync();
 		}
 
 		public async Task<PostEntity> CreatePostAsync(PostEntity post)
@@ -43,22 +90,6 @@ namespace Slay.Dal.Repositories
 			}
 
 			return await this.GetPostByIdAsync(postId);
-		}
-
-		public async Task<PostEntity> GetPostByIdAsync(string postId)
-		{
-			try
-			{
-				var filteredPostsCollection = await this.Collection.FindAsync(Builders<PostEntity>.Filter.Eq("_id", ObjectId.Parse(postId)));
-
-				return await filteredPostsCollection.FirstOrDefaultAsync();
-			}
-
-			catch (Exception exception)
-			{
-				Console.WriteLine(exception);
-				throw;
-			}
 		}
 
 		public async Task<CommentEntity> CreateCommentAsync(string postId, string commentId, CommentEntity comment)
