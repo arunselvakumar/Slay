@@ -20,5 +20,7 @@ namespace Slay.DalContracts.Repositories
 		Task<PostEntity> UpdateAsync([NotNull] string postId, [NotNull] PostEntity post, CancellationToken token = default(CancellationToken));
 
 		Task<bool> DeleteAsync(string id, CancellationToken token = default(CancellationToken));
+
+		Task<long> CountAsync(Expression<Func<PostEntity, bool>> filter, CancellationToken token = default(CancellationToken));
 	}
 }

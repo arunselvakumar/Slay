@@ -6,7 +6,7 @@
 		{
 		}
 
-		public SortingOptions(string fieldName, SortingMode sortingMode = SortingMode.Ascending)
+		public SortingOptions(string fieldName, SortingMode sortingMode = SortingMode.Descending)
 		{
 			this.FieldName = fieldName;
 			this.SortingMode = sortingMode;

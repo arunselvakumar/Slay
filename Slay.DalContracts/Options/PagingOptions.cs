@@ -2,18 +2,22 @@
 {
 	public sealed class PagingOptions
 	{
-		public PagingOptions()
-		{
-		}
+		public int? Skip { get; private set; }
 
-		public PagingOptions(int? skip, int? limit)
+		public int? Limit { get; private set; }
+
+		public PagingOptions SkipItems(int? skip)
 		{
 			this.Skip = skip;
-			this.Limit = limit;
+
+			return this;
 		}
 
-		public int? Skip { get; set; }
+		public PagingOptions LimitItems(int? limit)
+		{
+			this.Limit = limit;
 
-		public int? Limit { get; set; }
+			return this;
+		}
 	}
 }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
+using Microsoft.AspNetCore.Routing;
 using MongoDB.Bson;
 using Slay.Models.BusinessObjects.Comment;
 using Slay.Models.BusinessObjects.Post;
 using Slay.Models.DataTransferObjects.Comment;
+using Slay.Models.DataTransferObjects.Link;
 using Slay.Models.DataTransferObjects.Post;
 using Slay.Models.Entities;
 using Slay.Models.Enums;
@@ -28,11 +30,14 @@ namespace Slay.Host.Configuration
 				.ForMember(postEntity => postEntity.CreatedOn, opt => opt.MapFrom(x => DateTime.UtcNow))
 				.ForMember(postEntity => postEntity.ModifiedOn, opt => opt.MapFrom(x => DateTime.UtcNow));
 
-	        this.CreateMap<PostEntity, PostResponseBo>()
+	        this.CreateMap<PostEntity, PostItemBo>()
 				.ForMember(postEntity => postEntity.CreatedBy, opt => opt.MapFrom(x => x.IsAnonymous ? string.Empty : x.CreatedBy));
 
-			this.CreateMap<PostResponseBo, PostResponseDto>();
-		}
+			this.CreateMap<PostItemBo, PostItemDto>();
+		    this.CreateMap<PostsResponseBo, PostsResponseDto>()
+				.ForMember(postsResponseDto => postsResponseDto.Data, opt => opt.MapFrom(x => x.Posts))
+				.ForMember(postsResponseDto => postsResponseDto.Links, opt => opt.MapFrom(x => new LinksDto { }));
+	    }
 
 	    private void ConfigureCommentMappers()
 	    {

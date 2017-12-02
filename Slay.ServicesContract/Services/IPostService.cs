@@ -7,10 +7,13 @@ namespace Slay.ServicesContracts.Services
 {
 	public interface IPostService
     {
-        Task<ServiceResult<PostResponseBo>> GetPostByIdAsync([NotNull]string id);
+        Task<ServiceResult<PostItemBo>> GetPostByIdAsync([NotNull]string id);
 
-        Task<ServiceResult<PostResponseBo>> CreatePostAsync([NotNull]CreatePostRequestBo createPostRequestBo);
+        Task<ServiceResult<PostItemBo>> CreatePostAsync([NotNull]CreatePostRequestBo createPostRequestBo);
 
 	    Task<ServiceResult<bool>> DeletePostAsync(string id);
+
+	    Task<ServiceResult<PostsResponseBo>> GetPostsAsync(int skip, int limit);
+
     }
 }

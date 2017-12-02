@@ -40,13 +40,38 @@ namespace Slay.Host.Controllers.ClientControllers
 					return new NotFoundResult();
 				}
 
-				return new OkObjectResult(this._mapper.Map<PostResponseDto>(serviceResult.Value));
+				var mapperResult = this._mapper.Map<PostItemDto>(serviceResult.Value);
+
+				return new OkObjectResult(mapperResult);
 			}
 			catch (Exception exception)
 			{
 				Console.WriteLine(exception);
 
 				return new NotFoundResult();
+			}
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> GetPostsAsync([FromQuery]int skip = 0, [FromQuery]int limit = 10)
+		{
+			try
+			{
+				var serviceResult = await this._postService.GetPostsAsync(skip, limit);
+
+				if (serviceResult.HasErrors)
+				{
+					return new BadRequestObjectResult(serviceResult.Errors);
+				}
+
+				var mapperResult = this._mapper.Map<PostsResponseDto>(serviceResult.Value);
+
+				return new OkObjectResult(mapperResult);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return new EmptyResult();
 			}
 		}
 
@@ -64,7 +89,7 @@ namespace Slay.Host.Controllers.ClientControllers
 					return new BadRequestObjectResult(serviceResult.Errors);
 				}
 
-				var mappedResult = this._mapper.Map<PostResponseDto>(serviceResult.Value);
+				var mappedResult = this._mapper.Map<PostItemDto>(serviceResult.Value);
 
 				return CreatedAtRoute(Routes.GetPost, new { id = mappedResult.Id }, mappedResult);
 			}

@@ -3,7 +3,7 @@ using Slay.Models.DataTransferObjects.Comment;
 
 namespace Slay.Models.DataTransferObjects.Post
 {
-	public sealed class PostResponseDto
+	public sealed class PostItemDto
 	{
 		public string Id { get; set; }
 

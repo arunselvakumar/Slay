@@ -4,7 +4,7 @@ using Slay.Models.BusinessObjects.Comment;
 
 namespace Slay.Models.BusinessObjects.Post
 {
-	public sealed class PostResponseBo
+	public sealed class PostItemBo
 	{
 		public string Id { get; set; }
 

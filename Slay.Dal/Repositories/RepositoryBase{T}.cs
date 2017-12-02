@@ -97,6 +97,48 @@ namespace Slay.Dal.Repositories
 			}
 		}
 
+		public virtual async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter, PagingOptions pagingOptions, IList<SortingOptions> sortingOptions, CancellationToken token = default(CancellationToken))
+		{
+			try
+			{
+				if (!this.IsCollectionsExists)
+				{
+					return Enumerable.Empty<T>();
+				}
+
+				var sortDefinitionBuilder = new SortDefinitionBuilder<T>();
+				var sortDefinitions = new List<SortDefinition<T>>();
+
+				if (sortingOptions.Any())
+				{
+					sortDefinitions.AddRange(sortingOptions.Select(sortingOption => sortingOption.SortingMode == SortingMode.Ascending
+						? sortDefinitionBuilder.Ascending(sortingOption.FieldName)
+						: sortDefinitionBuilder.Descending(sortingOption.FieldName)));
+				}
+
+				var sourceCollection = filter == null ? Collection.Find(_ => true) : Collection.Find(filter);
+
+				sourceCollection.Sort(sortDefinitionBuilder.Combine(sortDefinitions));
+
+				if (pagingOptions.Skip != null)
+				{
+					sourceCollection = sourceCollection.Skip(pagingOptions.Skip);
+				}
+
+				if (pagingOptions.Limit != null)
+				{
+					sourceCollection = sourceCollection.Limit(pagingOptions.Limit);
+				}
+
+				return await sourceCollection.ToListAsync(token);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+
 		public virtual async Task<T> CreateAsync(T entity, CancellationToken token = default(CancellationToken))
 		{
 			try
@@ -147,48 +189,6 @@ namespace Slay.Dal.Repositories
 				return true;
 			}
 
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
-
-		public virtual async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter, PagingOptions pagingOptions, IList<SortingOptions> sortingOptions, CancellationToken token = default(CancellationToken))
-		{
-			try
-			{
-				if (!this.IsCollectionsExists)
-				{
-					return Enumerable.Empty<T>();
-				}
-
-				var sortDefinitionBuilder = new SortDefinitionBuilder<T>();
-				var sortDefinitions = new List<SortDefinition<T>>();
-
-				if (sortingOptions.Any())
-				{
-					sortDefinitions.AddRange(sortingOptions.Select(sortingOption => sortingOption.SortingMode == SortingMode.Ascending
-														   ? sortDefinitionBuilder.Ascending(sortingOption.FieldName)
-														   : sortDefinitionBuilder.Descending(sortingOption.FieldName)));
-				}
-
-				var sourceCollection = filter == null ? Collection.Find(_ => true) : Collection.Find(filter);
-
-				sourceCollection.Sort(sortDefinitionBuilder.Combine(sortDefinitions));
-
-				if (pagingOptions.Skip != null)
-				{
-					sourceCollection = sourceCollection.Skip(pagingOptions.Skip);
-				}
-
-				if (pagingOptions.Limit != null)
-				{
-					sourceCollection = sourceCollection.Limit(pagingOptions.Limit);
-				}
-
-				return await sourceCollection.ToListAsync(token);
-			}
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
