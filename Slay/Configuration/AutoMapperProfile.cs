@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
-using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
+using Slay.Host.Controllers;
 using Slay.Models.BusinessObjects.Comment;
 using Slay.Models.BusinessObjects.Post;
 using Slay.Models.DataTransferObjects.Comment;
@@ -16,9 +17,9 @@ namespace Slay.Host.Configuration
 {
 	public sealed class AutoMapperProfile : Profile
     {
-        public AutoMapperProfile()
-        {
-            this.ConfigurePostMappers();
+	    public AutoMapperProfile()
+	    {
+		    this.ConfigurePostMappers();
 	        this.ConfigureCommentMappers();
         }
 
@@ -35,8 +36,7 @@ namespace Slay.Host.Configuration
 
 			this.CreateMap<PostItemBo, PostItemDto>();
 		    this.CreateMap<PostsResponseBo, PostsResponseDto>()
-				.ForMember(postsResponseDto => postsResponseDto.Data, opt => opt.MapFrom(x => x.Posts))
-				.ForMember(postsResponseDto => postsResponseDto.Links, opt => opt.MapFrom(x => new LinksDto { }));
+			    .ForMember(postsResponseDto => postsResponseDto.Data, opt => opt.MapFrom(x => x.Posts));
 	    }
 
 	    private void ConfigureCommentMappers()

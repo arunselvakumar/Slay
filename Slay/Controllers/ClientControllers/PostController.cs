@@ -5,6 +5,7 @@ using Slay.Models.BusinessObjects.Post;
 using Slay.Models.DataTransferObjects.Post;
 using Slay.ServicesContracts.Services;
 using System.Threading.Tasks;
+using Slay.Models.DataTransferObjects.Link;
 
 namespace Slay.Host.Controllers.ClientControllers
 {
@@ -52,7 +53,7 @@ namespace Slay.Host.Controllers.ClientControllers
 			}
 		}
 
-		[HttpGet]
+		[HttpGet(Name = Routes.GetPosts)]
 		public async Task<IActionResult> GetPostsAsync([FromQuery]int skip = 0, [FromQuery]int limit = 10)
 		{
 			try
@@ -65,6 +66,13 @@ namespace Slay.Host.Controllers.ClientControllers
 				}
 
 				var mapperResult = this._mapper.Map<PostsResponseDto>(serviceResult.Value);
+
+				mapperResult.Links = new LinksDto
+				{
+					Base = Url.Link(Routes.GetPosts, null),
+					Self = Url.Link(Routes.GetPosts, new { skip = (int?) skip, limit = (int?) limit}),
+					Next = Url.Link(Routes.GetPosts, new { skip = serviceResult.Value.Skip, limit = serviceResult.Value.Limit })
+				};
 
 				return new OkObjectResult(mapperResult);
 			}

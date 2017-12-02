@@ -7,5 +7,7 @@
 		public const string CreatePost = "CreatePost";
 
 		public const string DeletePost = "DeletePost";
+
+		public const string GetPosts = "GetPosts";
 	}
 }
