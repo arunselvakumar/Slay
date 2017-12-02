@@ -52,5 +52,10 @@ namespace Slay.Models.Entities
 
 		[JsonProperty(PropertyName = "modifiedon")]
 		public DateTime ModifiedOn { get; set; }
+
+		public void Delete()
+		{
+			this.IsDeleted = true;
+		}
 	}
 }

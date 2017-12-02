@@ -55,5 +55,17 @@ namespace Slay.Services.Services
 
 			return new ServiceResult<PostResponseBo> { Value = mapperResult };
         }
+
+	    public async Task<ServiceResult<bool>> DeletePostAsync(string id)
+	    {
+			if (string.IsNullOrEmpty(id))
+			{
+				return new ServiceResult<bool> { Errors = new[] { new Error { Code = "POSTID_MANDATORY_ERROR" } } };
+			}
+
+		    var result = await this._postRepository.DeleteAsync(id);
+
+			return new ServiceResult<bool> { Value = result };
+	    }
     }
 }

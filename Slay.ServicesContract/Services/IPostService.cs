@@ -10,5 +10,7 @@ namespace Slay.ServicesContracts.Services
         Task<ServiceResult<PostResponseBo>> GetPostByIdAsync([NotNull]string id);
 
         Task<ServiceResult<PostResponseBo>> CreatePostAsync([NotNull]CreatePostRequestBo createPostRequestBo);
+
+	    Task<ServiceResult<bool>> DeletePostAsync(string id);
     }
 }

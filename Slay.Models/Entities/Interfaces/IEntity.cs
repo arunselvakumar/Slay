@@ -7,5 +7,7 @@ namespace Slay.Models.Entities.Interfaces
 		ObjectId Id { get; set; }
 
 		bool IsDeleted { get; set; }
+
+		void Delete();
 	}
 }

@@ -27,5 +27,10 @@ namespace Slay.Models.Entities
 
 		[JsonProperty(PropertyName = "createdon")]
 		public DateTime CreatedOn { get; set; }
+
+		public void Delete()
+		{
+			this.IsDeleted = true;
+		}
 	}
 }

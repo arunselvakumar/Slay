@@ -129,6 +129,31 @@ namespace Slay.Dal.Repositories
 			}
 		}
 
+		public virtual async Task<bool> DeleteAsync(string id, CancellationToken token = default(CancellationToken))
+		{
+			try
+			{
+				var entity = await this.GetByIdAsync(id, token);
+
+				if (entity == null)
+				{
+					return false;
+				}
+
+				entity.Delete();
+
+				await this.Collection.ReplaceOneAsync(Builders<T>.Filter.Eq("_id", ObjectId.Parse(id)), entity, cancellationToken: token);
+
+				return true;
+			}
+
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+
 		public virtual async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter, PagingOptions pagingOptions, IList<SortingOptions> sortingOptions, CancellationToken token = default(CancellationToken))
 		{
 			try
