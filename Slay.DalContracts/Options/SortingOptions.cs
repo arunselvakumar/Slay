@@ -4,7 +4,6 @@
 	{
 		public SortingOptions()
 		{
-			
 		}
 
 		public SortingOptions(string fieldName, SortingMode sortingMode = SortingMode.Ascending)

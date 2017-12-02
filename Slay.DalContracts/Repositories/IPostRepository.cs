@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading;
 using JetBrains.Annotations;
 using Slay.Models.Entities;
 using System.Threading.Tasks;
@@ -8,14 +11,12 @@ namespace Slay.DalContracts.Repositories
 {
 	public interface IPostRepository
 	{
-		Task<PostEntity> GetPostByIdAsync([NotNull] string postId);
+		Task<PostEntity> GetByIdAsync([NotNull] string postId, CancellationToken token = default(CancellationToken));
 
-		Task<IEnumerable<PostEntity>> GetPosts([NotNull]PagingOptions pagingOptions, [NotNull]IList<SortingOptions> sortingOptions);
+		Task<IEnumerable<PostEntity>> GetAsync(Expression<Func<PostEntity, bool>> filter, [NotNull]PagingOptions pagingOptions, [NotNull]IList<SortingOptions> sortingOptions, CancellationToken token = default(CancellationToken));
 
-		Task<PostEntity> CreatePostAsync([NotNull] PostEntity post);
+		Task<PostEntity> CreateAsync([NotNull] PostEntity post, CancellationToken token = default(CancellationToken));
 
-		Task<PostEntity> UpdatePostByIdAsync([NotNull] string postId, [NotNull] PostEntity post);
-
-		Task<CommentEntity> CreateCommentAsync([NotNull] string postId, string commentId, [NotNull] CommentEntity commentEntity);
+		Task<PostEntity> UpdateAsync([NotNull] string postId, [NotNull] PostEntity post, CancellationToken token = default(CancellationToken));
 	}
 }

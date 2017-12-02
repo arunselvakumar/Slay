@@ -4,10 +4,11 @@ using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using Slay.Models.Enums;
 using System.Collections.Generic;
+using Slay.Models.Entities.Interfaces;
 
 namespace Slay.Models.Entities
 {
-	public sealed class PostEntity
+	public sealed class PostEntity : IEntity
 	{
 		[BsonId]
 		[JsonProperty(PropertyName = "id")]
@@ -34,11 +35,11 @@ namespace Slay.Models.Entities
 		[JsonProperty(PropertyName = "searchtags")]
 		public IEnumerable<string> SearchTags { get; set; }
 
-		[JsonProperty(PropertyName = "comments")]
-		public IEnumerable<CommentEntity> Comments { get; set; }
-
 		[JsonProperty(PropertyName = "isanonymous")]
 		public bool IsAnonymous { get; set; }
+
+		[JsonProperty(PropertyName = "isdeleted")]
+		public bool IsDeleted { get; set; }
 
 		[JsonProperty(PropertyName = "createdby")]
 		public string CreatedBy { get; set; }

@@ -1,10 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Authentication;
+using System.Threading;
+using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using Slay.DalContracts.Options;
+using Slay.Models.Entities.Interfaces;
 
 namespace Slay.Dal.Repositories
 {
-	public abstract class RepositoryBase<T>
+	public abstract class RepositoryBase<T> where T : class, IEntity, new()
 	{
 		private readonly string _userName;
 
@@ -20,6 +28,8 @@ namespace Slay.Dal.Repositories
 
 		protected IMongoCollection<T> Collection;
 
+		protected bool IsCollectionsExists => this.Collection != null;
+
 		protected RepositoryBase(string databaseId, string collectionId)
 		{
 			this._host = "slay-dev.documents.azure.com";
@@ -30,6 +40,135 @@ namespace Slay.Dal.Repositories
 			_collectionId = collectionId;
 
 			this.InitializeDatabaseConnection();
+		}
+
+		public virtual async Task<long> CountAsync(Expression<Func<T, bool>> filter, CancellationToken token = default(CancellationToken))
+		{
+			try
+			{
+				return this.IsCollectionsExists ? await this.Collection.CountAsync(filter, cancellationToken: token) : 0;
+			}
+
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+
+		public virtual async Task<bool> ExistsAsync(Expression<Func<T, bool>> filter, CancellationToken token = default(CancellationToken))
+		{
+			try
+			{
+				if (!this.IsCollectionsExists)
+				{
+					return false;
+				}
+
+				var filteredCollection = await this.Collection.FindAsync(filter, cancellationToken: token);
+				return await filteredCollection.AnyAsync(token);
+			}
+
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+
+		public virtual async Task<T> GetByIdAsync(string id, CancellationToken token = default(CancellationToken))
+		{
+			try
+			{
+				if (!this.IsCollectionsExists)
+				{
+					return new T();
+				}
+
+				var filteredCollection = await this.Collection.FindAsync(Builders<T>.Filter.Eq("_id", ObjectId.Parse(id)), cancellationToken:token);
+
+				return await filteredCollection.FirstOrDefaultAsync(token);
+			}
+
+			catch (Exception exception)
+			{
+				Console.WriteLine(exception);
+				throw;
+			}
+		}
+
+		public virtual async Task<T> CreateAsync(T entity, CancellationToken token = default(CancellationToken))
+		{
+			try
+			{
+				await this.Collection.InsertOneAsync(entity, cancellationToken: token);
+
+				return await this.GetByIdAsync(entity.Id.ToString(), token);
+			}
+
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+
+		public virtual async Task<T> UpdateAsync(string id, T entity, CancellationToken token = default(CancellationToken))
+		{
+			try
+			{
+				await this.Collection.ReplaceOneAsync(Builders<T>.Filter.Eq("_id", ObjectId.Parse(id)), entity, cancellationToken: token);
+
+				return await this.GetByIdAsync(entity.Id.ToString(), token);
+			}
+
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+
+		public virtual async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter, PagingOptions pagingOptions, IList<SortingOptions> sortingOptions, CancellationToken token = default(CancellationToken))
+		{
+			try
+			{
+				if (!this.IsCollectionsExists)
+				{
+					return Enumerable.Empty<T>();
+				}
+
+				var sortDefinitionBuilder = new SortDefinitionBuilder<T>();
+				var sortDefinitions = new List<SortDefinition<T>>();
+
+				if (sortingOptions.Any())
+				{
+					sortDefinitions.AddRange(sortingOptions.Select(sortingOption => sortingOption.SortingMode == SortingMode.Ascending
+														   ? sortDefinitionBuilder.Ascending(sortingOption.FieldName)
+														   : sortDefinitionBuilder.Descending(sortingOption.FieldName)));
+				}
+
+				var sourceCollection = filter == null ? Collection.Find(_ => true) : Collection.Find(filter);
+
+				sourceCollection.Sort(sortDefinitionBuilder.Combine(sortDefinitions));
+
+				if (pagingOptions.Skip != null)
+				{
+					sourceCollection = sourceCollection.Skip(pagingOptions.Skip);
+				}
+
+				if (pagingOptions.Limit != null)
+				{
+					sourceCollection = sourceCollection.Limit(pagingOptions.Limit);
+				}
+
+				return await sourceCollection.ToListAsync(token);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
 		}
 
 		private void InitializeDatabaseConnection()

@@ -35,9 +35,9 @@ namespace Slay.Services.Services
 				return new ServiceResult<CommentResponseBo> { Errors = validationResult.Errors.ToServiceResultErrors() };
 			}
 
-			var repositoryResult = await this._postRepository.CreateCommentAsync(postId, commentId, this._mapper.Map<CommentEntity>(createCommentRequestBo));
+			// var repositoryResult = await this._postRepository.CreateCommentAsync(postId, commentId, this._mapper.Map<CommentEntity>(createCommentRequestBo));
 
-			var mapperResult = this._mapper.Map<CommentResponseBo>(repositoryResult);
+			var mapperResult = this._mapper.Map<CommentResponseBo>(null);
 
 			return new ServiceResult<CommentResponseBo> { Value = mapperResult };
 		}

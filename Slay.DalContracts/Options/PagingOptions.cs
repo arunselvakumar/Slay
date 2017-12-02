@@ -4,7 +4,6 @@
 	{
 		public PagingOptions()
 		{
-			
 		}
 
 		public PagingOptions(int? skip, int? limit)
