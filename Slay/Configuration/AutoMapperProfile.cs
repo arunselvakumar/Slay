@@ -49,7 +49,11 @@ namespace Slay.Host.Configuration
 
 		    this.CreateMap<CommentEntity, CommentItemBo>();
 		    this.CreateMap<CommentItemBo, CommentItemDto>();
-		    this.CreateMap<CommentsResponseBo, CommentsResponseDto>()
+		    this.CreateMap<CommentItemBo, CommentResponseDto>()
+			    .ForMember(commentResponseDto => commentResponseDto.Data, opt => opt.MapFrom(x => x));
+			this.CreateMap<CommentsResponseBo, CommentResponseDto>()
+			    .ForMember(commentResponseDto => commentResponseDto.Data, opt => opt.MapFrom(x => x.Comments));
+			this.CreateMap<CommentsResponseBo, CommentsResponseDto>()
 			    .ForMember(commentsResponseDto => commentsResponseDto.Data, opt => opt.MapFrom(x => x.Comments));
 	    }
 	}

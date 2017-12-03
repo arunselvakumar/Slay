@@ -7,6 +7,6 @@ namespace Slay.Models.DataTransferObjects.Comment
 	{
 		public LinksDto Links { get; set; }
 
-		public IEnumerable<CommentItemDto> Data { get; set; }
+		public IEnumerable<CommentResponseDto> Data { get; set; }
 	}
 }

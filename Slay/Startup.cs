@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Slay.Host.Configuration;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Slay.Host
 {
@@ -19,7 +20,6 @@ namespace Slay.Host
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
@@ -29,9 +29,13 @@ namespace Slay.Host
 	        services.AddAutoMapper();
 
             services.RegisterServices();
-        }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+	        services.AddSwaggerGen(c =>
+	        {
+		        c.SwaggerDoc("v1", new Info { Title = "Slay Project", Version = "v1" });
+	        });
+		}
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -49,7 +53,14 @@ namespace Slay.Host
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
+	        app.UseSwagger();
+
+	        app.UseSwaggerUI(c =>
+	        {
+		        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+	        });
+
+			app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",

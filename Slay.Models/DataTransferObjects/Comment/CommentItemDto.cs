@@ -10,7 +10,7 @@
 
 		public string Comment { get; set; }
 
-		public long ChildrensCount { get; set; }
+		public long Descendants { get; set; }
 
 		public string CommentedBy { get; set; }
 

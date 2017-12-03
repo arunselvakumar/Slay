@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -59,6 +60,12 @@ namespace Slay.Host.Controllers.ClientControllers
 				    Self = Url.Link(Routes.GetComments, new { postId = postId, commentId = commentId, skip = (int?)skip, limit = (int?)limit }),
 				    Next = Url.Link(Routes.GetComments, new { postId = postId, commentId = commentId, skip = serviceResult.Value.Skip, limit = serviceResult.Value.Limit })
 				};
+
+			    mapperResult.Data.ToList().ForEach(comment => comment.Links = new LinksDto
+			    {
+				    Base = this.GetBaseUrl(),
+				    Descendants = comment.Data.Descendants > 0 ? Url.Link(Routes.GetComments, new {postId = comment.Data.PostId, commentId = comment.Data.Id, skip = (int?) skip, limit = (int?) limit}) : null
+			    });
 
 			    return new OkObjectResult(mapperResult);
 		    }

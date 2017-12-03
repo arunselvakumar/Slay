@@ -84,7 +84,7 @@ namespace Slay.Services.Services
 
 			var commentsResponseBo = new CommentsResponseBo
 			{
-				Comments = mapperResult.ForEach(async comment => comment.ChildrensCount = await this._commentRepository.CountAsync(cx => !cx.IsDeleted && cx.ParentId == comment.Id)).ToList(),
+				Comments = mapperResult.ForEach(async comment => comment.Descendants = await this._commentRepository.CountAsync(cx => !cx.IsDeleted && cx.ParentId == comment.Id)).ToList(),
 				Skip = skip + limit >= postsCount ? (int?)null : skip + limit,
 				Limit = limit
 			};
