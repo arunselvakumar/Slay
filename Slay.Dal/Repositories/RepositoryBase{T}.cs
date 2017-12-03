@@ -46,7 +46,9 @@ namespace Slay.Dal.Repositories
 		{
 			try
 			{
-				return this.IsCollectionsExists ? await this.Collection.CountAsync(filter, cancellationToken: token) : 0;
+				var foo = this.IsCollectionsExists ? await this.Collection.CountAsync(filter, cancellationToken: token) : 0;
+
+				return foo;
 			}
 
 			catch (Exception e)

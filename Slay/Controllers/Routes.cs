@@ -9,5 +9,7 @@
 		public const string DeletePost = "DeletePost";
 
 		public const string GetPosts = "GetPosts";
+
+		public const string GetComments = "GetComments";
 	}
 }

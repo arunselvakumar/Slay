@@ -14,5 +14,8 @@ namespace Slay.Models.DataTransferObjects.Link
 
 		[JsonProperty(PropertyName = "_next")]
 		public string Next { get; set; }
+
+		[JsonProperty(PropertyName = "_descendants")]
+		public string Descendants { get; set; }
 	}
 }

@@ -21,6 +21,7 @@ namespace Slay.Host.Configuration
 	        services.AddScoped<ICommentService, CommentService>();
 
 	        services.AddScoped<IPostRepository, PostRepository>();
+	        services.AddScoped<ICommentRepository, CommentRepository>();
 	        services.AddScoped<IValidationsProvider, ValidationsProvider>();
 
 	        services.AddTransient<IValidator<CreatePostRequestBo>, CreatePostValidator>();

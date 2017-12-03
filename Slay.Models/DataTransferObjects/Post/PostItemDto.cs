@@ -19,7 +19,7 @@ namespace Slay.Models.DataTransferObjects.Post
 
 		public IEnumerable<string> SearchTags { get; set; }
 
-		public IEnumerable<CommentResponseDto> Comments { get; set; }
+		public IEnumerable<CommentItemDto> Comments { get; set; }
 
 		public bool IsAnonymous { get; set; }
 

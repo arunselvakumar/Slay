@@ -20,7 +20,7 @@ namespace Slay.Models.BusinessObjects.Post
 
 		public IEnumerable<string> SearchTags { get; set; }
 
-		public IEnumerable<CommentResponseBo> Comments { get; set; }
+		public IEnumerable<CommentItemBo> Comments { get; set; }
 
 		public bool IsAnonymous { get; set; }
 

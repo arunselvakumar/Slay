@@ -7,7 +7,6 @@ using Slay.Models.DataTransferObjects.Post;
 using Slay.ServicesContracts.Services;
 using System.Threading.Tasks;
 using Slay.Models.DataTransferObjects.Link;
-using Slay.Utilities.Extensions;
 
 namespace Slay.Host.Controllers.ClientControllers
 {

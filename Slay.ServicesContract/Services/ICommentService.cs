@@ -7,6 +7,8 @@ namespace Slay.ServicesContracts.Services
 {
 	public interface ICommentService
 	{
-		Task<ServiceResult<CommentResponseBo>> CreateCommentAsync([NotNull] string postId, string commentId, [NotNull] CreateCommentRequestBo createCommentRequestBo);
+		Task<ServiceResult<CommentItemBo>> CreateCommentAsync([NotNull] string postId, string commentId, [NotNull] CreateCommentRequestBo createCommentRequestBo);
+
+		Task<ServiceResult<CommentsResponseBo>> GetCommentsAsync([NotNull] string postId, string commentId, int skip, int limit);
 	}
 }

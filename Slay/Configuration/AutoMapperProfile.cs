@@ -43,11 +43,14 @@ namespace Slay.Host.Configuration
 			this.CreateMap<CreateCommentRequestDto, CreateCommentRequestBo>();
 		    this.CreateMap<CreateCommentRequestBo, CommentEntity>()
 			    .ForMember(commentEntity => commentEntity.Id, opt => opt.MapFrom(x => ObjectId.GenerateNewId()))
-			    .ForMember(commentEntity => commentEntity.Comments, opt => opt.UseValue(Enumerable.Empty<CommentEntity>()))
+				.ForMember(commentEntity => commentEntity.PostId, opt => opt.ResolveUsing((src, dst, arg3, context) => context.Options.Items["PostId"]))
+			    .ForMember(commentEntity => commentEntity.ParentId, opt => opt.ResolveUsing((src, dst, arg3, context) => context.Options.Items["ParentId"]))
 			    .ForMember(commentEntity => commentEntity.CreatedOn, opt => opt.MapFrom(x => DateTime.UtcNow));
 
-		    this.CreateMap<CommentEntity, CommentResponseBo>();
-		    this.CreateMap<CommentResponseBo, CommentResponseDto>();
+		    this.CreateMap<CommentEntity, CommentItemBo>();
+		    this.CreateMap<CommentItemBo, CommentItemDto>();
+		    this.CreateMap<CommentsResponseBo, CommentsResponseDto>()
+			    .ForMember(commentsResponseDto => commentsResponseDto.Data, opt => opt.MapFrom(x => x.Comments));
 	    }
 	}
 }

@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Slay.Models.BusinessObjects.Comment;
 using Slay.Models.DataTransferObjects.Comment;
+using Slay.Models.DataTransferObjects.Link;
 using Slay.ServicesContracts.Services;
 
 namespace Slay.Host.Controllers.ClientControllers
@@ -22,23 +24,8 @@ namespace Slay.Host.Controllers.ClientControllers
 		    this._commentService = commentService;
 	    }
 
-	    [HttpPost]
-	    public async Task<IActionResult> CreateCommentAsync(string postId, [FromBody]CreateCommentRequestDto createCommentRequestDto)
-	    {
-		    var createCommentBo = this._mapper.Map<CreateCommentRequestBo>(createCommentRequestDto);
-
-		    var serviceResult = await this._commentService.CreateCommentAsync(postId, string.Empty, createCommentBo);
-
-		    if (serviceResult.HasErrors)
-		    {
-			    return new BadRequestObjectResult(serviceResult.Errors);
-		    }
-
-			return new OkObjectResult(this._mapper.Map<CommentResponseDto>(serviceResult.Value));
-		}
-
-	    [HttpPost("{commentId}")]
-	    public async Task<IActionResult> CreateNestedCommentAsync(string postId, string commentId, [FromBody] CreateCommentRequestDto createCommentRequestDto)
+	    [HttpPost("{commentId?}")]
+	    public async Task<IActionResult> CreateCommentAsync(string postId, string commentId, [FromBody] CreateCommentRequestDto createCommentRequestDto)
 	    {
 			var createCommentBo = this._mapper.Map<CreateCommentRequestBo>(createCommentRequestDto);
 
@@ -49,7 +36,42 @@ namespace Slay.Host.Controllers.ClientControllers
 			    return new BadRequestObjectResult(serviceResult.Errors);
 		    }
 
-		    return new OkObjectResult(this._mapper.Map<CommentResponseDto>(serviceResult.Value));
+		    return new OkObjectResult(this._mapper.Map<CommentItemDto>(serviceResult.Value));
 		}
-    }
+
+	    [HttpGet("{commentId?}", Name = Routes.GetComments)]
+	    public async Task<IActionResult> GetCommentsAsync(string postId, string commentId, [FromQuery]int skip = 0, [FromQuery]int limit = 10)
+	    {
+		    try
+		    {
+			    var serviceResult = await this._commentService.GetCommentsAsync(postId, commentId, skip, limit);
+
+			    if (serviceResult.HasErrors)
+			    {
+				    return new BadRequestObjectResult(serviceResult.Errors);
+			    }
+
+			    var mapperResult = this._mapper.Map<CommentsResponseDto>(serviceResult.Value);
+
+			    mapperResult.Links = new LinksDto
+			    {
+				    Base = this.GetBaseUrl(),
+				    Self = Url.Link(Routes.GetComments, new { postId = postId, commentId = commentId, skip = (int?)skip, limit = (int?)limit }),
+				    Next = Url.Link(Routes.GetComments, new { postId = postId, commentId = commentId, skip = serviceResult.Value.Skip, limit = serviceResult.Value.Limit })
+				};
+
+			    return new OkObjectResult(mapperResult);
+		    }
+		    catch (Exception e)
+		    {
+			    Console.WriteLine(e);
+			    return new EmptyResult();
+		    }
+	    }
+
+	    private string GetBaseUrl()
+	    {
+		    return Request.Scheme + "://" + Request.Host + Request.PathBase.Value.TrimEnd('/') + "/";
+	    }
+	}
 }

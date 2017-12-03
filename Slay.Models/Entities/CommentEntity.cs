@@ -13,11 +13,14 @@ namespace Slay.Models.Entities
 		[JsonProperty(PropertyName = "id")]
 		public ObjectId Id { get; set; }
 
+		[JsonProperty(PropertyName = "parentid")]
+		public string ParentId { get; set; }
+
+		[JsonProperty(PropertyName = "postid")]
+		public string PostId { get; set; }
+
 		[JsonProperty(PropertyName = "comment")]
 		public string Comment { get; set; }
-
-		[JsonProperty(PropertyName = "comments")]
-		public IEnumerable<CommentEntity> Comments { get; set; }
 
 		[JsonProperty(PropertyName = "isdeleted")]
 		public bool IsDeleted { get; set; }
