@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Slay.Host.Configuration;
 
 namespace Slay.Host
@@ -22,9 +23,10 @@ namespace Slay.Host
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
+					.AddJsonOptions(options => { options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore; })
 				    .AddFluentValidation();
 
-            services.AddAutoMapper();
+	        services.AddAutoMapper();
 
             services.RegisterServices();
         }

@@ -10,6 +10,6 @@ namespace Slay.Models.DataTransferObjects.Post
 		public LinksDto Links { get; set; }
 
 		[JsonProperty(PropertyName = "_data")]
-		public IEnumerable<PostItemDto> Data { get; set; }
+		public IEnumerable<PostResponseDto> Data { get; set; }
 	}
 }

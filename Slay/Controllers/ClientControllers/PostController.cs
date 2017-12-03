@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Slay.Models.BusinessObjects.Post;
@@ -6,6 +7,7 @@ using Slay.Models.DataTransferObjects.Post;
 using Slay.ServicesContracts.Services;
 using System.Threading.Tasks;
 using Slay.Models.DataTransferObjects.Link;
+using Slay.Utilities.Extensions;
 
 namespace Slay.Host.Controllers.ClientControllers
 {
@@ -41,7 +43,13 @@ namespace Slay.Host.Controllers.ClientControllers
 					return new NotFoundResult();
 				}
 
-				var mapperResult = this._mapper.Map<PostItemDto>(serviceResult.Value);
+				var mapperResult = this._mapper.Map<PostResponseDto>(serviceResult.Value);
+
+				mapperResult.Links = new LinksDto
+				{
+					Base = this.GetBaseUrl(),
+					Self = Url.Link(Routes.GetPost, new { id = mapperResult.Data.Id } )
+				};
 
 				return new OkObjectResult(mapperResult);
 			}
@@ -69,10 +77,12 @@ namespace Slay.Host.Controllers.ClientControllers
 
 				mapperResult.Links = new LinksDto
 				{
-					Base = Url.Link(Routes.GetPosts, null),
+					Base = this.GetBaseUrl(),
 					Self = Url.Link(Routes.GetPosts, new { skip = (int?) skip, limit = (int?) limit}),
 					Next = Url.Link(Routes.GetPosts, new { skip = serviceResult.Value.Skip, limit = serviceResult.Value.Limit })
 				};
+
+				mapperResult.Data.ToList().ForEach(post => post.Links = new LinksDto {Base = this.GetBaseUrl(), Self = Url.Link(Routes.GetPost, new {id = post.Data.Id})});
 
 				return new OkObjectResult(mapperResult);
 			}
@@ -115,7 +125,7 @@ namespace Slay.Host.Controllers.ClientControllers
 			try
 			{
 				var serviceResult = await this._postService.DeletePostAsync(id);
-
+				
 				if (serviceResult.HasErrors)
 				{
 					return new BadRequestObjectResult(serviceResult.Errors);
@@ -129,6 +139,11 @@ namespace Slay.Host.Controllers.ClientControllers
 				
 				return new BadRequestResult();
 			}
+		}
+
+		private string GetBaseUrl()
+		{
+			return Request.Scheme + "://" + Request.Host + Request.PathBase.Value.TrimEnd('/') + "/";
 		}
 	}
 }
