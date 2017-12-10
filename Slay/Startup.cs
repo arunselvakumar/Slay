@@ -26,7 +26,16 @@ namespace Slay.Host
 					.AddJsonOptions(options => { options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore; })
 				    .AddFluentValidation();
 
-	        services.AddAutoMapper();
+            services.AddAuthentication("Bearer")
+                    .AddIdentityServerAuthentication(options =>
+                    {
+                        options.Authority = "http://localhost:50365";
+                        options.RequireHttpsMetadata = false;
+
+                        options.ApiName = "Client";
+                    });
+
+            services.AddAutoMapper();
 
             services.RegisterServices();
 
@@ -70,6 +79,8 @@ namespace Slay.Host
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+
+            app.UseAuthentication();
         }
     }
 }
