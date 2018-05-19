@@ -12,7 +12,7 @@ namespace Slay.Host.Controllers.ClientControllers
 {
 	[Produces("application/json")]
 	[Route("api/Post")]
-	public class PostController : ControllerBase
+	public sealed class PostController : ControllerBase
 	{
 		private readonly IPostService _postService;
 
@@ -25,7 +25,7 @@ namespace Slay.Host.Controllers.ClientControllers
 			this._postService = postService;
 		}
 
-		[HttpGet("{id}", Name = Routes.GetPost)]
+		[HttpGet("{id}", Name = nameof(GetPostByIdAsync))]
 		public async Task<IActionResult> GetPostByIdAsync(string id)
 		{
 			try
@@ -47,7 +47,7 @@ namespace Slay.Host.Controllers.ClientControllers
 				mapperResult.Links = new LinksDto
 				{
 					Base = this.GetBaseUrl(),
-					Self = Url.Link(Routes.GetPost, new { id = mapperResult.Data.Id } )
+					Self = Url.Link(nameof(GetPostByIdAsync), new { id = mapperResult.Data.Id } )
 				};
 
 				return new OkObjectResult(mapperResult);
@@ -60,7 +60,7 @@ namespace Slay.Host.Controllers.ClientControllers
 			}
 		}
 
-		[HttpGet(Name = Routes.GetPosts)]
+		[HttpGet(Name = nameof(GetPostsAsync))]
 		public async Task<IActionResult> GetPostsAsync([FromQuery]int skip = 0, [FromQuery]int limit = 10)
 		{
 			try
@@ -77,11 +77,11 @@ namespace Slay.Host.Controllers.ClientControllers
 				mapperResult.Links = new LinksDto
 				{
 					Base = this.GetBaseUrl(),
-					Self = Url.Link(Routes.GetPosts, new { skip = (int?) skip, limit = (int?) limit}),
-					Next = Url.Link(Routes.GetPosts, new { skip = serviceResult.Value.Skip, limit = serviceResult.Value.Limit })
+					Self = Url.Link(nameof(GetPostsAsync), new { skip = (int?) skip, limit = (int?) limit}),
+					Next = Url.Link(nameof(GetPostsAsync), new { skip = serviceResult.Value.Skip, limit = serviceResult.Value.Limit })
 				};
 
-				mapperResult.Data.ToList().ForEach(post => post.Links = new LinksDto {Base = this.GetBaseUrl(), Self = Url.Link(Routes.GetPost, new {id = post.Data.Id})});
+				mapperResult.Data.ToList().ForEach(post => post.Links = new LinksDto {Base = this.GetBaseUrl(), Self = Url.Link(nameof(GetPostsAsync), new {id = post.Data.Id})});
 
 				return new OkObjectResult(mapperResult);
 			}
@@ -92,7 +92,7 @@ namespace Slay.Host.Controllers.ClientControllers
 			}
 		}
 
-		[HttpPost(Name = Routes.CreatePost)]
+		[HttpPost(Name = nameof(CreatePostAsync))]
 		public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostRequestDto createPostDto)
 		{
 			try
@@ -108,7 +108,7 @@ namespace Slay.Host.Controllers.ClientControllers
 
 				var mappedResult = this._mapper.Map<PostItemDto>(serviceResult.Value);
 
-				return CreatedAtRoute(Routes.GetPost, new { id = mappedResult.Id }, mappedResult);
+				return CreatedAtRoute(nameof(CreatePostAsync), new { id = mappedResult.Id }, mappedResult);
 			}
 			catch (Exception e)
 			{
@@ -118,7 +118,7 @@ namespace Slay.Host.Controllers.ClientControllers
 			}
 		}
 
-		[HttpDelete("{id}", Name = Routes.DeletePost)]
+		[HttpDelete("{id}", Name = nameof(DeletePostAsync))]
 		public async Task<IActionResult> DeletePostAsync(string id)
 		{
 			try

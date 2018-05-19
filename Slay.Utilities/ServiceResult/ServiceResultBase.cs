@@ -8,6 +8,6 @@ namespace Slay.Utilities.ServiceResult
     {
 	    public IEnumerable<Error> Errors { get; set; }
 
-	    public bool HasErrors => this.Errors.IsAny();
+	    public bool HasErrors => this.Errors.IsNullOrEmpty();
     }
 }
