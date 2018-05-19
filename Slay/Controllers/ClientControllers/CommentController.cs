@@ -71,7 +71,6 @@ namespace Slay.Host.Controllers.ClientControllers
 		    }
 		    catch (Exception e)
 		    {
-			    Console.WriteLine(e);
 			    return new EmptyResult();
 		    }
 	    }
