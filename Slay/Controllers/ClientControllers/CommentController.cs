@@ -12,7 +12,7 @@ namespace Slay.Host.Controllers.ClientControllers
 {
 	[Produces("application/json")]
     [Route("api/Post/{postId}/Comment")]
-    public class CommentController : ControllerBase
+    public sealed class CommentController : ControllerBase
     {
 	    private readonly IMapper _mapper;
 
