@@ -1,148 +1,161 @@
-﻿using System;
-using System.Linq;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Slay.Models.BusinessObjects.Post;
-using Slay.Models.DataTransferObjects.Post;
-using Slay.ServicesContracts.Services;
-using System.Threading.Tasks;
-using Slay.Models.DataTransferObjects.Link;
-
-namespace Slay.Host.Controllers.ClientControllers
+﻿namespace Slay.Host.Controllers.ClientControllers
 {
-	[Produces("application/json")]
-	[Route("api/Post")]
-	public sealed class PostController : ControllerBase
-	{
-		private readonly IPostService _postService;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
 
-		private readonly IMapper _mapper;
+    using AutoMapper;
 
-		public PostController(IMapper mapper, IPostService postService)
-		{
-			this._mapper = mapper;
+    using Microsoft.AspNetCore.Mvc;
 
-			this._postService = postService;
-		}
+    using Slay.Models.BusinessObjects.Post;
+    using Slay.Models.DataTransferObjects.Post.Links;
+    using Slay.Models.DataTransferObjects.Post.Request;
+    using Slay.Models.DataTransferObjects.Post.Response;
+    using Slay.ServicesContracts.Services;
 
-		[HttpGet("{id}", Name = nameof(GetPostByIdAsync))]
-		public async Task<IActionResult> GetPostByIdAsync(string id)
-		{
-			try
-			{
-				var serviceResult = await this._postService.GetPostByIdAsync(id);
+    /// <summary>
+    /// The post controller.
+    /// </summary>
+    [Produces("application/json")]
+    [Route("api/Post")]
+    public sealed class PostController : ApiBaseController
+    {
+        private readonly IMapper _mapper;
 
-				if (serviceResult.HasErrors)
-				{
-					return new BadRequestObjectResult(serviceResult.Errors);
-				}
+        private readonly IPostService _postService;
 
-				if (serviceResult.Value == null)
-				{
-					return new NotFoundResult();
-				}
+        public PostController(IMapper mapper, IPostService postService)
+        {
+            this._mapper = mapper;
 
-				var mapperResult = this._mapper.Map<PostResponseDto>(serviceResult.Value);
+            this._postService = postService;
+        }
 
-				mapperResult.Links = new LinksDto
-				{
-					Base = this.GetBaseUrl(),
-					Self = Url.Link(nameof(GetPostByIdAsync), new { id = mapperResult.Data.Id } )
-				};
+        /// <summary>
+        /// Gets a post by its ID.
+        /// </summary>
+        /// <param name="id">Post ID.</param>
+        /// <returns>
+        /// If post is found, then a <see cref="PostResponseDto"/> is returned.
+        /// If no post is found, then an <see cref="NotFoundResult"/> is returned
+        /// </returns>
+        [HttpGet("{id}", Name = nameof(GetPostByIdAsync))]
+        public async Task<IActionResult> GetPostByIdAsync(string id)
+        {
+            try
+            {
+                var serviceResult = await this._postService.GetPostByIdAsync(id);
 
-				return new OkObjectResult(mapperResult);
-			}
-			catch (Exception exception)
-			{
-				Console.WriteLine(exception);
+                if (serviceResult.HasErrors)
+                {
+                    return new BadRequestObjectResult(serviceResult.Errors);
+                }
 
-				return new NotFoundResult();
-			}
-		}
+                if (serviceResult.Value == null)
+                {
+                    return new NotFoundResult();
+                }
 
-		[HttpGet(Name = nameof(GetPostsAsync))]
-		public async Task<IActionResult> GetPostsAsync([FromQuery]int skip = 0, [FromQuery]int limit = 10)
-		{
-			try
-			{
-				var serviceResult = await this._postService.GetPostsAsync(skip, limit);
+                var mapperResult = this._mapper.Map<PostResponseDto>(serviceResult.Value);
 
-				if (serviceResult.HasErrors)
-				{
-					return new BadRequestObjectResult(serviceResult.Errors);
-				}
+                mapperResult.Links = new LinksDto
+                {
+                    Base = this.GetBaseUrl(),
+                    Self = Url.Link(nameof(this.GetPostByIdAsync), new { id = mapperResult.Data.Id })
+                };
 
-				var mapperResult = this._mapper.Map<PostsResponseDto>(serviceResult.Value);
+                return new OkObjectResult(mapperResult);
+            }
+            catch (Exception)
+            {
+                return new NotFoundResult();
+            }
+        }
 
-				mapperResult.Links = new LinksDto
-				{
-					Base = this.GetBaseUrl(),
-					Self = Url.Link(nameof(GetPostsAsync), new { skip = (int?) skip, limit = (int?) limit}),
-					Next = Url.Link(nameof(GetPostsAsync), new { skip = serviceResult.Value.Skip, limit = serviceResult.Value.Limit })
-				};
+        [HttpGet(Name = nameof(GetPostsAsync))]
+        public async Task<IActionResult> GetPostsAsync([FromQuery] int skip = 0, [FromQuery] int limit = 10)
+        {
+            try
+            {
+                var serviceResult = await this._postService.GetPostsAsync(skip, limit);
 
-				mapperResult.Data.ToList().ForEach(post => post.Links = new LinksDto {Base = this.GetBaseUrl(), Self = Url.Link(nameof(GetPostsAsync), new {id = post.Data.Id})});
+                if (serviceResult.HasErrors)
+                {
+                    return new BadRequestObjectResult(serviceResult.Errors);
+                }
 
-				return new OkObjectResult(mapperResult);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return new EmptyResult();
-			}
-		}
+                var mapperResult = this._mapper.Map<PostsResponseDto>(serviceResult.Value);
 
-		[HttpPost(Name = nameof(CreatePostAsync))]
-		public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostRequestDto createPostDto)
-		{
-			try
-			{
-				var createPostBo = this._mapper.Map<CreatePostRequestBo>(createPostDto);
+                mapperResult.Links = new LinksDto
+                {
+                    Base = this.GetBaseUrl(),
+                    Self = Url.Link(nameof(this.GetPostsAsync), new { skip = (int?)skip, limit = (int?)limit }),
+                    Next = Url.Link(nameof(this.GetPostsAsync), new { skip = serviceResult.Value.Skip, limit = serviceResult.Value.Limit })
+                };
 
-				var serviceResult = await this._postService.CreatePostAsync(createPostBo);
+                mapperResult.Data.ToList().ForEach(post => post.Links = new LinksDto { Base = this.GetBaseUrl(), Self = Url.Link(nameof(this.GetPostsAsync), new { id = post.Data.Id }) });
 
-				if (serviceResult.HasErrors)
-				{
-					return new BadRequestObjectResult(serviceResult.Errors);
-				}
+                return new OkObjectResult(mapperResult);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new EmptyResult();
+            }
+        }
 
-				var mappedResult = this._mapper.Map<PostItemDto>(serviceResult.Value);
+        [HttpPost(Name = nameof(CreatePostAsync))]
+        public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostRequestDto createPostDto)
+        {
+            try
+            {
+                var createPostBo = this._mapper.Map<CreatePostRequestBo>(createPostDto);
 
-				return CreatedAtRoute(nameof(CreatePostAsync), new { id = mappedResult.Id }, mappedResult);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				
-				return new BadRequestResult();
-			}
-		}
+                var serviceResult = await this._postService.CreatePostAsync(createPostBo);
 
-		[HttpDelete("{id}", Name = nameof(DeletePostAsync))]
-		public async Task<IActionResult> DeletePostAsync(string id)
-		{
-			try
-			{
-				var serviceResult = await this._postService.DeletePostAsync(id);
-				
-				if (serviceResult.HasErrors)
-				{
-					return new BadRequestObjectResult(serviceResult.Errors);
-				}
+                if (serviceResult.HasErrors)
+                {
+                    return new BadRequestObjectResult(serviceResult.Errors);
+                }
 
-				return new EmptyResult();
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				
-				return new BadRequestResult();
-			}
-		}
+                var mappedResult = this._mapper.Map<PostDto>(serviceResult.Value);
 
-		private string GetBaseUrl()
-		{
-			return Request.Scheme + "://" + Request.Host + Request.PathBase.Value.TrimEnd('/') + "/";
-		}
-	}
+                return this.CreatedAtRoute(nameof(this.CreatePostAsync), new { id = mappedResult.Id }, mappedResult);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                return new BadRequestResult();
+            }
+        }
+
+        [HttpDelete("{id}", Name = nameof(DeletePostAsync))]
+        public async Task<IActionResult> DeletePostAsync(string id)
+        {
+            try
+            {
+                var serviceResult = await this._postService.DeletePostAsync(id);
+
+                if (serviceResult.HasErrors)
+                {
+                    return new BadRequestObjectResult(serviceResult.Errors);
+                }
+
+                return new EmptyResult();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                return new BadRequestResult();
+            }
+        }
+
+        private string GetBaseUrl()
+        {
+            return Request.Scheme + "://" + Request.Host + Request.PathBase.Value.TrimEnd('/') + "/";
+        }
+    }
 }

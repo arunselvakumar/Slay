@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Slay.Models.DataTransferObjects.Post
+namespace Slay.Models.DataTransferObjects.Post.Request
 {
 	public sealed class CreatePostRequestDto
 	{

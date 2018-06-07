@@ -1,7 +1,6 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Slay.Models.DataTransferObjects.Link
+namespace Slay.Models.DataTransferObjects.Post.Links
 {
 	public sealed class LinksDto
 	{

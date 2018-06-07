@@ -6,6 +6,8 @@ using Slay.Models.BusinessObjects.Comment;
 using Slay.Models.BusinessObjects.Post;
 using Slay.Models.DataTransferObjects.Comment;
 using Slay.Models.DataTransferObjects.Post;
+using Slay.Models.DataTransferObjects.Post.Request;
+using Slay.Models.DataTransferObjects.Post.Response;
 using Slay.Models.Entities;
 using Slay.Models.Enums;
 using Slay.Utilities.Extensions;
@@ -31,7 +33,7 @@ namespace Slay.Host.Configuration
 	        this.CreateMap<PostEntity, PostItemBo>()
 				.ForMember(postEntity => postEntity.CreatedBy, opt => opt.MapFrom(x => x.IsAnonymous ? string.Empty : x.CreatedBy));
 
-			this.CreateMap<PostItemBo, PostItemDto>();
+			this.CreateMap<PostItemBo, PostDto>();
 		    this.CreateMap<PostItemBo, PostResponseDto>()
 			    .ForMember(postResponseDto => postResponseDto.Data, opt => opt.MapFrom(x => x));
 		    this.CreateMap<PostsResponseBo, PostsResponseDto>()

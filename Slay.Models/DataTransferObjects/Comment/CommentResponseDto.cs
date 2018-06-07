@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Slay.Models.DataTransferObjects.Link;
+using Slay.Models.DataTransferObjects.Post.Links;
 
 namespace Slay.Models.DataTransferObjects.Comment
 {

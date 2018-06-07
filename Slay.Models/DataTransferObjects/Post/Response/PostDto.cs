@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Slay.Models.DataTransferObjects.Comment;
 
-namespace Slay.Models.DataTransferObjects.Post
+namespace Slay.Models.DataTransferObjects.Post.Response
 {
-	public sealed class PostItemDto
+	public sealed class PostDto
 	{
 		public string Id { get; set; }
 

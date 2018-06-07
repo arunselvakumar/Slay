@@ -5,14 +5,14 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Slay.Models.BusinessObjects.Comment;
 using Slay.Models.DataTransferObjects.Comment;
-using Slay.Models.DataTransferObjects.Link;
+using Slay.Models.DataTransferObjects.Post.Links;
 using Slay.ServicesContracts.Services;
 
 namespace Slay.Host.Controllers.ClientControllers
 {
 	[Produces("application/json")]
     [Route("api/Post/{postId}/Comment")]
-    public sealed class CommentController : ControllerBase
+    public sealed class CommentController : ApiBaseController
     {
 	    private readonly IMapper _mapper;
 
