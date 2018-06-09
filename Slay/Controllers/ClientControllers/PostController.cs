@@ -21,14 +21,13 @@
     [Route("api/Post")]
     public sealed class PostController : ApiBaseController
     {
-        private readonly IMapper _mapper;
+        private readonly IMapper _autoMapperService;
 
         private readonly IPostService _postService;
 
-        public PostController(IMapper mapper, IPostService postService)
+        public PostController(IMapper autoMapperService, IPostService postService)
         {
-            this._mapper = mapper;
-
+            this._autoMapperService = autoMapperService;
             this._postService = postService;
         }
 
@@ -41,6 +40,9 @@
         /// If no post is found, then an <see cref="NotFoundResult"/> is returned
         /// </returns>
         [HttpGet("{id}", Name = nameof(GetPostByIdAsync))]
+        [ProducesResponseType(200, Type = typeof(PostResponseDto))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> GetPostByIdAsync(string id)
         {
             try
@@ -57,7 +59,7 @@
                     return new NotFoundResult();
                 }
 
-                var mapperResult = this._mapper.Map<PostResponseDto>(serviceResult.Value);
+                var mapperResult = this._autoMapperService.Map<PostResponseDto>(serviceResult.Value);
 
                 mapperResult.Links = new LinksDto
                 {
@@ -73,7 +75,17 @@
             }
         }
 
+        /// <summary>
+        /// Gets the all posts based on paging.
+        /// </summary>
+        /// <param name="skip">Skip Posts.</param>
+        /// <param name="limit">Limits to retrieve.</param>
+        /// <returns>
+        /// <see cref="PostsResponseDto"/> is returned.
+        /// </returns>
         [HttpGet(Name = nameof(GetPostsAsync))]
+        [ProducesResponseType(200, Type = typeof(PostsResponseDto))]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> GetPostsAsync([FromQuery] int skip = 0, [FromQuery] int limit = 10)
         {
             try
@@ -85,7 +97,7 @@
                     return new BadRequestObjectResult(serviceResult.Errors);
                 }
 
-                var mapperResult = this._mapper.Map<PostsResponseDto>(serviceResult.Value);
+                var mapperResult = this._autoMapperService.Map<PostsResponseDto>(serviceResult.Value);
 
                 mapperResult.Links = new LinksDto
                 {
@@ -98,19 +110,28 @@
 
                 return new OkObjectResult(mapperResult);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e);
                 return new EmptyResult();
             }
         }
 
+        /// <summary>
+        /// Creates a Post.
+        /// </summary>
+        /// <param name="createPostDto">The create post dto.</param>
+        /// <returns>
+        /// If post is created, then a 201 response code with created at route is returned.
+        /// If post is not created, then a 400 response is returned.
+        /// </returns>
         [HttpPost(Name = nameof(CreatePostAsync))]
+        [ProducesResponseType(201, Type = typeof(PostDto))]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostRequestDto createPostDto)
         {
             try
             {
-                var createPostBo = this._mapper.Map<CreatePostRequestBo>(createPostDto);
+                var createPostBo = this._autoMapperService.Map<CreatePostRequestBo>(createPostDto);
 
                 var serviceResult = await this._postService.CreatePostAsync(createPostBo);
 
@@ -119,19 +140,27 @@
                     return new BadRequestObjectResult(serviceResult.Errors);
                 }
 
-                var mappedResult = this._mapper.Map<PostDto>(serviceResult.Value);
+                var mappedResult = this._autoMapperService.Map<PostDto>(serviceResult.Value);
 
                 return this.CreatedAtRoute(nameof(this.CreatePostAsync), new { id = mappedResult.Id }, mappedResult);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e);
-
                 return new BadRequestResult();
             }
         }
 
+        /// <summary>
+        /// Deletes the post based on the ID.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// If post is deleted, then a 200 response code is returned.
+        /// If post is not deleted, then a 400 response is returned.
+        /// </returns>
         [HttpDelete("{id}", Name = nameof(DeletePostAsync))]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> DeletePostAsync(string id)
         {
             try
@@ -145,10 +174,8 @@
 
                 return new EmptyResult();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e);
-
                 return new BadRequestResult();
             }
         }

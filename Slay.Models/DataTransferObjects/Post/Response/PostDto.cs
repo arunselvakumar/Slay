@@ -1,30 +1,31 @@
-﻿using System.Collections.Generic;
-using Slay.Models.DataTransferObjects.Comment;
-
-namespace Slay.Models.DataTransferObjects.Post.Response
+﻿namespace Slay.Models.DataTransferObjects.Post.Response
 {
-	public sealed class PostDto
-	{
-		public string Id { get; set; }
+    using System.Collections.Generic;
 
-		public string Title { get; set; }
+    using Slay.Models.DataTransferObjects.Comment;
 
-		public string Type { get; set; }
+    public sealed class PostDto
+    {
+        public string Id { get; set; }
 
-		public string Content { get; set; }
+        public string Title { get; set; }
 
-		public string Category { get; set; }
+        public string Type { get; set; }
 
-		public IEnumerable<string> Tags { get; set; }
+        public string Content { get; set; }
 
-		public IEnumerable<string> SearchTags { get; set; }
+        public string Category { get; set; }
 
-		public IEnumerable<CommentItemDto> Comments { get; set; }
+        public IEnumerable<string> Tags { get; set; }
 
-		public bool IsAnonymous { get; set; }
+        public IEnumerable<string> SearchTags { get; set; }
 
-		public string CreatedBy { get; set; }
+        public IEnumerable<CommentItemDto> Comments { get; set; }
 
-		public string CreatedOn { get; set; }
-	}
+        public bool IsAnonymous { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        public string CreatedOn { get; set; }
+    }
 }
