@@ -10,10 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Aggregators\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Slay.Models\Slay.Models.csproj" />
     <ProjectReference Include="..\Slay.Utilities\Slay.Utilities.csproj" />
   </ItemGroup>

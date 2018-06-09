@@ -1,31 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using Slay.Models.BusinessObjects.Comment;
-
-namespace Slay.Models.BusinessObjects.Post
+﻿namespace Slay.Models.BusinessObjects.Post
 {
-	public sealed class PostItemBo
-	{
-		public string Id { get; set; }
+    using System;
+    using System.Collections.Generic;
 
-		public string Title { get; set; }
+    using Slay.Models.BusinessObjects.Comment;
 
-		public string Type { get; set; }
+    public sealed class PostItemBo
+    {
+        public string Id { get; set; }
 
-		public string Content { get; set; }
+        public string Title { get; set; }
 
-		public string Category { get; set; }
+        public string Type { get; set; }
 
-		public IEnumerable<string> Tags { get; set; }
+        public string Content { get; set; }
 
-		public IEnumerable<string> SearchTags { get; set; }
+        public string Category { get; set; }
 
-		public IEnumerable<CommentItemBo> Comments { get; set; }
+        public IEnumerable<string> Tags { get; set; }
 
-		public bool IsAnonymous { get; set; }
+        public IEnumerable<string> SearchTags { get; set; }
 
-		public string CreatedBy { get; set; }
+        public CommentsResponseBo Comments { get; set; }
 
-		public DateTime CreatedOn { get; set; }
-	}
+        public bool IsAnonymous { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+    }
 }

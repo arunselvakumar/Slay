@@ -1,4 +1,4 @@
-﻿namespace Slay.ServicesContracts.Services
+﻿namespace Slay.Business.ServicesContracts.Services
 {
     using System.Threading.Tasks;
 

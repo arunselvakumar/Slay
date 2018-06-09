@@ -28,8 +28,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Slay.Models\Slay.Models.csproj" />
-    <ProjectReference Include="..\Slay.ServicesContract\Slay.ServicesContracts.csproj" />
-    <ProjectReference Include="..\Slay.Services\Slay.Services.csproj" />
+    <ProjectReference Include="..\Slay.ServicesContract\Slay.Business.ServicesContracts.csproj" />
+    <ProjectReference Include="..\Slay.Services\Slay.Business.Services.csproj" />
     <ProjectReference Include="..\Slay.Utilities\Slay.Utilities.csproj" />
   </ItemGroup>
 

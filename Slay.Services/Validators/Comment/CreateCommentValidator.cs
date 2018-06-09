@@ -1,4 +1,4 @@
-﻿namespace Slay.Services.Validators.Comment
+﻿namespace Slay.Business.Services.Validators.Comment
 {
     using FluentValidation;
 
@@ -6,7 +6,8 @@
 
     public sealed class CreateCommentValidator : AbstractValidator<CreateCommentRequestBo>
     {
-        private readonly string _commentLengthShouldBeLessThan999CharactersError = "COMMENT_LENGTHSHOULDBELESSTHAN999_ERROR";
+        private readonly string _commentLengthShouldBeLessThan999CharactersError =
+            "COMMENT_LENGTHSHOULDBELESSTHAN999_ERROR";
 
         private readonly string _commentShouldNotBeEmptyError = "COMMENT_SHOULDNOTBEEMPTY_ERROR";
 

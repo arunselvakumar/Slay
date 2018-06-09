@@ -1,13 +1,14 @@
-﻿using FluentValidation;
-using Slay.Models.BusinessObjects.Comment;
-using Slay.Models.BusinessObjects.Post;
-
-namespace Slay.ServicesContracts.Providers.ValidationsProviders
+﻿namespace Slay.Business.ServicesContracts.Providers.ValidationsProviders
 {
-	public interface IValidationsProvider
-	{
-		IValidator<CreatePostRequestBo> CreatePostValidator { get; }
+    using FluentValidation;
 
-		IValidator<CreateCommentRequestBo> CreateCommentValidator { get; }
-	}
+    using Slay.Models.BusinessObjects.Comment;
+    using Slay.Models.BusinessObjects.Post;
+
+    public interface IValidationsProvider
+    {
+        IValidator<CreatePostRequestBo> CreatePostValidator { get; }
+
+        IValidator<CreateCommentRequestBo> CreateCommentValidator { get; }
+    }
 }

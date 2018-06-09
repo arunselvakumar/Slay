@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Host", "Slay\Slay.Host
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Utilities", "Slay.Utilities\Slay.Utilities.csproj", "{DD29DAFF-04E0-4D44-BC41-B2A8E2734B54}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Services", "Slay.Services\Slay.Services.csproj", "{4686D7C8-7DD9-42C6-86C2-A1C8F4B57E6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Business.Services", "Slay.Services\Slay.Business.Services.csproj", "{4686D7C8-7DD9-42C6-86C2-A1C8F4B57E6C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.ServicesContracts", "Slay.ServicesContract\Slay.ServicesContracts.csproj", "{EB721078-CFA3-4A6D-BD65-FFE713DE717A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Business.ServicesContracts", "Slay.ServicesContract\Slay.Business.ServicesContracts.csproj", "{EB721078-CFA3-4A6D-BD65-FFE713DE717A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".settings", ".settings", "{A878F5F9-B109-4E8E-82ED-D64A7D0EDC79}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Dal", "Slay.Dal\Slay.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.DalContracts", "Slay.DalContracts\Slay.DalContracts.csproj", "{01A229AF-B15F-4FAC-9D00-B403064A47EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slay.Host.OAuth.Server", "Slay.Host.OAuth.Server\Slay.Host.OAuth.Server.csproj", "{CE4AD240-5FCB-4D6F-B1D7-96F10DFF4FA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Host.OAuth.Server", "Slay.Host.OAuth.Server\Slay.Host.OAuth.Server.csproj", "{CE4AD240-5FCB-4D6F-B1D7-96F10DFF4FA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

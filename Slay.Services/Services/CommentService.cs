@@ -1,95 +1,136 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using AutoMapper;
-using Slay.DalContracts.Options;
-using Slay.DalContracts.Repositories;
-using Slay.Models.BusinessObjects.Comment;
-using Slay.Models.Entities;
-using Slay.ServicesContracts.Providers.ValidationsProviders;
-using Slay.ServicesContracts.Services;
-using Slay.Utilities.Extensions;
-using Slay.Utilities.ServiceResult;
-
-namespace Slay.Services.Services
+﻿namespace Slay.Business.Services.Services
 {
-	public sealed class CommentService : ICommentService
-	{
-		private readonly IValidationsProvider _validationsProvider;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
-		private readonly ICommentRepository _commentRepository;
+    using AutoMapper;
 
-		private readonly IMapper _mapper;
+    using Slay.Business.ServicesContracts.Providers.ValidationsProviders;
+    using Slay.Business.ServicesContracts.Services;
+    using Slay.DalContracts.Options;
+    using Slay.DalContracts.Repositories;
+    using Slay.Models.BusinessObjects.Comment;
+    using Slay.Models.Entities;
+    using Slay.Utilities.Extensions;
+    using Slay.Utilities.ServiceResult;
 
-		public CommentService(IValidationsProvider validationsProvider, ICommentRepository commentRepository, IMapper mapper)
-		{
-			this._validationsProvider = validationsProvider;
-			this._commentRepository = commentRepository;
+    public sealed class CommentService : ICommentService
+    {
+        private readonly ICommentRepository _commentRepository;
 
-			this._mapper = mapper;
-		}
+        private readonly IMapper _mapper;
 
-		public async Task<ServiceResult<CommentItemBo>> CreateCommentAsync(string postId, string commentId, CreateCommentRequestBo createCommentRequestBo)
-		{
-			var validationResult = await this._validationsProvider.CreateCommentValidator.ValidateAsync(createCommentRequestBo);
+        private readonly IValidationsProvider _validationsProvider;
 
-			if (!validationResult.IsValid)
-			{
-				return new ServiceResult<CommentItemBo> { Errors = validationResult.Errors.ToServiceResultErrors() };
-			}
+        public CommentService(
+            IValidationsProvider validationsProvider,
+            ICommentRepository commentRepository,
+            IMapper mapper)
+        {
+            this._validationsProvider = validationsProvider;
+            this._commentRepository = commentRepository;
 
-			var repositoryResult = await this._commentRepository.CreateAsync(this._mapper.Map<CommentEntity>(createCommentRequestBo, opt => { opt.Items["PostId"] = postId; opt.Items["ParentId"] = commentId; }));
+            this._mapper = mapper;
+        }
 
-			var mapperResult = this._mapper.Map<CommentItemBo>(repositoryResult);
+        public async Task<ServiceResult<CommentItemBo>> CreateCommentAsync(
+            string postId,
+            string commentId,
+            CreateCommentRequestBo createCommentRequestBo)
+        {
+            var validationResult =
+                await this._validationsProvider.CreateCommentValidator.ValidateAsync(createCommentRequestBo);
 
-			return new ServiceResult<CommentItemBo> { Value = mapperResult };
-		}
+            if (!validationResult.IsValid)
+            {
+                return new ServiceResult<CommentItemBo> { Errors = validationResult.Errors.ToServiceResultErrors() };
+            }
 
-		public async Task<ServiceResult<CommentsResponseBo>> GetCommentsAsync(string postId, string commentId, int skip, int limit)
-		{
-			var pagingOptions = new PagingOptions().SkipItems(skip).LimitItems(limit);
-			var sortingOptions = new SortingOptions("CreatedOn");
+            var repositoryResult = await this._commentRepository.CreateAsync(
+                                       this._mapper.Map<CommentEntity>(
+                                           createCommentRequestBo,
+                                           opt =>
+                                               {
+                                                   opt.Items["PostId"] = postId;
+                                                   opt.Items["ParentId"] = commentId;
+                                               }));
 
-			var sortOptions = new List<SortingOptions> { sortingOptions };
+            var mapperResult = this._mapper.Map<CommentItemBo>(repositoryResult);
 
-			Expression<Func<CommentEntity, bool>> filterCondition;
+            return new ServiceResult<CommentItemBo> { Value = mapperResult };
+        }
 
-			if (!string.IsNullOrEmpty(commentId))
-			{
-				filterCondition = comment => comment.IsDeleted == false && comment.PostId == postId && comment.ParentId == commentId;
-			}
-			else
-			{
-				filterCondition = comment => comment.IsDeleted == false && comment.PostId == postId && comment.ParentId == null;
-			}
+        public async Task<ServiceResult<CommentsResponseBo>> GetCommentsAsync(
+            string postId,
+            string commentId,
+            int skip,
+            int limit)
+        {
+            var pagingOptions = new PagingOptions().SkipItems(skip).LimitItems(limit);
+            var sortingOptions = new SortingOptions("CreatedOn");
 
-			var repositoryResult = await this._commentRepository.GetAsync(filterCondition, pagingOptions, sortOptions);
+            var sortOptions = new List<SortingOptions> { sortingOptions };
 
-			var mapperResult = this._mapper.Map<IEnumerable<CommentItemBo>>(repositoryResult);
+            Expression<Func<CommentEntity, bool>> filterCondition;
 
-			var commentResponseBo = await this.MapCommentsResultsWithPageOptions(postId, commentId, skip, limit, mapperResult);
+            if (!string.IsNullOrEmpty(commentId))
+            {
+                filterCondition = comment => comment.IsDeleted == false && comment.PostId == postId && comment.ParentId == commentId;
+            }
+            else
+            {
+                filterCondition = comment => comment.IsDeleted == false && comment.PostId == postId && comment.ParentId == null;
+            }
 
-			return new ServiceResult<CommentsResponseBo> { Value = commentResponseBo };
-		}
+            var repositoryResult = await this._commentRepository.GetAsync(filterCondition, pagingOptions, sortOptions);
 
-		private async Task<CommentsResponseBo> MapCommentsResultsWithPageOptions(string postId, string commentId, int skip, int limit, IEnumerable<CommentItemBo> mapperResult)
-		{
-			long postsCount;
+            var mapperResult = this._mapper.Map<IEnumerable<CommentItemBo>>(repositoryResult);
 
-			postsCount = string.IsNullOrWhiteSpace(commentId)
-						? await this._commentRepository.CountAsync(comment => !comment.IsDeleted && comment.PostId == postId)
-						: await this._commentRepository.CountAsync(comment => !comment.IsDeleted && comment.PostId == postId && comment.ParentId == commentId);
+            var commentResponseBo = await this.MapCommentsResultsWithPageOptions(
+                                        postId,
+                                        commentId,
+                                        skip,
+                                        limit,
+                                        mapperResult);
 
-			var commentsResponseBo = new CommentsResponseBo
-			{
-				Comments = mapperResult.ForEach(async comment => comment.Descendants = await this._commentRepository.CountAsync(cx => !cx.IsDeleted && cx.ParentId == comment.Id)).ToList(),
-				Skip = skip + limit >= postsCount ? (int?)null : skip + limit,
-				Limit = limit
-			};
+            return new ServiceResult<CommentsResponseBo> { Value = commentResponseBo };
+        }
 
-			return commentsResponseBo;
-		}
-	}
+        private async Task<CommentsResponseBo> MapCommentsResultsWithPageOptions(
+            string postId,
+            string commentId,
+            int skip,
+            int limit,
+            IEnumerable<CommentItemBo> mapperResult)
+        {
+            long postsCount;
+
+            postsCount = string.IsNullOrWhiteSpace(commentId)
+                             ? await this._commentRepository.CountAsync(
+                                   comment => !comment.IsDeleted && comment.PostId == postId)
+                             : await this._commentRepository.CountAsync(
+                                   comment => !comment.IsDeleted && comment.PostId == postId
+                                              && comment.ParentId == commentId);
+
+            var commentsResponseBo = new CommentsResponseBo
+                                         {
+                                             Comments = mapperResult.ForEach(
+                                                     async comment =>
+                                                         comment.Descendants =
+                                                             await this._commentRepository.CountAsync(
+                                                                 cx => !cx.IsDeleted
+                                                                       && cx.ParentId == comment.Id))
+                                                 .ToList(),
+                                             Skip = skip + limit >= postsCount
+                                                        ? (int?)null
+                                                        : skip + limit,
+                                             Limit = limit
+                                         };
+
+            return commentsResponseBo;
+        }
+    }
 }

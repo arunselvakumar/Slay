@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-
-namespace Slay.Models.BusinessObjects.Comment
+﻿namespace Slay.Models.BusinessObjects.Comment
 {
-	public sealed class CommentsResponseBo
-	{
-		public IEnumerable<CommentItemBo> Comments { get; set; }
+    using System.Collections.Generic;
 
-		public int? Skip { get; set; }
+    public sealed class CommentsResponseBo
+    {
+        public IEnumerable<CommentItemBo> Comments { get; set; }
 
-		public int? Limit { get; set; }
-	}
+        public int? Skip { get; set; }
+
+        public int? Limit { get; set; }
+    }
 }

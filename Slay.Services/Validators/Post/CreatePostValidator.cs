@@ -1,4 +1,4 @@
-﻿namespace Slay.Services.Validators.Post
+﻿namespace Slay.Business.Services.Validators.Post
 {
     using CSharpVerbalExpressions;
 

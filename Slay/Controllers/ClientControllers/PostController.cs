@@ -8,11 +8,11 @@
 
     using Microsoft.AspNetCore.Mvc;
 
+    using Slay.Business.ServicesContracts.Services;
     using Slay.Models.BusinessObjects.Post;
     using Slay.Models.DataTransferObjects.Post.Links;
     using Slay.Models.DataTransferObjects.Post.Request;
     using Slay.Models.DataTransferObjects.Post.Response;
-    using Slay.ServicesContracts.Services;
 
     /// <summary>
     /// The post controller.

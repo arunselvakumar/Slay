@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Aggregators\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="FluentValidation" Version="7.2.1" />
     <PackageReference Include="VerbalExpressions-netstandard16" Version="0.2.0" />
@@ -18,7 +14,7 @@
     <ProjectReference Include="..\Slay.DalContracts\Slay.DalContracts.csproj" />
     <ProjectReference Include="..\Slay.Dal\Slay.Dal.csproj" />
     <ProjectReference Include="..\Slay.Models\Slay.Models.csproj" />
-    <ProjectReference Include="..\Slay.ServicesContract\Slay.ServicesContracts.csproj" />
+    <ProjectReference Include="..\Slay.ServicesContract\Slay.Business.ServicesContracts.csproj" />
     <ProjectReference Include="..\Slay.Utilities\Slay.Utilities.csproj" />
   </ItemGroup>
 
