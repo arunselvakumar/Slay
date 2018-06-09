@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Host", "Slay\Slay.Host
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Utilities", "Slay.Utilities\Slay.Utilities.csproj", "{DD29DAFF-04E0-4D44-BC41-B2A8E2734B54}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Business.Services", "Slay.Services\Slay.Business.Services.csproj", "{4686D7C8-7DD9-42C6-86C2-A1C8F4B57E6C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Business.ServicesContracts", "Slay.ServicesContract\Slay.Business.ServicesContracts.csproj", "{EB721078-CFA3-4A6D-BD65-FFE713DE717A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".settings", ".settings", "{A878F5F9-B109-4E8E-82ED-D64A7D0EDC79}"
 	ProjectSection(SolutionItems) = preProject
 		ReSharperSettings.DotSettings = ReSharperSettings.DotSettings
@@ -23,6 +19,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.DalContracts", "Slay.DalContracts\Slay.DalContracts.csproj", "{01A229AF-B15F-4FAC-9D00-B403064A47EA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Host.OAuth.Server", "Slay.Host.OAuth.Server\Slay.Host.OAuth.Server.csproj", "{CE4AD240-5FCB-4D6F-B1D7-96F10DFF4FA8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Business.Services", "Slay.Business.Services\Slay.Business.Services.csproj", "{8BA93953-398C-444D-929B-285870D8DF55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Business.ServicesContracts", "Slay.Business.ServicesContract\Slay.Business.ServicesContracts.csproj", "{FCADB486-B1A6-46BD-A907-BC3F022803AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,14 +38,6 @@ Global
 		{DD29DAFF-04E0-4D44-BC41-B2A8E2734B54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD29DAFF-04E0-4D44-BC41-B2A8E2734B54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD29DAFF-04E0-4D44-BC41-B2A8E2734B54}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4686D7C8-7DD9-42C6-86C2-A1C8F4B57E6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4686D7C8-7DD9-42C6-86C2-A1C8F4B57E6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4686D7C8-7DD9-42C6-86C2-A1C8F4B57E6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4686D7C8-7DD9-42C6-86C2-A1C8F4B57E6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB721078-CFA3-4A6D-BD65-FFE713DE717A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB721078-CFA3-4A6D-BD65-FFE713DE717A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB721078-CFA3-4A6D-BD65-FFE713DE717A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB721078-CFA3-4A6D-BD65-FFE713DE717A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B707479F-BDB4-41DE-9B3D-C141E15B32AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B707479F-BDB4-41DE-9B3D-C141E15B32AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B707479F-BDB4-41DE-9B3D-C141E15B32AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -62,6 +54,14 @@ Global
 		{CE4AD240-5FCB-4D6F-B1D7-96F10DFF4FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE4AD240-5FCB-4D6F-B1D7-96F10DFF4FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE4AD240-5FCB-4D6F-B1D7-96F10DFF4FA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BA93953-398C-444D-929B-285870D8DF55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BA93953-398C-444D-929B-285870D8DF55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BA93953-398C-444D-929B-285870D8DF55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BA93953-398C-444D-929B-285870D8DF55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCADB486-B1A6-46BD-A907-BC3F022803AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCADB486-B1A6-46BD-A907-BC3F022803AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCADB486-B1A6-46BD-A907-BC3F022803AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCADB486-B1A6-46BD-A907-BC3F022803AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

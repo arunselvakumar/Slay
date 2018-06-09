@@ -11,10 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Slay.Business.ServicesContract\Slay.Business.ServicesContracts.csproj" />
     <ProjectReference Include="..\Slay.DalContracts\Slay.DalContracts.csproj" />
     <ProjectReference Include="..\Slay.Dal\Slay.Dal.csproj" />
     <ProjectReference Include="..\Slay.Models\Slay.Models.csproj" />
-    <ProjectReference Include="..\Slay.ServicesContract\Slay.Business.ServicesContracts.csproj" />
     <ProjectReference Include="..\Slay.Utilities\Slay.Utilities.csproj" />
   </ItemGroup>
 
