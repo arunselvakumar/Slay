@@ -14,7 +14,7 @@
             string commentId,
             [NotNull] CreateCommentRequestBo createCommentRequestBo);
 
-        Task<ServiceResult<CommentsResponseBo>> GetCommentsAsync(
+        Task<ServiceResult<CommentsListResponseBo>> GetCommentsAsync(
             [NotNull] string postId,
             string commentId,
             int skip,

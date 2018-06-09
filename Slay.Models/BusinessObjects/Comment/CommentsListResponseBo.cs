@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public sealed class CommentsResponseBo
+    public sealed class CommentsListResponseBo
     {
         public IEnumerable<CommentItemBo> Comments { get; set; }
 

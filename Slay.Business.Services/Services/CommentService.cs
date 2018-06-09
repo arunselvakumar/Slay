@@ -63,7 +63,7 @@
             return new ServiceResult<CommentItemBo> { Value = mapperResult };
         }
 
-        public async Task<ServiceResult<CommentsResponseBo>> GetCommentsAsync(
+        public async Task<ServiceResult<CommentsListResponseBo>> GetCommentsAsync(
             string postId,
             string commentId,
             int skip,
@@ -96,10 +96,10 @@
                                         limit,
                                         mapperResult);
 
-            return new ServiceResult<CommentsResponseBo> { Value = commentResponseBo };
+            return new ServiceResult<CommentsListResponseBo> { Value = commentResponseBo };
         }
 
-        private async Task<CommentsResponseBo> MapCommentsResultsWithPageOptions(
+        private async Task<CommentsListResponseBo> MapCommentsResultsWithPageOptions(
             string postId,
             string commentId,
             int skip,
@@ -115,7 +115,7 @@
                                    comment => !comment.IsDeleted && comment.PostId == postId
                                               && comment.ParentId == commentId);
 
-            var commentsResponseBo = new CommentsResponseBo
+            var commentsResponseBo = new CommentsListResponseBo
                                          {
                                              Comments = mapperResult.ForEach(
                                                      async comment =>

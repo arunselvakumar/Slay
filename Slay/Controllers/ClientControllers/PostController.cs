@@ -61,12 +61,6 @@
 
                 var mapperResult = this._autoMapperService.Map<PostResponseDto>(serviceResult.Value);
 
-                mapperResult.Links = new LinksDto
-                {
-                    Base = this.GetBaseUrl(),
-                    Self = Url.Link(nameof(this.GetPostByIdAsync), new { id = mapperResult.Data.Id })
-                };
-
                 return new OkObjectResult(mapperResult);
             }
             catch (Exception)
@@ -140,9 +134,9 @@
                     return new BadRequestObjectResult(serviceResult.Errors);
                 }
 
-                var mappedResult = this._autoMapperService.Map<PostDto>(serviceResult.Value);
+                var mappedResult = this._autoMapperService.Map<PostResponseDto>(serviceResult.Value);
 
-                return this.CreatedAtRoute(nameof(this.CreatePostAsync), new { id = mappedResult.Id }, mappedResult);
+                return this.CreatedAtRoute(nameof(this.CreatePostAsync), new { id = mappedResult.Data.Id }, mappedResult);
             }
             catch (Exception)
             {

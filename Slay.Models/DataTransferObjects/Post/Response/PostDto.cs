@@ -20,7 +20,7 @@
 
         public IEnumerable<string> SearchTags { get; set; }
 
-        public CommentResponseDto Comments { get; set; }
+        public CommentsListResponseDto Comments { get; set; }
 
         public bool IsAnonymous { get; set; }
 

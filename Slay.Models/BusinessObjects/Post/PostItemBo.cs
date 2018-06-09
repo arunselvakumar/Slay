@@ -21,7 +21,7 @@
 
         public IEnumerable<string> SearchTags { get; set; }
 
-        public CommentsResponseBo Comments { get; set; }
+        public CommentsListResponseBo Comments { get; set; }
 
         public bool IsAnonymous { get; set; }
 

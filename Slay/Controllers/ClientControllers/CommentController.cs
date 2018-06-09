@@ -62,7 +62,7 @@
                     return new BadRequestObjectResult(serviceResult.Errors);
                 }
 
-                var mapperResult = this._autoMapperService.Map<CommentsResponseDto>(serviceResult.Value);
+                var mapperResult = this._autoMapperService.Map<CommentsListResponseDto>(serviceResult.Value);
 
                 mapperResult.Links = new LinksDto
                                          {
