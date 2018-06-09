@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Slay.Utilities.Extensions;
-
-namespace Slay.Utilities.ServiceResult
+﻿namespace Slay.Utilities.ServiceResult
 {
+    using System.Collections.Generic;
+
+    using Slay.Utilities.Extensions;
+
     public abstract class ServiceResultBase
     {
-	    public IEnumerable<Error> Errors { get; set; }
+        public IEnumerable<Error> Errors { get; set; }
 
-	    public bool HasErrors => this.Errors.IsNullOrEmpty();
+        public bool HasErrors => !this.Errors.IsNullOrEmpty();
     }
 }

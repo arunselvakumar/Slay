@@ -32,9 +32,9 @@
 
         protected RepositoryBase(string databaseId, string collectionId)
         {
-            this._host = "slay-dev.documents.azure.com";
-            this._userName = "slay-dev";
-            this._password = "eci6ORyI50QMBkziPp1SAl23ZaB9qGW7fiCWx1q68vDCEA9KzZlZpBO19E5zJJSolRgRSQsZbfH8l3fUDAafAA==";
+            this._host = "jerichodev.documents.azure.com";
+            this._userName = "jerichodev";
+            this._password = "0WhBYS93X3VIpOrNr4uoPqSQ0P5fjRCkDV7PKS11Vjd9bq37lZFRjrvWOFOAG32Wj6l8S80I56AFP20c952KvQ==";
 
             _databaseId = databaseId;
             _collectionId = collectionId;
