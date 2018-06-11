@@ -29,10 +29,9 @@
         }
 
         [HttpPost("{commentId?}")]
-        public async Task<IActionResult> CreateCommentAsync(
-            string postId,
-            string commentId,
-            [FromBody] CreateCommentRequestDto createCommentRequestDto)
+        [ProducesResponseType(201, Type = typeof(CommentResponseDto))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateCommentAsync([FromBody] CreateCommentRequestDto createCommentRequestDto, string postId, [FromRoute]string commentId = null)
         {
             var createCommentBo = this._autoMapperService.Map<CreateCommentRequestBo>(createCommentRequestDto);
 
@@ -43,15 +42,15 @@
                 return new BadRequestObjectResult(serviceResult.Errors);
             }
 
-            return new OkObjectResult(this._autoMapperService.Map<CommentItemDto>(serviceResult.Value));
+            var mappedResult = this._autoMapperService.Map<CommentResponseDto>(serviceResult.Value);
+
+            return this.CreatedAtRoute(nameof(this.GetCommentsAsync), new { postId = postId, commentId = mappedResult.Data.Id }, mappedResult);
         }
 
         [HttpGet("{commentId?}", Name = nameof(GetCommentsAsync))]
-        public async Task<IActionResult> GetCommentsAsync(
-            string postId,
-            string commentId,
-            [FromQuery] int skip = 0,
-            [FromQuery] int limit = 10)
+        [ProducesResponseType(201, Type = typeof(CommentsListResponseDto))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetCommentsAsync(string postId, string commentId, [FromQuery] int skip = 0, [FromQuery] int limit = 10)
         {
             try
             {
@@ -64,50 +63,15 @@
 
                 var mapperResult = this._autoMapperService.Map<CommentsListResponseDto>(serviceResult.Value);
 
-                mapperResult.Links = new LinksDto
-                                         {
-                                             Base = this.GetBaseUrl(),
-                                             Self = Url.Link(
-                                                 nameof(GetCommentsAsync),
-                                                 new
-                                                     {
-                                                         postId = postId,
-                                                         commentId = commentId,
-                                                         skip = (int?)skip,
-                                                         limit = (int?)limit
-                                                     }),
-                                             Next = Url.Link(
-                                                 nameof(GetCommentsAsync),
-                                                 new
-                                                     {
-                                                         postId = postId,
-                                                         commentId = commentId,
-                                                         skip = serviceResult.Value.Skip,
-                                                         limit = serviceResult.Value.Limit
-                                                     })
-                                         };
-
-                mapperResult.Data.ToList().ForEach(
-                    comment => comment.Links = new LinksDto
-                                                   {
-                                                       Base = this.GetBaseUrl(),
-                                                       Descendants =
-                                                           comment.Data.Descendants > 0
-                                                               ? Url.Link(
-                                                                   nameof(GetCommentsAsync),
-                                                                   new
-                                                                       {
-                                                                           postId = comment.Data.PostId,
-                                                                           commentId = comment.Data.Id,
-                                                                           skip = (int?)skip,
-                                                                           limit = (int?)limit
-                                                                       })
-                                                               : null
-                                                   });
+                mapperResult.Data.ToList().ForEach(comment => comment.Links = new LinksDto
+                {
+                    Base = this.GetBaseUrl(),
+                    Descendants = comment.Data.Descendants > 0 ? Url.Link(nameof(this.GetCommentsAsync), new { postId = comment.Data.PostId, commentId = comment.Data.Id, skip = (int?)skip, limit = (int?)limit }) : null
+                });
 
                 return new OkObjectResult(mapperResult);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new EmptyResult();
             }
