@@ -1,5 +1,6 @@
 ﻿namespace Slay.Business.ServicesContracts.Services
 {
+    using System.Threading;
     using System.Threading.Tasks;
 
     using JetBrains.Annotations;
@@ -9,12 +10,12 @@
 
     public interface IPostService
     {
-        Task<ServiceResult<PostItemBo>> GetPostByIdAsync([NotNull] string id);
+        Task<ServiceResult<PostItemBo>> GetPostByIdAsync([NotNull] string id, CancellationToken token);
 
-        Task<ServiceResult<PostItemBo>> CreatePostAsync([NotNull] CreatePostRequestBo createPostRequestBo);
+        Task<ServiceResult<PostItemBo>> CreatePostAsync([NotNull] CreatePostRequestBo createPostRequestBo, CancellationToken token);
 
-        Task<ServiceResult<bool>> DeletePostAsync(string id);
+        Task<ServiceResult<bool>> DeletePostAsync([NotNull]string id, CancellationToken token);
 
-        Task<ServiceResult<PostsResponseBo>> GetPostsAsync(int skip, int limit);
+        Task<ServiceResult<PostsResponseBo>> GetPostsAsync(int skip, int limit, CancellationToken token);
     }
 }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -17,9 +18,9 @@
     [Route("api/Post/{postId}/Comment")]
     public sealed class CommentController : ApiBaseController
     {
-        private readonly ICommentService _commentService;
-
         private readonly IMapper _autoMapperService;
+
+        private readonly ICommentService _commentService;
 
         public CommentController(IMapper autoMapperService, ICommentService commentService)
         {
@@ -28,14 +29,29 @@
             this._commentService = commentService;
         }
 
+        /// <summary>
+        /// Creates the comment asynchronous.
+        /// </summary>
+        /// <param name="createCommentRequestDto">The create comment request dto.</param>
+        /// <param name="postId">The post identifier.</param>
+        /// <param name="commentId">The comment identifier.</param>
+        /// <param name="token">Cancellation Token.</param>
+        /// <returns>
+        /// If comment is created, then a 201 response code with created at route is returned with <see cref="CommentResponseDto"/> .
+        /// Else a 400 response is returned.
+        /// </returns>
         [HttpPost("{commentId?}")]
         [ProducesResponseType(201, Type = typeof(CommentResponseDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateCommentAsync([FromBody] CreateCommentRequestDto createCommentRequestDto, string postId, [FromRoute]string commentId = null)
+        public async Task<IActionResult> CreateCommentAsync(
+            [FromBody] CreateCommentRequestDto createCommentRequestDto,
+            string postId,
+            [FromRoute] string commentId = null,
+            CancellationToken token = default(CancellationToken))
         {
             var createCommentBo = this._autoMapperService.Map<CreateCommentRequestBo>(createCommentRequestDto);
 
-            var serviceResult = await this._commentService.CreateCommentAsync(postId, commentId, createCommentBo);
+            var serviceResult = await this._commentService.CreateCommentAsync(postId, commentId, createCommentBo, token);
 
             if (serviceResult.HasErrors)
             {
@@ -47,14 +63,30 @@
             return this.CreatedAtRoute(nameof(this.GetCommentsAsync), new { postId = postId, commentId = mappedResult.Data.Id }, mappedResult);
         }
 
+        /// <summary>
+        /// Gets the comments asynchronous.
+        /// </summary>
+        /// <param name="postId">The post identifier.</param>
+        /// <param name="commentId">The comment identifier.</param>
+        /// <param name="skip">The skip.</param>
+        /// <param name="limit">The limit.</param>
+        /// <param name="token">Cancellation Token.</param>
+        /// <returns>
+        /// <see cref="CommentsListResponseDto"/> is returned.
+        /// </returns>
         [HttpGet("{commentId?}", Name = nameof(GetCommentsAsync))]
         [ProducesResponseType(201, Type = typeof(CommentsListResponseDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetCommentsAsync(string postId, string commentId, [FromQuery] int skip = 0, [FromQuery] int limit = 10)
+        public async Task<IActionResult> GetCommentsAsync(
+            string postId,
+            string commentId,
+            [FromQuery] int skip = 0,
+            [FromQuery] int limit = 10,
+            CancellationToken token = default(CancellationToken))
         {
             try
             {
-                var serviceResult = await this._commentService.GetCommentsAsync(postId, commentId, skip, limit);
+                var serviceResult = await this._commentService.GetCommentsAsync(postId, commentId, skip, limit, token);
 
                 if (serviceResult.HasErrors)
                 {

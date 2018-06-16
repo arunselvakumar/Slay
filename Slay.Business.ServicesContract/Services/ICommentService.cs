@@ -1,5 +1,6 @@
 ﻿namespace Slay.Business.ServicesContracts.Services
 {
+    using System.Threading;
     using System.Threading.Tasks;
 
     using JetBrains.Annotations;
@@ -12,12 +13,14 @@
         Task<ServiceResult<CommentItemBo>> CreateCommentAsync(
             [NotNull] string postId,
             string commentId,
-            [NotNull] CreateCommentRequestBo createCommentRequestBo);
+            [NotNull] CreateCommentRequestBo createCommentRequestBo,
+            CancellationToken token);
 
         Task<ServiceResult<CommentsListResponseBo>> GetCommentsAsync(
             [NotNull] string postId,
             string commentId,
             int skip,
-            int limit);
+            int limit,
+            CancellationToken token);
     }
 }

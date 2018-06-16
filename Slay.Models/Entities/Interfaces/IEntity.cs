@@ -1,13 +1,13 @@
-﻿using MongoDB.Bson;
-
-namespace Slay.Models.Entities.Interfaces
+﻿namespace Slay.Models.Entities.Interfaces
 {
-	public interface IEntity
-	{
-		ObjectId Id { get; set; }
+    using MongoDB.Bson;
 
-		bool IsDeleted { get; set; }
+    public interface IEntity
+    {
+        ObjectId Id { get; set; }
 
-		void Delete();
-	}
+        bool IsDeleted { get; set; }
+
+        void Delete();
+    }
 }

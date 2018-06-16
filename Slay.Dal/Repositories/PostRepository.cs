@@ -1,12 +1,13 @@
-﻿using Slay.DalContracts.Repositories;
-using Slay.Models.Entities;
-
-namespace Slay.Dal.Repositories
+﻿namespace Slay.Dal.Repositories
 {
-	public sealed class PostRepository : RepositoryBase<PostEntity>, IPostRepository
-	{
-		public PostRepository() : base("Slay", "Posts")
-		{
-		}
-	}
+    using Slay.DalContracts.Repositories;
+    using Slay.Models.Entities;
+
+    public sealed class PostRepository : RepositoryBase<PostEntity>, IPostRepository
+    {
+        public PostRepository()
+            : base("Slay", "Posts")
+        {
+        }
+    }
 }

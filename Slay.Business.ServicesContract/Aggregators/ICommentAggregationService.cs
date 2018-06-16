@@ -1,5 +1,6 @@
 ﻿namespace Slay.Business.ServicesContracts.Aggregators
 {
+    using System.Threading;
     using System.Threading.Tasks;
 
     using JetBrains.Annotations;
@@ -8,6 +9,6 @@
 
     public interface ICommentAggregationService
     {
-        Task AggregateAsync([NotNull]PostItemBo post);
+        Task AggregateAsync([NotNull]PostItemBo post, CancellationToken token);
     }
 }

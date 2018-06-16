@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -35,6 +36,7 @@
         /// Gets a post by its ID.
         /// </summary>
         /// <param name="id">Post ID.</param>
+        /// <param name="token">Cancellation Token.</param>
         /// <returns>
         /// If post is found, then a <see cref="PostResponseDto"/> is returned.
         /// If no post is found, then an <see cref="NotFoundResult"/> is returned
@@ -43,11 +45,11 @@
         [ProducesResponseType(200, Type = typeof(PostResponseDto))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetPostByIdAsync(string id)
+        public async Task<IActionResult> GetPostByIdAsync(string id, CancellationToken token = default(CancellationToken))
         {
             try
             {
-                var serviceResult = await this._postService.GetPostByIdAsync(id);
+                var serviceResult = await this._postService.GetPostByIdAsync(id, token);
 
                 if (serviceResult.HasErrors)
                 {
@@ -74,17 +76,18 @@
         /// </summary>
         /// <param name="skip">Skip Posts.</param>
         /// <param name="limit">Limits to retrieve.</param>
+        /// <param name="token">Cancellation Token.</param>
         /// <returns>
         /// <see cref="PostsResponseDto"/> is returned.
         /// </returns>
         [HttpGet(Name = nameof(GetPostsAsync))]
         [ProducesResponseType(200, Type = typeof(PostsResponseDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetPostsAsync([FromQuery] int skip = 0, [FromQuery] int limit = 10)
+        public async Task<IActionResult> GetPostsAsync([FromQuery] int skip = 0, [FromQuery] int limit = 10, CancellationToken token = default(CancellationToken))
         {
             try
             {
-                var serviceResult = await this._postService.GetPostsAsync(skip, limit);
+                var serviceResult = await this._postService.GetPostsAsync(skip, limit, token);
 
                 if (serviceResult.HasErrors)
                 {
@@ -114,20 +117,21 @@
         /// Creates a Post.
         /// </summary>
         /// <param name="createPostDto">The create post dto.</param>
+        /// <param name="token">Cancellation Token.</param>
         /// <returns>
-        /// If post is created, then a 201 response code with created at route is returned.
-        /// If post is not created, then a 400 response is returned.
+        /// If post is created, then a 201 response code with created at route is returned with <see cref="PostDto"/> .
+        /// Else a 400 response is returned.
         /// </returns>
         [HttpPost(Name = nameof(CreatePostAsync))]
         [ProducesResponseType(201, Type = typeof(PostDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostRequestDto createPostDto)
+        public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostRequestDto createPostDto, CancellationToken token = default(CancellationToken))
         {
             try
             {
                 var createPostBo = this._autoMapperService.Map<CreatePostRequestBo>(createPostDto);
 
-                var serviceResult = await this._postService.CreatePostAsync(createPostBo);
+                var serviceResult = await this._postService.CreatePostAsync(createPostBo, token);
 
                 if (serviceResult.HasErrors)
                 {
@@ -148,6 +152,7 @@
         /// Deletes the post based on the ID.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <param name="token">Cancellation Token.</param>
         /// <returns>
         /// If post is deleted, then a 200 response code is returned.
         /// If post is not deleted, then a 400 response is returned.
@@ -155,11 +160,11 @@
         [HttpDelete("{id}", Name = nameof(DeletePostAsync))]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> DeletePostAsync(string id)
+        public async Task<IActionResult> DeletePostAsync(string id, CancellationToken token = default(CancellationToken))
         {
             try
             {
-                var serviceResult = await this._postService.DeletePostAsync(id);
+                var serviceResult = await this._postService.DeletePostAsync(id, token);
 
                 if (serviceResult.HasErrors)
                 {

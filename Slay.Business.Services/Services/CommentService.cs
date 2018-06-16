@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -36,23 +37,23 @@
             this._mapper = mapper;
         }
 
-        public async Task<ServiceResult<CommentItemBo>> CreateCommentAsync(string postId, string commentId, CreateCommentRequestBo createCommentRequestBo)
+        public async Task<ServiceResult<CommentItemBo>> CreateCommentAsync(string postId, string commentId, CreateCommentRequestBo createCommentRequestBo, CancellationToken token)
         {
-            var validationResult = await this._validationsProvider.CreateCommentValidator.ValidateAsync(createCommentRequestBo);
+            var validationResult = await this._validationsProvider.CreateCommentValidator.ValidateAsync(createCommentRequestBo, token);
 
             if (!validationResult.IsValid)
             {
                 return new ServiceResult<CommentItemBo> { Errors = validationResult.Errors.ToServiceResultErrors() };
             }
 
-            var repositoryResult = await this._commentRepository.CreateAsync(this._mapper.Map<CommentEntity>(createCommentRequestBo, opt => { opt.Items["PostId"] = postId; opt.Items["ParentId"] = commentId; }));
+            var repositoryResult = await this._commentRepository.CreateAsync(this._mapper.Map<CommentEntity>(createCommentRequestBo, opt => { opt.Items["PostId"] = postId; opt.Items["ParentId"] = commentId; }), token);
 
             var mapperResult = this._mapper.Map<CommentItemBo>(repositoryResult);
 
             return new ServiceResult<CommentItemBo> { Value = mapperResult };
         }
 
-        public async Task<ServiceResult<CommentsListResponseBo>> GetCommentsAsync(string postId, string commentId, int skip, int limit)
+        public async Task<ServiceResult<CommentsListResponseBo>> GetCommentsAsync(string postId, string commentId, int skip, int limit, CancellationToken token)
         {
             var pagingOptions = new PagingOptions().SkipItems(skip).LimitItems(limit);
             var sortingOptions = new SortingOptions("CreatedOn");
@@ -70,25 +71,25 @@
                 filterCondition = comment => comment.IsDeleted == false && comment.PostId == postId && comment.ParentId == null;
             }
 
-            var repositoryResult = await this._commentRepository.GetAsync(filterCondition, pagingOptions, sortOptions);
+            var repositoryResult = await this._commentRepository.GetAsync(filterCondition, pagingOptions, sortOptions, token);
 
             var mapperResult = this._mapper.Map<IEnumerable<CommentItemBo>>(repositoryResult);
 
-            var commentResponseBo = await this.MapCommentsResultsWithPageOptions(postId, commentId,  skip, limit, mapperResult);
+            var commentResponseBo = await this.MapCommentsResultsWithPageOptions(postId, commentId,  skip, limit, mapperResult, token);
 
             return new ServiceResult<CommentsListResponseBo> { Value = commentResponseBo };
         }
 
-        private async Task<CommentsListResponseBo> MapCommentsResultsWithPageOptions(string postId, string commentId, int skip, int limit, IEnumerable<CommentItemBo> mapperResult)
+        private async Task<CommentsListResponseBo> MapCommentsResultsWithPageOptions(string postId, string commentId, int skip, int limit, IEnumerable<CommentItemBo> mapperResult, CancellationToken token)
         {
             long postsCount;
 
-            postsCount = string.IsNullOrWhiteSpace(commentId) ? await this._commentRepository.CountAsync(comment => !comment.IsDeleted && comment.PostId == postId)
-                                                              : await this._commentRepository.CountAsync(comment => !comment.IsDeleted && comment.PostId == postId && comment.ParentId == commentId);
+            postsCount = string.IsNullOrWhiteSpace(commentId) ? await this._commentRepository.CountAsync(comment => !comment.IsDeleted && comment.PostId == postId, token)
+                                                              : await this._commentRepository.CountAsync(comment => !comment.IsDeleted && comment.PostId == postId && comment.ParentId == commentId, token);
 
             var commentsResponseBo = new CommentsListResponseBo
             {
-                Comments = mapperResult.ForEach(async comment => comment.Descendants = await this._commentRepository.CountAsync(cx => !cx.IsDeleted && cx.ParentId == comment.Id)).ToList(),
+                Comments = mapperResult.ForEach(async comment => comment.Descendants = await this._commentRepository.CountAsync(cx => !cx.IsDeleted && cx.ParentId == comment.Id, token)).ToList(),
                 Skip = skip + limit >= postsCount ? (int?)null : skip + limit,
                 Limit = limit
             };

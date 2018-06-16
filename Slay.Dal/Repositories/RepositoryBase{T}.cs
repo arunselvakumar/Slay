@@ -14,7 +14,8 @@
     using Slay.DalContracts.Options;
     using Slay.Models.Entities.Interfaces;
 
-    public abstract class RepositoryBase<T> where T : class, IEntity, new()
+    public abstract class RepositoryBase<T>
+        where T : class, IEntity, new()
     {
         private readonly string _collectionId;
 
@@ -44,9 +45,7 @@
 
         protected bool IsCollectionsExists => this.Collection != null;
 
-        public virtual async Task<long> CountAsync(
-            Expression<Func<T, bool>> filter,
-            CancellationToken token = default(CancellationToken))
+        public virtual async Task<long> CountAsync(Expression<Func<T, bool>> filter, CancellationToken token)
         {
             try
             {
@@ -63,9 +62,7 @@
             }
         }
 
-        public virtual async Task<bool> ExistsAsync(
-            Expression<Func<T, bool>> filter,
-            CancellationToken token = default(CancellationToken))
+        public virtual async Task<bool> ExistsAsync(Expression<Func<T, bool>> filter, CancellationToken token)
         {
             try
             {
@@ -84,7 +81,7 @@
             }
         }
 
-        public virtual async Task<T> GetByIdAsync(string id, CancellationToken token = default(CancellationToken))
+        public virtual async Task<T> GetByIdAsync(string id, CancellationToken token)
         {
             try
             {
@@ -110,7 +107,7 @@
             Expression<Func<T, bool>> filter,
             PagingOptions pagingOptions,
             IList<SortingOptions> sortingOptions,
-            CancellationToken token = default(CancellationToken))
+            CancellationToken token)
         {
             try
             {
@@ -154,7 +151,7 @@
             }
         }
 
-        public virtual async Task<T> CreateAsync(T entity, CancellationToken token = default(CancellationToken))
+        public virtual async Task<T> CreateAsync(T entity, CancellationToken token)
         {
             try
             {
@@ -169,10 +166,7 @@
             }
         }
 
-        public virtual async Task<T> UpdateAsync(
-            string id,
-            T entity,
-            CancellationToken token = default(CancellationToken))
+        public virtual async Task<T> UpdateAsync(string id, T entity, CancellationToken token)
         {
             try
             {
@@ -190,7 +184,7 @@
             }
         }
 
-        public virtual async Task<bool> DeleteAsync(string id, CancellationToken token = default(CancellationToken))
+        public virtual async Task<bool> DeleteAsync(string id, CancellationToken token)
         {
             try
             {

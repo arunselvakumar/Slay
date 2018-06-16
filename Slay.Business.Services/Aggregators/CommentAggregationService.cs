@@ -1,5 +1,6 @@
 ﻿namespace Slay.Business.Services.Aggregators
 {
+    using System.Threading;
     using System.Threading.Tasks;
 
     using Slay.Business.ServicesContracts.Aggregators;
@@ -16,14 +17,14 @@
             this._commentService = commentService;
         }
 
-        public async Task AggregateAsync(PostItemBo post)
+        public async Task AggregateAsync(PostItemBo post, CancellationToken token)
         {
             if (post.IsNull())
             {
                 return;
             }
 
-            var commentServiceResult = await this._commentService.GetCommentsAsync(post.Id, null, 0, 10);
+            var commentServiceResult = await this._commentService.GetCommentsAsync(post.Id, null, 0, 10, token);
             post.Comments = commentServiceResult.Value;
         }
     }
