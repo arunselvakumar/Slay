@@ -1,7 +1,5 @@
 ﻿namespace Slay.Models.Entities
 {
-    using System;
-
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
 
@@ -9,7 +7,7 @@
 
     using Slay.Models.Entities.Interfaces;
 
-    public sealed class CommentEntity : IEntity
+    public sealed class CategoryEntity : IEntity
     {
         [BsonId]
         [JsonProperty(PropertyName = "id")]
@@ -18,17 +16,11 @@
         [JsonProperty(PropertyName = "parentid")]
         public string ParentId { get; set; }
 
-        [JsonProperty(PropertyName = "postid")]
-        public string PostId { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
-        [JsonProperty(PropertyName = "comment")]
-        public string Comment { get; set; }
-
-        [JsonProperty(PropertyName = "commentedby")]
-        public string CommentedBy { get; set; }
-
-        [JsonProperty(PropertyName = "createdon")]
-        public DateTime CreatedOn { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         [JsonProperty(PropertyName = "isdeleted")]
         public bool IsDeleted { get; set; }
