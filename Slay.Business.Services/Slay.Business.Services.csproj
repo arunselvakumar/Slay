@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.2.2" />
-    <PackageReference Include="FluentValidation" Version="7.2.1" />
+    <PackageReference Include="AutoMapper" Version="7.0.0" />
     <PackageReference Include="VerbalExpressions-netstandard16" Version="0.2.0" />
   </ItemGroup>
 
