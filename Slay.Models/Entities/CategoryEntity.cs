@@ -1,5 +1,7 @@
 ﻿namespace Slay.Models.Entities
 {
+    using System;
+
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
 
@@ -22,8 +24,17 @@
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
+        [JsonProperty(PropertyName = "order")]
+        public int Order { get; set; }
+
         [JsonProperty(PropertyName = "isdeleted")]
         public bool IsDeleted { get; set; }
+
+        [JsonProperty(PropertyName = "createdon")]
+        public DateTime CreatedOn { get; set; }
+
+        [JsonProperty(PropertyName = "modifiedon")]
+        public DateTime ModifiedOn { get; set; }
 
         public void Delete()
         {

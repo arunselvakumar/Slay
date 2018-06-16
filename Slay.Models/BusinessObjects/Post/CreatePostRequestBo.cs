@@ -1,22 +1,23 @@
-﻿using Slay.Models.Enums;
-using System.Collections.Generic;
-
-namespace Slay.Models.BusinessObjects.Post
+﻿namespace Slay.Models.BusinessObjects.Post
 {
-	public sealed class CreatePostRequestBo
-	{
-		public string Title { get; set; }
+    using System.Collections.Generic;
 
-		public PostTypeEnum Type { get; set; }
+    using Slay.Models.Enums;
 
-		public string Content { get; set; }
+    public sealed class CreatePostRequestBo
+    {
+        public string Title { get; set; }
 
-		public string Category { get; set; }
+        public PostTypeEnum Type { get; set; }
 
-		public bool IsAnonymous { get; set; }
+        public string Content { get; set; }
 
-		public IEnumerable<string> Tags { get; set; }
+        public string Category { get; set; }
 
-		public IEnumerable<string> SearchTags { get; set; }
-	}
+        public bool IsAnonymous { get; set; }
+
+        public IEnumerable<string> Tags { get; set; }
+
+        public IEnumerable<string> SearchTags { get; set; }
+    }
 }

@@ -6,6 +6,7 @@
 
     using MongoDB.Bson;
 
+    using Slay.Models.BusinessObjects.Category;
     using Slay.Models.BusinessObjects.Comment;
     using Slay.Models.BusinessObjects.Post;
     using Slay.Models.DataTransferObjects.Comment;
@@ -20,6 +21,7 @@
         public AutoMapperProfile()
         {
             this.ConfigurePostMappers();
+            this.ConfigurePostCategoryMappers();
             this.ConfigureCommentMappers();
         }
 
@@ -39,8 +41,17 @@
                 .ForMember(postResponseDto => postResponseDto.TimeStamp, opt => opt.MapFrom(x => new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds()))
                 .ForMember(postResponseDto => postResponseDto.Links, opt => opt.Ignore());
 
-            this.CreateMap<PostsResponseBo, PostsResponseDto>()
+            this.CreateMap<PostsListResponseBo, PostsResponseDto>()
                 .ForMember(postsResponseDto => postsResponseDto.Data, opt => opt.MapFrom(x => x.Posts));
+        }
+
+        private void ConfigurePostCategoryMappers()
+        {
+            this.CreateMap<CreateCategoryRequestBo, CategoryEntity>()
+                .ForMember(categoryEntity => categoryEntity.CreatedOn, opt => opt.MapFrom(x => DateTime.UtcNow))
+                .ForMember(categoryEntity => categoryEntity.ModifiedOn, opt => opt.MapFrom(x => DateTime.UtcNow));
+
+            this.CreateMap<CategoryEntity, CategoryItemBo>();
         }
 
         private void ConfigureCommentMappers()

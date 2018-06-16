@@ -2,6 +2,7 @@
 {
     using FluentValidation;
 
+    using Slay.Models.BusinessObjects.Category;
     using Slay.Models.BusinessObjects.Comment;
     using Slay.Models.BusinessObjects.Post;
 
@@ -10,5 +11,7 @@
         IValidator<CreatePostRequestBo> CreatePostValidator { get; }
 
         IValidator<CreateCommentRequestBo> CreateCommentValidator { get; }
+
+        IValidator<CreateCategoryRequestBo> CreateCategoryValidator { get; }
     }
 }

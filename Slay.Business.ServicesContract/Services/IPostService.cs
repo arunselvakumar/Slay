@@ -16,6 +16,6 @@
 
         Task<ServiceResult<bool>> DeletePostAsync([NotNull]string id, CancellationToken token);
 
-        Task<ServiceResult<PostsResponseBo>> GetPostsAsync(int skip, int limit, CancellationToken token);
+        Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(int skip, int limit, CancellationToken token);
     }
 }

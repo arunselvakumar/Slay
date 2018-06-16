@@ -55,7 +55,7 @@
             return new ServiceResult<PostItemBo> { Value = mapperResult };
         }
 
-        public async Task<ServiceResult<PostsResponseBo>> GetPostsAsync(int skip, int limit, CancellationToken token)
+        public async Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(int skip, int limit, CancellationToken token)
         {
             var pagingOptions = new PagingOptions().SkipItems(skip).LimitItems(limit);
             var sortingOptions = new SortingOptions("CreatedOn");
@@ -68,7 +68,7 @@
 
             var postsResponseBo = await this.MapPostsResultsWithPageOptions(skip, limit, mapperResult, token);
 
-            return new ServiceResult<PostsResponseBo> { Value = postsResponseBo };
+            return new ServiceResult<PostsListResponseBo> { Value = postsResponseBo };
         }
 
         public async Task<ServiceResult<PostItemBo>> CreatePostAsync(CreatePostRequestBo createPostRequestBo, CancellationToken token)
@@ -99,11 +99,11 @@
             return new ServiceResult<bool> { Value = result };
         }
 
-        private async Task<PostsResponseBo> MapPostsResultsWithPageOptions(int skip, int limit, IEnumerable<PostItemBo> mapperResult, CancellationToken token)
+        private async Task<PostsListResponseBo> MapPostsResultsWithPageOptions(int skip, int limit, IEnumerable<PostItemBo> mapperResult, CancellationToken token)
         {
             var postsCount = await this._postRepository.CountAsync(postEntity => postEntity.IsDeleted == false, token);
 
-            var postsResponseBo = new PostsResponseBo
+            var postsResponseBo = new PostsListResponseBo
             {
                 Posts = mapperResult,
                 Skip = skip + limit >= postsCount ? (int?)null : skip + limit,
