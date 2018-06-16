@@ -10,8 +10,8 @@
 
     public interface IPostCategoryService
     {
-        Task<ServiceResult<CategoryItemBo>> CreateCategoryAsync([NotNull] CreateCategoryRequestBo category, CancellationToken token);
+        Task<ServiceResult<CreateCategoryResponseBo>> CreateCategoryAsync([NotNull] CreateCategoryRequestBo category, CancellationToken token);
 
-        Task<ServiceResult<CategoriesListResponseBo>> GetAllCategoriesAsync(CancellationToken token);
+        Task<ServiceResult<CategoriesListResponseBo>> GetCategoriesAsync(CancellationToken token);
     }
 }

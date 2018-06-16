@@ -10,7 +10,9 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Slay.Business.ServicesContracts.Services;
+    using Slay.Models.BusinessObjects.Category;
     using Slay.Models.BusinessObjects.Post;
+    using Slay.Models.DataTransferObjects.Category;
     using Slay.Models.DataTransferObjects.Post.Links;
     using Slay.Models.DataTransferObjects.Post.Request;
     using Slay.Models.DataTransferObjects.Post.Response;
@@ -26,10 +28,13 @@
 
         private readonly IPostService _postService;
 
-        public PostController(IMapper autoMapperService, IPostService postService)
+        private readonly IPostCategoryService _postCategoryService;
+
+        public PostController(IMapper autoMapperService, IPostService postService, IPostCategoryService postCategoryService)
         {
             this._autoMapperService = autoMapperService;
             this._postService = postService;
+            this._postCategoryService = postCategoryService;
         }
 
         /// <summary>
@@ -78,10 +83,10 @@
         /// <param name="limit">Limits to retrieve.</param>
         /// <param name="token">Cancellation Token.</param>
         /// <returns>
-        /// <see cref="PostsResponseDto"/> is returned.
+        /// <see cref="PostsListResponseDto"/> is returned.
         /// </returns>
         [HttpGet(Name = nameof(GetPostsAsync))]
-        [ProducesResponseType(200, Type = typeof(PostsResponseDto))]
+        [ProducesResponseType(200, Type = typeof(PostsListResponseDto))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetPostsAsync([FromQuery] int skip = 0, [FromQuery] int limit = 10, CancellationToken token = default(CancellationToken))
         {
@@ -94,7 +99,7 @@
                     return new BadRequestObjectResult(serviceResult.Errors);
                 }
 
-                var mapperResult = this._autoMapperService.Map<PostsResponseDto>(serviceResult.Value);
+                var mapperResult = this._autoMapperService.Map<PostsListResponseDto>(serviceResult.Value);
 
                 mapperResult.Links = new LinksDto
                 {
@@ -172,6 +177,73 @@
                 }
 
                 return new EmptyResult();
+            }
+            catch (Exception)
+            {
+                return new BadRequestResult();
+            }
+        }
+
+        /// <summary>
+        /// Gets the categories asynchronous.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <returns>
+        /// If categories are found, then a <see cref="CategoriesListResponseDto"/> is returned.
+        /// Else an <see cref="EmptyResult"/> is returned
+        /// </returns>
+        [HttpGet("category", Name = nameof(GetCategoriesAsync))]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetCategoriesAsync(CancellationToken token = default(CancellationToken))
+        {
+            try
+            {
+                var serviceResult = await this._postCategoryService.GetCategoriesAsync(token);
+
+                if (serviceResult.HasErrors)
+                {
+                    return new BadRequestObjectResult(serviceResult.Errors);
+                }
+
+                var mapperResult = this._autoMapperService.Map<CategoriesListResponseDto>(serviceResult.Value);
+
+                return new OkObjectResult(mapperResult);
+            }
+            catch (Exception)
+            {
+                return new EmptyResult();
+            }
+        }
+
+        /// <summary>
+        /// Creates the category asynchronous.
+        /// </summary>
+        /// <param name="category">The category.</param>
+        /// <param name="token">The token.</param>
+        /// <returns>
+        /// If post is created, then a 201 response code with created at route is returned with <see cref="CreateCategoryResponseDto"/>.
+        /// Else a 400 response is returned.
+        /// </returns>
+        [HttpPost("category", Name = nameof(CreateCategoryAsync))]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateCategoryAsync(CreateCategoryRequestDto category, CancellationToken token = default(CancellationToken))
+        {
+            try
+            {
+                var categoryRequestBo = this._autoMapperService.Map<CreateCategoryRequestBo>(category);
+
+                var serviceResult = await this._postCategoryService.CreateCategoryAsync(categoryRequestBo, token);
+
+                if (serviceResult.HasErrors)
+                {
+                    return new BadRequestObjectResult(serviceResult.Errors);
+                }
+
+                var mappedResult = this._autoMapperService.Map<CreateCategoryResponseDto>(serviceResult.Value);
+
+                return this.CreatedAtRoute(nameof(this.CreateCategoryAsync), new { id = mappedResult.Data.Id }, mappedResult);
             }
             catch (Exception)
             {

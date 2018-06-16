@@ -30,23 +30,23 @@
             this._categoryRepository = categoryRepository;
         }
 
-        public async Task<ServiceResult<CategoryItemBo>> CreateCategoryAsync(CreateCategoryRequestBo category, CancellationToken token)
+        public async Task<ServiceResult<CreateCategoryResponseBo>> CreateCategoryAsync(CreateCategoryRequestBo category, CancellationToken token)
         {
             var validationResult = await this._validationsProvider.CreateCategoryValidator.ValidateAsync(category, token);
 
             if (!validationResult.IsValid)
             {
-                return new ServiceResult<CategoryItemBo> { Errors = validationResult.Errors.ToServiceResultErrors() };
+                return new ServiceResult<CreateCategoryResponseBo> { Errors = validationResult.Errors.ToServiceResultErrors() };
             }
 
             var repositoryResult = await this._categoryRepository.CreateAsync(this._autoMapperService.Map<CategoryEntity>(category), token);
 
             var mapperResult = this._autoMapperService.Map<CategoryItemBo>(repositoryResult);
 
-            return new ServiceResult<CategoryItemBo> { Value = mapperResult };
+            return new ServiceResult<CreateCategoryResponseBo> { Value = new CreateCategoryResponseBo { Data = mapperResult } };
         }
 
-        public async Task<ServiceResult<CategoriesListResponseBo>> GetAllCategoriesAsync(CancellationToken token)
+        public async Task<ServiceResult<CategoriesListResponseBo>> GetCategoriesAsync(CancellationToken token)
         {
             var sortingOptions = new List<SortingOptions> { new SortingOptions("Order") };
 

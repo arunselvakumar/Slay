@@ -9,6 +9,7 @@
     using Slay.Models.BusinessObjects.Category;
     using Slay.Models.BusinessObjects.Comment;
     using Slay.Models.BusinessObjects.Post;
+    using Slay.Models.DataTransferObjects.Category;
     using Slay.Models.DataTransferObjects.Comment;
     using Slay.Models.DataTransferObjects.Post.Request;
     using Slay.Models.DataTransferObjects.Post.Response;
@@ -41,17 +42,24 @@
                 .ForMember(postResponseDto => postResponseDto.TimeStamp, opt => opt.MapFrom(x => new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds()))
                 .ForMember(postResponseDto => postResponseDto.Links, opt => opt.Ignore());
 
-            this.CreateMap<PostsListResponseBo, PostsResponseDto>()
+            this.CreateMap<PostsListResponseBo, PostsListResponseDto>()
                 .ForMember(postsResponseDto => postsResponseDto.Data, opt => opt.MapFrom(x => x.Posts));
         }
 
         private void ConfigurePostCategoryMappers()
         {
+            this.CreateMap<CreateCategoryRequestDto, CreateCategoryRequestBo>();
             this.CreateMap<CreateCategoryRequestBo, CategoryEntity>()
                 .ForMember(categoryEntity => categoryEntity.CreatedOn, opt => opt.MapFrom(x => DateTime.UtcNow))
                 .ForMember(categoryEntity => categoryEntity.ModifiedOn, opt => opt.MapFrom(x => DateTime.UtcNow));
 
             this.CreateMap<CategoryEntity, CategoryItemBo>();
+
+            this.CreateMap<CategoryItemBo, CategoryItemDto>();
+            this.CreateMap<CategoriesListResponseBo, CategoriesListResponseDto>().ForMember(
+                categoriesListResponseDto => categoriesListResponseDto.Data, opt => opt.MapFrom(x => x.Categories));
+
+            this.CreateMap<CreateCategoryResponseBo, CreateCategoryResponseDto>();
         }
 
         private void ConfigureCommentMappers()
