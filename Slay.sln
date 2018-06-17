@@ -24,9 +24,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Business.Services", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Business.ServicesContracts", "Slay.Business.ServicesContract\Slay.Business.ServicesContracts.csproj", "{FCADB486-B1A6-46BD-A907-BC3F022803AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slay.Email.Services", "Slay.Email.Services\Slay.Email.Services.csproj", "{2C2E15E1-A439-4891-A573-53F500B1E220}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Email.Services", "Slay.Email.Services\Slay.Email.Services.csproj", "{2C2E15E1-A439-4891-A573-53F500B1E220}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slay.Email.ServicesContracts", "Slay.Email.ServicesContracts\Slay.Email.ServicesContracts.csproj", "{43F8F681-978F-4082-BBF3-C6CF67BA10A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Email.ServicesContracts", "Slay.Email.ServicesContracts\Slay.Email.ServicesContracts.csproj", "{43F8F681-978F-4082-BBF3-C6CF67BA10A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slay.Identity.Services", "Slay.Identity.Services\Slay.Identity.Services.csproj", "{46631890-1A6E-40BD-8383-DFA4BC9E5F44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slay.Identity.ServicesContracts", "Slay.Identity.ServicesContracts\Slay.Identity.ServicesContracts.csproj", "{A3B0AF20-82DC-4C25-81DF-172FAD2F60EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +78,14 @@ Global
 		{43F8F681-978F-4082-BBF3-C6CF67BA10A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43F8F681-978F-4082-BBF3-C6CF67BA10A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43F8F681-978F-4082-BBF3-C6CF67BA10A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46631890-1A6E-40BD-8383-DFA4BC9E5F44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46631890-1A6E-40BD-8383-DFA4BC9E5F44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46631890-1A6E-40BD-8383-DFA4BC9E5F44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46631890-1A6E-40BD-8383-DFA4BC9E5F44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3B0AF20-82DC-4C25-81DF-172FAD2F60EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3B0AF20-82DC-4C25-81DF-172FAD2F60EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3B0AF20-82DC-4C25-81DF-172FAD2F60EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3B0AF20-82DC-4C25-81DF-172FAD2F60EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
