@@ -228,7 +228,7 @@
         [HttpPost("category", Name = nameof(CreateCategoryAsync))]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateCategoryAsync(CreateCategoryRequestDto category, CancellationToken token = default(CancellationToken))
+        public async Task<IActionResult> CreateCategoryAsync([FromBody]CreateCategoryRequestDto category, CancellationToken token = default(CancellationToken))
         {
             try
             {

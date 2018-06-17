@@ -7,6 +7,7 @@
     using Slay.Business.Services.Aggregators;
     using Slay.Business.Services.Providers.ValidationsProviders;
     using Slay.Business.Services.Services;
+    using Slay.Business.Services.Validators.Category;
     using Slay.Business.Services.Validators.Comment;
     using Slay.Business.Services.Validators.Post;
     using Slay.Business.ServicesContracts.Aggregators;
@@ -14,6 +15,7 @@
     using Slay.Business.ServicesContracts.Services;
     using Slay.Dal.Repositories;
     using Slay.DalContracts.Repositories;
+    using Slay.Models.BusinessObjects.Category;
     using Slay.Models.BusinessObjects.Comment;
     using Slay.Models.BusinessObjects.Post;
 
@@ -22,6 +24,7 @@
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IPostCategoryService, PostCategoryService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ICommentAggregationService, CommentAggregationService>();
 
@@ -33,6 +36,7 @@
 
             services.AddTransient<IValidator<CreatePostRequestBo>, CreatePostValidator>();
             services.AddTransient<IValidator<CreateCommentRequestBo>, CreateCommentValidator>();
+            services.AddTransient<IValidator<CreateCategoryRequestBo>, CreateCategoryValidator>();
         }
     }
 }

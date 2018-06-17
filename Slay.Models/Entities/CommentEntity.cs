@@ -30,6 +30,9 @@
         [JsonProperty(PropertyName = "createdon")]
         public DateTime CreatedOn { get; set; }
 
+        [JsonProperty(PropertyName = "modifiedon")]
+        public DateTime ModifiedOn { get; set; }
+
         [JsonProperty(PropertyName = "isdeleted")]
         public bool IsDeleted { get; set; }
 

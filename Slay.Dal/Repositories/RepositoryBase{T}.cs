@@ -35,7 +35,7 @@
         {
             this._host = "jerichodev.documents.azure.com";
             this._userName = "jerichodev";
-            this._password = "0WhBYS93X3VIpOrNr4uoPqSQ0P5fjRCkDV7PKS11Vjd9bq37lZFRjrvWOFOAG32Wj6l8S80I56AFP20c952KvQ==";
+            this._password = "bCT1cSpnexPcQeSbDD5iHa6JfHsdB18TG6COYxWfjHBic01Jcf2L4X0DN8JBwvF2uoWbbYEyhOQlUQ37yFUB3Q==";
 
             _databaseId = databaseId;
             _collectionId = collectionId;
@@ -132,12 +132,12 @@
 
                 sourceCollection.Sort(sortDefinitionBuilder.Combine(sortDefinitions));
 
-                if (pagingOptions.Skip != null)
+                if (pagingOptions != null && pagingOptions.Skip != null)
                 {
                     sourceCollection = sourceCollection.Skip(pagingOptions.Skip);
                 }
 
-                if (pagingOptions.Limit != null)
+                if (pagingOptions != null && pagingOptions.Limit != null)
                 {
                     sourceCollection = sourceCollection.Limit(pagingOptions.Limit);
                 }

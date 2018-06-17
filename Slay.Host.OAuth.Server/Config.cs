@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentityServer4.Models;
-using IdentityServer4.Test;
-
-namespace Slay.Host.OAuth.Server
+﻿namespace Slay.Host.OAuth.Server
 {
+    using System.Collections.Generic;
+
+    using IdentityServer4.Models;
+    using IdentityServer4.Test;
+
     public class Config
     {
         // scopes define the API resources in your system
         public static IEnumerable<ApiResource> GetApiResources()
         {
-            return new List<ApiResource>
-            {
-                new ApiResource("Client", "My API")
-            };
+            return new List<ApiResource> { new ApiResource("Client", "My API") };
         }
 
         // clients want to access resources (aka scopes)
@@ -28,11 +23,7 @@ namespace Slay.Host.OAuth.Server
                 {
                     ClientId = "client",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
+                    ClientSecrets = { new Secret("secret".Sha256()) },
                     AllowedScopes = { "Client" }
                 },
 
@@ -41,12 +32,8 @@ namespace Slay.Host.OAuth.Server
                 {
                     ClientId = "ro.client",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    AllowedScopes = {"api1"}
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    AllowedScopes = { "api1" }
                 }
             };
         }
@@ -55,18 +42,8 @@ namespace Slay.Host.OAuth.Server
         {
             return new List<TestUser>
             {
-                new TestUser
-                {
-                    SubjectId = "1",
-                    Username = "alice",
-                    Password = "password"
-                },
-                new TestUser
-                {
-                    SubjectId = "2",
-                    Username = "bob",
-                    Password = "password"
-                }
+                new TestUser { SubjectId = "1", Username = "alice", Password = "password" },
+                new TestUser { SubjectId = "2", Username = "bob", Password = "password" }
             };
         }
     }
