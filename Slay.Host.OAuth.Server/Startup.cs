@@ -1,5 +1,10 @@
 ﻿namespace Slay.Host.OAuth.Server
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using IdentityServer4.Models;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -13,30 +18,25 @@
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer("Connection String"));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                .AddAspNetIdentity<ApplicationUser>()
-                .AddConfigurationStore(options => { options.ConfigureDbContext = builder => builder.UseSqlServer("Connection String"); })
-                .AddOperationalStore(options => { options.ConfigureDbContext = builder => builder.UseSqlServer("Connection String"); });
+                .AddTestUsers(InMemoryConfiguration.Users().ToList())
+                .AddInMemoryClients(InMemoryConfiguration.Clients())
+                .AddInMemoryApiResources(InMemoryConfiguration.ApiResources())
+                .AddInMemoryIdentityResources(new List<IdentityResource> { new IdentityResource("socialnetwork", new [] { "socialnetwork" }) });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseIdentityServer();
-
-            app.UseMvc();
         }
     }
 }
