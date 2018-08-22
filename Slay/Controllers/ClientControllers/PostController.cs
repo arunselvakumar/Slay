@@ -7,6 +7,7 @@
 
     using AutoMapper;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using Slay.Business.ServicesContracts.Services;
@@ -128,6 +129,7 @@
         /// Else a 400 response is returned.
         /// </returns>
         [HttpPost(Name = nameof(CreatePostAsync))]
+        [Authorize]
         [ProducesResponseType(201, Type = typeof(PostDto))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostRequestDto createPostDto, CancellationToken token = default(CancellationToken))

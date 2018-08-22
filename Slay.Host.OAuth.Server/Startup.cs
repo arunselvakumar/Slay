@@ -7,12 +7,7 @@
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-
-    using Slay.Identity.Services.Data;
-    using Slay.Identity.Services.Models;
 
     public class Startup
     {

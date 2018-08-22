@@ -1,6 +1,7 @@
 ﻿namespace Slay.Host.OAuth.Server
 {
     using System.Collections.Generic;
+    using System.Security.Claims;
 
     using IdentityModel;
 
@@ -16,7 +17,7 @@
     {
         public static IEnumerable<ApiResource> ApiResources()
         {
-            return new[] { new ApiResource { Name = "socialnetwork", DisplayName = "Social Network" } };
+            return new[] { new ApiResource { Name = "socialnetwork", DisplayName = "Social Network", Scopes = new List<Scope> { new Scope { Name = "socialnetwork_fullaccess" } } } };
         }
 
         public static IEnumerable<Client> Clients()
@@ -25,7 +26,8 @@
                                {
                                     ClientId = "socialnetwork",
                                     AllowedGrantTypes = { GrantType.ResourceOwnerPassword, GrantType.ClientCredentials },
-                                    AllowedScopes = { "socialnetwork" },
+                                    AllowedScopes = { "socialnetwork_fullaccess" },
+                                    AccessTokenType = AccessTokenType.Jwt,
                                     ClientSecrets = { new Secret("secret".ToSha256()) }
                                } };
         }

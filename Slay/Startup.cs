@@ -4,8 +4,11 @@ namespace Slay.Host
 
     using FluentValidation.AspNetCore;
 
+    using IdentityModel;
+
     using IdentityServer4.AccessTokenValidation;
 
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -30,17 +33,11 @@ namespace Slay.Host
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
-                .AddJsonOptions(options => { options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore; })
-                .AddFluentValidation();
+                    .AddJsonOptions(options => { options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore; })
+                    .AddFluentValidation();
 
-            services.AddAuthentication("Bearer").AddIdentityServerAuthentication(
-                options =>
-                    {
-                        options.Authority = "http://localhost:50365/";
-                        options.RequireHttpsMetadata = false;
-
-                        options.ApiName = "Client";
-                    });
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                    .AddIdentityServerAuthentication(options => { options.Authority = "http://localhost:50365/"; options.RequireHttpsMetadata = false; options.ApiName = "socialnetwork"; options.ApiSecret = "secret"; });
 
             services.AddAutoMapper();
 

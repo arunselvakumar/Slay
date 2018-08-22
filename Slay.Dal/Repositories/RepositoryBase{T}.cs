@@ -14,8 +14,7 @@
     using Slay.DalContracts.Options;
     using Slay.Models.Entities.Interfaces;
 
-    public abstract class RepositoryBase<T>
-        where T : class, IEntity, new()
+    public abstract class RepositoryBase<T> where T : class, IEntity, new()
     {
         private readonly string _collectionId;
 
@@ -33,9 +32,9 @@
 
         protected RepositoryBase(string databaseId, string collectionId)
         {
-            this._host = "jerichodev.documents.azure.com";
-            this._userName = "jerichodev";
-            this._password = "bCT1cSpnexPcQeSbDD5iHa6JfHsdB18TG6COYxWfjHBic01Jcf2L4X0DN8JBwvF2uoWbbYEyhOQlUQ37yFUB3Q==";
+            this._host = "aruncosmos.documents.azure.com";
+            this._userName = "aruncosmos";
+            this._password = "usExALzoioX6rfBLteKQItPy4u5IsQuHcR7iA68sOE2oDgMnBxtICWRLty5iv0Ul2tAbEYMfZTa09KaHzcq0tA==";
 
             _databaseId = databaseId;
             _collectionId = collectionId;
@@ -214,16 +213,11 @@
         private void InitializeDatabaseConnection()
         {
             var mongoClientSettings = new MongoClientSettings
-                                          {
-                                              Server = new MongoServerAddress(_host, 10255),
-                                              UseSsl = true,
-                                              SslSettings =
-                                                  new SslSettings
-                                                      {
-                                                          EnabledSslProtocols =
-                                                              SslProtocols.Tls12
-                                                      }
-                                          };
+            {
+                Server = new MongoServerAddress(_host, 10255),
+                UseSsl = true,
+                SslSettings = new SslSettings { EnabledSslProtocols = SslProtocols.Tls12 }
+            };
 
             var mongoIdentity = new MongoInternalIdentity(_databaseId, _userName);
             var mongoIdentityEvidence = new PasswordEvidence(_password);
