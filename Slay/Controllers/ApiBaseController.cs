@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Slay.Host.Controllers
+﻿namespace Slay.Host.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
     public abstract class ApiBaseController : ControllerBase
     {
 

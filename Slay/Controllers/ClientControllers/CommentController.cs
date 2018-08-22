@@ -22,6 +22,11 @@
 
         private readonly ICommentService _commentService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommentController"/> class.
+        /// </summary>
+        /// <param name="autoMapperService">The automatic mapper service.</param>
+        /// <param name="commentService">The comment service.</param>
         public CommentController(IMapper autoMapperService, ICommentService commentService)
         {
             this._autoMapperService = autoMapperService;
@@ -30,7 +35,7 @@
         }
 
         /// <summary>
-        /// Creates the comment asynchronous.
+        /// Creates the comment.
         /// </summary>
         /// <param name="createCommentRequestDto">The create comment request dto.</param>
         /// <param name="postId">The post identifier.</param>
