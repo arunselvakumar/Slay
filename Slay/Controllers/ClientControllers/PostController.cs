@@ -8,12 +8,11 @@
     using AutoMapper;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     using Slay.Business.ServicesContracts.Services;
-    using Slay.Models.BusinessObjects.Category;
     using Slay.Models.BusinessObjects.Post;
-    using Slay.Models.DataTransferObjects.Category;
     using Slay.Models.DataTransferObjects.Post.Links;
     using Slay.Models.DataTransferObjects.Post.Request;
     using Slay.Models.DataTransferObjects.Post.Response;
@@ -182,6 +181,30 @@
                 }
 
                 return new EmptyResult();
+            }
+            catch (Exception)
+            {
+                return new BadRequestResult();
+            }
+        }
+
+        [HttpPost("Upload/{type}", Name = nameof(UploadPostAsync))]
+        [Authorize]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> UploadPostAsync([FromRoute]string type, [FromForm]IFormCollection formCollection, CancellationToken token = default(CancellationToken))
+        {
+            try
+            {
+                var formFile = formCollection.Files.First();
+                var serviceResult = await this._postService.UploadPostAsync(this.User, formFile, default(CancellationToken));
+
+                if (serviceResult.HasErrors)
+                {
+                    return new BadRequestObjectResult(serviceResult.Errors);
+                }
+
+                return new CreatedResult(serviceResult.Value, string.Empty);
             }
             catch (Exception)
             {

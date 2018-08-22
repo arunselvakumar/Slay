@@ -6,8 +6,8 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("api/post/template")]
-    [ApiController]
+    [Produces("application/json")]
+    [Route("api/Post/Template")]
     public sealed class PostTemplateController : ApiBaseController
     {
         [HttpGet(Name = nameof(GetPostTemplatesAsync))]

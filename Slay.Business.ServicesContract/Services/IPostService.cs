@@ -1,9 +1,12 @@
 ﻿namespace Slay.Business.ServicesContracts.Services
 {
+    using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
 
     using JetBrains.Annotations;
+
+    using Microsoft.AspNetCore.Http;
 
     using Slay.Models.BusinessObjects.Post;
     using Slay.Utilities.ServiceResult;
@@ -17,5 +20,7 @@
         Task<ServiceResult<bool>> DeletePostAsync([NotNull]string id, CancellationToken token);
 
         Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(int skip, int limit, CancellationToken token);
+
+        Task<ServiceResult<string>> UploadPostAsync([NotNull]ClaimsPrincipal user, [NotNull]IFormFile formFile, CancellationToken token);
     }
 }

@@ -32,10 +32,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Identity.Services", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slay.Identity.ServicesContracts", "Slay.Identity.ServicesContracts\Slay.Identity.ServicesContracts.csproj", "{A3B0AF20-82DC-4C25-81DF-172FAD2F60EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slay.Storage.Services", "Slay.Storage.Services\Slay.Storage.Services.csproj", "{461D3827-5689-4EEB-B30F-E7A58BEE56E1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slay.Storage.ServicesContracts", "Slay.Storage.ServicesContracts\Slay.Storage.ServicesContracts.csproj", "{20324DA7-B8A6-48EC-A161-B5995882C364}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,14 +86,6 @@ Global
 		{A3B0AF20-82DC-4C25-81DF-172FAD2F60EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3B0AF20-82DC-4C25-81DF-172FAD2F60EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3B0AF20-82DC-4C25-81DF-172FAD2F60EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{461D3827-5689-4EEB-B30F-E7A58BEE56E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{461D3827-5689-4EEB-B30F-E7A58BEE56E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{461D3827-5689-4EEB-B30F-E7A58BEE56E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{461D3827-5689-4EEB-B30F-E7A58BEE56E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20324DA7-B8A6-48EC-A161-B5995882C364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20324DA7-B8A6-48EC-A161-B5995882C364}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20324DA7-B8A6-48EC-A161-B5995882C364}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20324DA7-B8A6-48EC-A161-B5995882C364}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

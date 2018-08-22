@@ -12,8 +12,8 @@
     using Slay.Models.BusinessObjects.Category;
     using Slay.Models.DataTransferObjects.Category;
 
-    [Route("api/post/category")]
-    [ApiController]
+    [Produces("application/json")]
+    [Route("api/Post/Category")]
     public sealed class PostCategoryController : ApiBaseController
     {
         private readonly IMapper _autoMapperService;

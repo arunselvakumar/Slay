@@ -1,12 +1,17 @@
 ﻿namespace Slay.Business.Services.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
 
     using AutoMapper;
 
+    using Microsoft.AspNetCore.Http;
+
     using Slay.Business.ServicesContracts.Aggregators;
+    using Slay.Business.ServicesContracts.Facades;
     using Slay.Business.ServicesContracts.Providers.ValidationsProviders;
     using Slay.Business.ServicesContracts.Services;
     using Slay.DalContracts.Options;
@@ -26,16 +31,22 @@
 
         private readonly ICommentAggregationService _commentAggregationService;
 
+        private readonly IAzureStorageServicesFacade _azureStorageServicesFacade;
+
         public PostService(
             IMapper autoMapperService, 
             IValidationsProvider validationsProvider,
             ICommentAggregationService commentAggregationService,
+            IAzureStorageServicesFacade azureStorageServicesFacade,
             IPostRepository postRepository)
         {
             this._autoMapperService = autoMapperService;
 
             this._validationsProvider = validationsProvider;
             this._commentAggregationService = commentAggregationService;
+
+            this._azureStorageServicesFacade = azureStorageServicesFacade;
+
             this._postRepository = postRepository;
         }
 
@@ -97,6 +108,11 @@
             var result = await this._postRepository.DeleteAsync(id, token);
 
             return new ServiceResult<bool> { Value = result };
+        }
+
+        public async Task<ServiceResult<string>> UploadPostAsync(ClaimsPrincipal user, IFormFile formFile, CancellationToken token)
+        {
+            return await this._azureStorageServicesFacade.SaveBlobInContainerAsync(user.GetUserId(), formFile, token);
         }
 
         private async Task<PostsListResponseBo> MapPostsResultsWithPageOptions(int skip, int limit, IEnumerable<PostItemBo> mapperResult, CancellationToken token)
