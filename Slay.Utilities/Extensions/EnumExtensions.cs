@@ -10,18 +10,17 @@
         /// Converts String to Enum.
         /// </summary>
         /// <typeparam name="TEnum">The type of the enum.</typeparam>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">value</exception>
-        public static TEnum ToEnum<TEnum>(this string value)
-            where TEnum : struct
+        /// <param name="this">The @this.</param>
+        /// <returns>TEnum</returns>
+        /// <exception cref="ArgumentNullException">@this</exception>
+        public static TEnum ToEnum<TEnum>(this string @this)where TEnum : struct
         {
-            if (value == null)
+            if (@this == null)
             {
-                throw new ArgumentNullException(nameof(value));
+                throw new ArgumentNullException(nameof(@this));
             }
 
-            return Enum.TryParse<TEnum>(value, true, out var result) ? result : default(TEnum);
+            return Enum.TryParse<TEnum>(@this, true, out var result) ? result : default(TEnum);
         }
 
         /// <summary>

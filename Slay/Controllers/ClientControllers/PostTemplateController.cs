@@ -3,6 +3,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("api/post/template")]
@@ -20,7 +21,7 @@
         [HttpGet(Name = nameof(CreatePostTemplateAsync))]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreatePostTemplateAsync()
+        public async Task<IActionResult> CreatePostTemplateAsync(IFormCollection formCollection)
         {
             return null;
         }

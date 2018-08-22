@@ -1,35 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace Slay.Utilities.Extensions.Iterators
+﻿namespace Slay.Utilities.Extensions.Iterators
 {
-	public abstract class Iterator<T> : IIterator<T>
-	{
-		public IEnumerable<T> Source { get; set; }
+    using System.Collections;
+    using System.Collections.Generic;
 
-		public T Current { get; set; }
+    public abstract class Iterator<T> : IIterator<T>
+    {
+        public IEnumerable<T> Source { get; set; }
 
-		object IEnumerator.Current { get; }
+        public T Current { get; set; }
 
-		public virtual IEnumerator<T> GetEnumerator()
-		{
-			return this;
-		}
+        object IEnumerator.Current { get; }
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this;
-		}
+        public virtual IEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
 
-		public virtual void Reset()
-		{
-		}
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this;
+        }
 
-		public virtual void Dispose()
-		{
-			this.Current = default(T);
-		}
+        public virtual void Reset()
+        {
+        }
 
-		public abstract bool MoveNext();
-	}
+        public virtual void Dispose()
+        {
+            this.Current = default(T);
+        }
+
+        public abstract bool MoveNext();
+    }
 }

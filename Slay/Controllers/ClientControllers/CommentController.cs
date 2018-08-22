@@ -7,6 +7,7 @@
 
     using AutoMapper;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using Slay.Business.ServicesContracts.Services;
@@ -46,6 +47,7 @@
         /// Else a 400 response is returned.
         /// </returns>
         [HttpPost("{commentId?}")]
+        [Authorize]
         [ProducesResponseType(201, Type = typeof(CommentResponseDto))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreateCommentAsync(

@@ -1,43 +1,45 @@
-﻿using System.Collections.Generic;
-
-namespace Slay.Utilities.Extensions.Iterators
+﻿namespace Slay.Utilities.Extensions.Iterators
 {
-	public abstract class ByIndexIterator<T> : Iterator<T>
-	{
-		public int Index { get; }
-		
-		public IEnumerator<T> Enumerator { get; set; }
+    using System.Collections.Generic;
 
-		private int currentIndex = 0;
+    public abstract class ByIndexIterator<T> : Iterator<T>
+    {
+        private int _currentIndex;
 
-		protected ByIndexIterator(IEnumerable<T> source, int index)
-		{
-			this.Source = source;
-			this.Index = index;
-			this.Enumerator = this.Source.GetEnumerator();
-		}
+        protected ByIndexIterator(IEnumerable<T> source, int index)
+        {
+            this.Source = source;
+            this.Index = index;
+            this.Enumerator = this.Source.GetEnumerator();
+        }
 
-		public override bool MoveNext()
-		{
-			var moved = this.Enumerator.MoveNext();
-			if (moved)
-			{
-				if (this.currentIndex == this.Index)
-				{
-					OnWantedIndexHit();
-				}
-				else
-				{
-					OnWrongIndexHit();
-				}
-				this.currentIndex++;
-				return true;
-			}
-			return false;
-		}
+        public int Index { get; }
 
-		public abstract void OnWantedIndexHit();
+        public IEnumerator<T> Enumerator { get; set; }
 
-		public abstract void OnWrongIndexHit();
-	}
+        public override bool MoveNext()
+        {
+            var moved = this.Enumerator.MoveNext();
+            if (moved)
+            {
+                if (this._currentIndex == this.Index)
+                {
+                    this.OnWantedIndexHit();
+                }
+                else
+                {
+                    this.OnWrongIndexHit();
+                }
+
+                this._currentIndex++;
+                return true;
+            }
+
+            return false;
+        }
+
+        public abstract void OnWantedIndexHit();
+
+        public abstract void OnWrongIndexHit();
+    }
 }

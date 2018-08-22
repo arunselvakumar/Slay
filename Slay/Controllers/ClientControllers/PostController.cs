@@ -167,6 +167,7 @@
         /// If post is not deleted, then a 400 response is returned.
         /// </returns>
         [HttpDelete("{id}", Name = nameof(DeletePostAsync))]
+        [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeletePostAsync(string id, CancellationToken token = default(CancellationToken))
