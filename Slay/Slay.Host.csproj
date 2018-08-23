@@ -27,6 +27,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="ClientApp\.angular-cli.json" />
+    <Content Include="ClientApp\package-lock.json" />
+    <Content Include="ClientApp\package.json" />
+    <Content Include="ClientApp\tsconfig.json" />
+    <Content Include="ClientApp\tslint.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Slay.Business.ServicesContract\Slay.Business.ServicesContracts.csproj" />
     <ProjectReference Include="..\Slay.Business.Services\Slay.Business.Services.csproj" />
     <ProjectReference Include="..\Slay.Models\Slay.Models.csproj" />

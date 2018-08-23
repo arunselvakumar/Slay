@@ -4,13 +4,12 @@ namespace Slay.Host
 
     using FluentValidation.AspNetCore;
 
-    using IdentityModel;
-
     using IdentityServer4.AccessTokenValidation;
 
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.AspNetCore.SpaServices.Webpack;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +24,7 @@ namespace Slay.Host
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -33,8 +32,11 @@ namespace Slay.Host
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                     .AddJsonOptions(options => { options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore; })
                     .AddFluentValidation();
+
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
 
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                     .AddIdentityServerAuthentication(options => { options.Authority = "http://localhost:50365/"; options.RequireHttpsMetadata = false; options.ApiName = "socialnetwork"; options.ApiSecret = "secret"; });
@@ -51,7 +53,6 @@ namespace Slay.Host
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions { HotModuleReplacement = true });
             }
             else
             {
@@ -59,6 +60,8 @@ namespace Slay.Host
             }
 
             app.UseStaticFiles();
+
+            app.UseSpaStaticFiles();
 
             app.UseSwagger();
 
@@ -69,12 +72,21 @@ namespace Slay.Host
             app.UseMvc(
                 routes =>
                     {
-                        routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
-
-                        routes.MapSpaFallbackRoute(
-                            name: "spa-fallback",
-                            defaults: new { controller = "Home", action = "Index" });
+                        routes.MapRoute(name: "default", template: "{controller}/{action=Index}/{id?}");
                     });
+
+            app.UseSpa(spa =>
+                {
+                    // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                    // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                    spa.Options.SourcePath = "ClientApp";
+
+                    if (env.IsDevelopment())
+                    {
+                        spa.UseAngularCliServer(npmScript: "start");
+                    }
+                });
         }
     }
 }
