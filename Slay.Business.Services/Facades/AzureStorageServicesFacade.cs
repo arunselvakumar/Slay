@@ -5,16 +5,17 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Http;
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Blob;
 
     using Slay.Business.ServicesContracts.Facades;
+    using Slay.Models.BusinessObjects.File;
+    using Slay.Utilities.Extensions;
     using Slay.Utilities.ServiceResult;
 
     public sealed class AzureStorageServicesFacade : IAzureStorageServicesFacade
     {
-        private static readonly CloudBlobClient CloudBlobClient;
+        private static readonly CloudBlobClient AzureBlobClient;
 
         static AzureStorageServicesFacade()
         {
@@ -23,7 +24,7 @@
 
             if (CloudStorageAccount.TryParse(storageConnectionString, out var storageAccount))
             {
-                CloudBlobClient = storageAccount.CreateCloudBlobClient();
+                AzureBlobClient = storageAccount.CreateCloudBlobClient();
             }
             else
             {
@@ -31,20 +32,21 @@
             }
         }
 
-        public async Task<ServiceResult<string>> SaveBlobInContainerAsync(string containerName, IFormFile file, CancellationToken token)
+        public async Task<ServiceResult<string>> SaveBlobInContainerAsync(FileUploadRequestContext uploadRequestContext, CancellationToken token)
         {
             try
             {
-                var fileName = file.FileName;
+                var fileName = uploadRequestContext.File.FileName;
+                var containerName = $"{uploadRequestContext.User.GetUserId()}-{uploadRequestContext.RequestType}";
 
-                var blobContainer = CloudBlobClient.GetContainerReference(containerName + "-container");
+                var blobContainer = AzureBlobClient.GetContainerReference(containerName);
 
                 await blobContainer.CreateIfNotExistsAsync();
                 await blobContainer.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
 
-                var blockBlock = blobContainer.GetBlockBlobReference(this.SlugFileName(fileName));
+                var blockBlock = blobContainer.GetBlockBlobReference(this.GenerateSlug(fileName));
 
-                using (var fileStream = file.OpenReadStream())
+                using (var fileStream = uploadRequestContext.File.OpenReadStream())
                 {
                     await blockBlock.UploadFromStreamAsync(fileStream);
                 }
@@ -57,7 +59,7 @@
             }
         }
 
-        private string SlugFileName(string fileName)
+        private string GenerateSlug(string fileName)
         {
             var extension = Path.GetExtension(fileName);
             var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
@@ -67,7 +69,7 @@
 
             var timeStamp = DateTime.UtcNow.ToFileTimeUtc().ToString();
 
-            var uniqueFileName = $"{randomFileNameWithoutExtension}_{fileNameWithoutExtension}_{timeStamp}{extension}";
+            var uniqueFileName = $"{fileNameWithoutExtension}_{randomFileNameWithoutExtension}_{timeStamp}{extension}";
             return uniqueFileName;
         }
     }

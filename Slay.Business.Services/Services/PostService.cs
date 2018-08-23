@@ -1,14 +1,10 @@
 ﻿namespace Slay.Business.Services.Services
 {
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
 
     using AutoMapper;
-
-    using Microsoft.AspNetCore.Http;
 
     using Slay.Business.ServicesContracts.Aggregators;
     using Slay.Business.ServicesContracts.Facades;
@@ -16,6 +12,7 @@
     using Slay.Business.ServicesContracts.Services;
     using Slay.DalContracts.Options;
     using Slay.DalContracts.Repositories;
+    using Slay.Models.BusinessObjects.File;
     using Slay.Models.BusinessObjects.Post;
     using Slay.Models.Entities;
     using Slay.Utilities.Extensions;
@@ -110,9 +107,16 @@
             return new ServiceResult<bool> { Value = result };
         }
 
-        public async Task<ServiceResult<string>> UploadPostAsync(ClaimsPrincipal user, IFormFile formFile, CancellationToken token)
+        public async Task<ServiceResult<string>> UploadPostAsync(FileUploadRequestContext uploadRequestContext, CancellationToken token)
         {
-            return await this._azureStorageServicesFacade.SaveBlobInContainerAsync(user.GetUserId(), formFile, token);
+            var validationResult = await this._validationsProvider.FileUploadValidator.ValidateAsync(uploadRequestContext, token);
+
+            if (!validationResult.IsValid)
+            {
+                return new ServiceResult<string> { Errors = validationResult.Errors.ToServiceResultErrors() };
+            }
+
+            return await this._azureStorageServicesFacade.SaveBlobInContainerAsync(uploadRequestContext, token);
         }
 
         private async Task<PostsListResponseBo> MapPostsResultsWithPageOptions(int skip, int limit, IEnumerable<PostItemBo> mapperResult, CancellationToken token)

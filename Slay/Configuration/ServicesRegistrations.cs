@@ -10,6 +10,7 @@
     using Slay.Business.Services.Services;
     using Slay.Business.Services.Validators.Category;
     using Slay.Business.Services.Validators.Comment;
+    using Slay.Business.Services.Validators.File;
     using Slay.Business.Services.Validators.Post;
     using Slay.Business.ServicesContracts.Aggregators;
     using Slay.Business.ServicesContracts.Facades;
@@ -19,6 +20,7 @@
     using Slay.DalContracts.Repositories;
     using Slay.Models.BusinessObjects.Category;
     using Slay.Models.BusinessObjects.Comment;
+    using Slay.Models.BusinessObjects.File;
     using Slay.Models.BusinessObjects.Post;
 
     public static class ServicesRegistrations
@@ -41,6 +43,7 @@
             services.AddTransient<IValidator<CreatePostRequestBo>, CreatePostValidator>();
             services.AddTransient<IValidator<CreateCommentRequestBo>, CreateCommentValidator>();
             services.AddTransient<IValidator<CreateCategoryRequestBo>, CreateCategoryValidator>();
+            services.AddTransient<IValidator<FileUploadRequestContext>, FileUploadValidator>();
         }
     }
 }

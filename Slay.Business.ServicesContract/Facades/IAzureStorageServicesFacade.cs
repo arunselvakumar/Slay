@@ -5,12 +5,11 @@
 
     using JetBrains.Annotations;
 
-    using Microsoft.AspNetCore.Http;
-
+    using Slay.Models.BusinessObjects.File;
     using Slay.Utilities.ServiceResult;
 
     public interface IAzureStorageServicesFacade
     {
-        Task<ServiceResult<string>> SaveBlobInContainerAsync([NotNull]string containerName, [NotNull]IFormFile file, CancellationToken token);
+        Task<ServiceResult<string>> SaveBlobInContainerAsync([NotNull]FileUploadRequestContext uploadRequestContext, CancellationToken token);
     }
 }

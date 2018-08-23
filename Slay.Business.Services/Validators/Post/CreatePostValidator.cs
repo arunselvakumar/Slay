@@ -34,10 +34,10 @@
             this.RuleFor(request => request.Content).NotEmpty().WithMessage(this._postContentShouldNotBeEmptyError)
                 .Length(1, 999).WithMessage(this._postContentShouldBeLessThanCharacters999Error);
 
-            this.RuleFor(request => request).Must(this.ValidUrlContent).WithMessage(this._postContentShouldBeValidUrlError);
+            this.RuleFor(request => request).Must(this.IsValidUrlContent).WithMessage(this._postContentShouldBeValidUrlError);
         }
 
-        private bool ValidUrlContent(CreatePostRequestBo post)
+        private bool IsValidUrlContent(CreatePostRequestBo post)
         {
             if (post.Type == PostTypeEnum.Image)
             {

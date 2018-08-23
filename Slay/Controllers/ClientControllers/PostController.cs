@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Slay.Business.ServicesContracts.Services;
+    using Slay.Models.BusinessObjects.File;
     using Slay.Models.BusinessObjects.Post;
     using Slay.Models.DataTransferObjects.Post.Links;
     using Slay.Models.DataTransferObjects.Post.Request;
@@ -192,12 +193,13 @@
         [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UploadPostAsync([FromRoute]string type, [FromForm]IFormCollection formCollection, CancellationToken token = default(CancellationToken))
+        public async Task<IActionResult> UploadPostAsync([FromForm]IFormCollection formCollection, [FromRoute]string type, CancellationToken token = default(CancellationToken))
         {
             try
             {
                 var formFile = formCollection.Files.First();
-                var serviceResult = await this._postService.UploadPostAsync(this.User, formFile, default(CancellationToken));
+                var fileRequestContext = new FileUploadRequestContext { File = formFile, RequestType = type, User = this.User };
+                var serviceResult = await this._postService.UploadPostAsync(fileRequestContext, default(CancellationToken));
 
                 if (serviceResult.HasErrors)
                 {
