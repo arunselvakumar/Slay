@@ -5,11 +5,13 @@
 
     using JetBrains.Annotations;
 
+    using Microsoft.WindowsAzure.Storage.Blob;
+
     using Slay.Models.BusinessObjects.File;
     using Slay.Utilities.ServiceResult;
 
     public interface IAzureStorageServicesFacade
     {
-        Task<ServiceResult<string>> SaveBlobInContainerAsync([NotNull]FileUploadRequestContext uploadRequestContext, CancellationToken token);
+        Task<CloudBlockBlob> SaveBlobInContainerAsync([NotNull]FileUploadRequestContext uploadRequestContext, CancellationToken token);
     }
 }

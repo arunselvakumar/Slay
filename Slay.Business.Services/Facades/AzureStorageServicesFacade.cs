@@ -11,7 +11,6 @@
     using Slay.Business.ServicesContracts.Facades;
     using Slay.Models.BusinessObjects.File;
     using Slay.Utilities.Extensions;
-    using Slay.Utilities.ServiceResult;
 
     public sealed class AzureStorageServicesFacade : IAzureStorageServicesFacade
     {
@@ -32,7 +31,7 @@
             }
         }
 
-        public async Task<ServiceResult<string>> SaveBlobInContainerAsync(FileUploadRequestContext uploadRequestContext, CancellationToken token)
+        public async Task<CloudBlockBlob> SaveBlobInContainerAsync(FileUploadRequestContext uploadRequestContext, CancellationToken token)
         {
             try
             {
@@ -51,11 +50,11 @@
                     await blockBlock.UploadFromStreamAsync(fileStream);
                 }
 
-                return new ServiceResult<string> { Value = blockBlock.StorageUri.PrimaryUri.AbsoluteUri };
+                return blockBlock;
             }
             catch (Exception)
             {
-                return new ServiceResult<string>();
+                return null;
             }
         }
 

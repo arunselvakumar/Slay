@@ -4,10 +4,13 @@
 
     using AutoMapper;
 
+    using Microsoft.WindowsAzure.Storage.Blob;
+
     using MongoDB.Bson;
 
     using Slay.Models.BusinessObjects.Category;
     using Slay.Models.BusinessObjects.Comment;
+    using Slay.Models.BusinessObjects.File;
     using Slay.Models.BusinessObjects.Post;
     using Slay.Models.DataTransferObjects.Category;
     using Slay.Models.DataTransferObjects.Comment;
@@ -24,11 +27,13 @@
             this.ConfigurePostMappers();
             this.ConfigurePostCategoryMappers();
             this.ConfigureCommentMappers();
+            this.ConfigureFileMappers();
         }
 
         private void ConfigurePostMappers()
         {
-            this.CreateMap<CreatePostRequestDto, CreatePostRequestBo>().ForMember(postBo => postBo.Type, opt => opt.MapFrom(x => x.Type.ToEnum<PostTypeEnum>()));
+            this.CreateMap<CreatePostRequestDto, CreatePostRequestBo>()
+                .ForMember(postBo => postBo.Type, opt => opt.MapFrom(x => x.Type.ToEnum<PostTypeEnum>()));
             this.CreateMap<CreatePostRequestBo, PostEntity>()
                 .ForMember(postEntity => postEntity.CreatedOn, opt => opt.MapFrom(x => DateTime.UtcNow))
                 .ForMember(postEntity => postEntity.ModifiedOn, opt => opt.MapFrom(x => DateTime.UtcNow));
@@ -80,6 +85,14 @@
             this.CreateMap<CommentsListResponseBo, CommentsListResponseDto>()
                 .ForMember(commentResponseDto => commentResponseDto.Data, opt => opt.MapFrom(x => x.Comments))
                 .ForMember(commentResponseDto => commentResponseDto.Links, opt => opt.Ignore());
+        }
+
+        private void ConfigureFileMappers()
+        {
+            this.CreateMap<CloudBlockBlob, FileUploadResponseContext>()
+                .ForMember(fileUploadResponseContext => fileUploadResponseContext.Url, opt => opt.MapFrom(x => x.Uri.AbsoluteUri))
+                .ForMember(fileUploadResponseContext => fileUploadResponseContext.PrimaryUrl, opt => opt.MapFrom(x => x.StorageUri.PrimaryUri.AbsoluteUri))
+                .ForMember(fileUploadResponseContext => fileUploadResponseContext.SecondaryUrl, opt => opt.MapFrom(x => x.StorageUri.SecondaryUri.AbsoluteUri));
         }
     }
 }

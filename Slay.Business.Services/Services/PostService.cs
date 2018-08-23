@@ -6,6 +6,8 @@
 
     using AutoMapper;
 
+    using Microsoft.WindowsAzure.Storage.Blob;
+
     using Slay.Business.ServicesContracts.Aggregators;
     using Slay.Business.ServicesContracts.Facades;
     using Slay.Business.ServicesContracts.Providers.ValidationsProviders;
@@ -107,16 +109,25 @@
             return new ServiceResult<bool> { Value = result };
         }
 
-        public async Task<ServiceResult<string>> UploadPostAsync(FileUploadRequestContext uploadRequestContext, CancellationToken token)
+        public async Task<ServiceResult<FileUploadResponseContext>> UploadPostAsync(FileUploadRequestContext uploadRequestContext, CancellationToken token)
         {
             var validationResult = await this._validationsProvider.FileUploadValidator.ValidateAsync(uploadRequestContext, token);
 
             if (!validationResult.IsValid)
             {
-                return new ServiceResult<string> { Errors = validationResult.Errors.ToServiceResultErrors() };
+                return new ServiceResult<FileUploadResponseContext> { Errors = validationResult.Errors.ToServiceResultErrors() };
             }
 
-            return await this._azureStorageServicesFacade.SaveBlobInContainerAsync(uploadRequestContext, token);
+            var azureStorageResult = await this._azureStorageServicesFacade.SaveBlobInContainerAsync(uploadRequestContext, token);
+
+            if (azureStorageResult.IsNull())
+            {
+                return new ServiceResult<FileUploadResponseContext> { Errors = new[] { new Error { Code = "POST_UPLOADFAILED_ERROR" } }};
+            }
+
+            var mapperResult = this._autoMapperService.Map<CloudBlockBlob, FileUploadResponseContext>(azureStorageResult);
+
+            return new ServiceResult<FileUploadResponseContext> { Value = mapperResult };
         }
 
         private async Task<PostsListResponseBo> MapPostsResultsWithPageOptions(int skip, int limit, IEnumerable<PostItemBo> mapperResult, CancellationToken token)

@@ -206,7 +206,9 @@
                     return new BadRequestObjectResult(serviceResult.Errors);
                 }
 
-                return new CreatedResult(serviceResult.Value, string.Empty);
+                var createdAtRoute = serviceResult.Value.Url;
+
+                return new CreatedResult(createdAtRoute, serviceResult.Value);
             }
             catch (Exception)
             {
