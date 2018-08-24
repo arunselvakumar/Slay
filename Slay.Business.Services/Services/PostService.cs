@@ -109,25 +109,25 @@
             return new ServiceResult<bool> { Value = result };
         }
 
-        public async Task<ServiceResult<FileUploadResponseContext>> UploadPostAsync(FileUploadRequestContext uploadRequestContext, CancellationToken token)
+        public async Task<ServiceResult<PostUploadResponseContext>> UploadPostAsync(PostUploadRequestContext uploadRequestContext, CancellationToken token)
         {
             var validationResult = await this._validationsProvider.FileUploadValidator.ValidateAsync(uploadRequestContext, token);
 
             if (!validationResult.IsValid)
             {
-                return new ServiceResult<FileUploadResponseContext> { Errors = validationResult.Errors.ToServiceResultErrors() };
+                return new ServiceResult<PostUploadResponseContext> { Errors = validationResult.Errors.ToServiceResultErrors() };
             }
 
             var azureStorageResult = await this._azureStorageServicesFacade.SaveBlobInContainerAsync(uploadRequestContext, token);
 
             if (azureStorageResult.IsNull())
             {
-                return new ServiceResult<FileUploadResponseContext> { Errors = new[] { new Error { Code = "POST_UPLOADFAILED_ERROR" } }};
+                return new ServiceResult<PostUploadResponseContext> { Errors = new[] { new Error { Code = "POST_UPLOADFAILED_ERROR" } }};
             }
 
-            var mapperResult = this._autoMapperService.Map<CloudBlockBlob, FileUploadResponseContext>(azureStorageResult);
+            var mapperResult = this._autoMapperService.Map<CloudBlockBlob, PostUploadResponseContext>(azureStorageResult);
 
-            return new ServiceResult<FileUploadResponseContext> { Value = mapperResult };
+            return new ServiceResult<PostUploadResponseContext> { Value = mapperResult };
         }
 
         private async Task<PostsListResponseBo> MapPostsResultsWithPageOptions(int skip, int limit, IEnumerable<PostItemBo> mapperResult, CancellationToken token)

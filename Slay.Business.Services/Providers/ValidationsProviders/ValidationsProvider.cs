@@ -14,7 +14,7 @@
             IValidator<CreatePostRequestBo> createPostValidator,
             IValidator<CreateCommentRequestBo> createCommentValidator,
             IValidator<CreateCategoryRequestBo> createCategoryValidator,
-            IValidator<FileUploadRequestContext> fileUploadValidator)
+            IValidator<PostUploadRequestContext> fileUploadValidator)
         {
             this.CreatePostValidator = createPostValidator;
             this.CreateCommentValidator = createCommentValidator;
@@ -28,6 +28,6 @@
 
         public IValidator<CreateCategoryRequestBo> CreateCategoryValidator { get; }
 
-        public IValidator<FileUploadRequestContext> FileUploadValidator { get; set; }
+        public IValidator<PostUploadRequestContext> FileUploadValidator { get; set; }
     }
 }

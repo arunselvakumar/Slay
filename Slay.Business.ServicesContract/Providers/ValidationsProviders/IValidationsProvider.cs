@@ -15,6 +15,6 @@
 
         IValidator<CreateCategoryRequestBo> CreateCategoryValidator { get; }
 
-        IValidator<FileUploadRequestContext> FileUploadValidator { get; set; }
+        IValidator<PostUploadRequestContext> FileUploadValidator { get; set; }
     }
 }

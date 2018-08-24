@@ -89,7 +89,7 @@
 
         private void ConfigureFileMappers()
         {
-            this.CreateMap<CloudBlockBlob, FileUploadResponseContext>()
+            this.CreateMap<CloudBlockBlob, PostUploadResponseContext>()
                 .ForMember(fileUploadResponseContext => fileUploadResponseContext.Url, opt => opt.MapFrom(x => x.Uri.AbsoluteUri))
                 .ForMember(fileUploadResponseContext => fileUploadResponseContext.PrimaryUrl, opt => opt.MapFrom(x => x.StorageUri.PrimaryUri.AbsoluteUri))
                 .ForMember(fileUploadResponseContext => fileUploadResponseContext.SecondaryUrl, opt => opt.MapFrom(x => x.StorageUri.SecondaryUri.AbsoluteUri));

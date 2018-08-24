@@ -44,7 +44,7 @@
         ///   <c>true</c> if the specified this is image; otherwise, <c>false</c>.
         /// </returns>
         /// <exception cref="ArgumentNullException">File Name</exception>
-        public static bool IsImageFile(this string @this)
+        public static bool IsImageFileType(this string @this)
         {
             if (@this == null)
             {
@@ -63,7 +63,7 @@
         ///   <c>true</c> if the specified this is audio; otherwise, <c>false</c>.
         /// </returns>
         /// <exception cref="ArgumentNullException">File Name</exception>
-        public static bool IsAudioFile(this string @this)
+        public static bool IsAudioFileType(this string @this)
         {
             if (@this == null)
             {
@@ -82,7 +82,7 @@
         ///   <c>true</c> if the specified this is video; otherwise, <c>false</c>.
         /// </returns>
         /// <exception cref="ArgumentNullException">File Name</exception>
-        public static bool IsVideoFile(this string @this)
+        public static bool IsVideoFileType(this string @this)
         {
             if (@this == null)
             {

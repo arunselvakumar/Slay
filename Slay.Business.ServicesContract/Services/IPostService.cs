@@ -22,6 +22,6 @@
 
         Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(int skip, int limit, CancellationToken token);
 
-        Task<ServiceResult<FileUploadResponseContext>> UploadPostAsync([NotNull]FileUploadRequestContext uploadRequestContext, CancellationToken token);
+        Task<ServiceResult<PostUploadResponseContext>> UploadPostAsync([NotNull]PostUploadRequestContext uploadRequestContext, CancellationToken token);
     }
 }

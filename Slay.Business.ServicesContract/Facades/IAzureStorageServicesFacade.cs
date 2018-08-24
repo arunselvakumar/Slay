@@ -12,6 +12,6 @@
 
     public interface IAzureStorageServicesFacade
     {
-        Task<CloudBlockBlob> SaveBlobInContainerAsync([NotNull]FileUploadRequestContext uploadRequestContext, CancellationToken token);
+        Task<CloudBlockBlob> SaveBlobInContainerAsync([NotNull]PostUploadRequestContext uploadRequestContext, CancellationToken token);
     }
 }

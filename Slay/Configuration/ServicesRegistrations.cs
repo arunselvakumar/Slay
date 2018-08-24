@@ -43,7 +43,7 @@
             services.AddTransient<IValidator<CreatePostRequestBo>, CreatePostValidator>();
             services.AddTransient<IValidator<CreateCommentRequestBo>, CreateCommentValidator>();
             services.AddTransient<IValidator<CreateCategoryRequestBo>, CreateCategoryValidator>();
-            services.AddTransient<IValidator<FileUploadRequestContext>, FileUploadValidator>();
+            services.AddTransient<IValidator<PostUploadRequestContext>, FileUploadValidator>();
         }
     }
 }

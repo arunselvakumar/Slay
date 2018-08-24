@@ -189,6 +189,16 @@
             }
         }
 
+        /// <summary>
+        /// Uploads File to User's Blob Storage Account.
+        /// </summary>
+        /// <param name="formCollection">The form collection.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="token">The token.</param>
+        /// <returns>
+        /// If file is uploaded, then a 201 response code is returned.
+        /// If file is not uploaded, then a 400 response is returned.
+        /// </returns>
         [HttpPost("Upload/{type}", Name = nameof(UploadPostAsync))]
         [Authorize]
         [ProducesResponseType(200)]
@@ -198,7 +208,7 @@
             try
             {
                 var formFile = formCollection.Files.First();
-                var fileRequestContext = new FileUploadRequestContext { File = formFile, RequestType = type, User = this.User };
+                var fileRequestContext = new PostUploadRequestContext { File = formFile, RequestType = type, User = this.User };
                 var serviceResult = await this._postService.UploadPostAsync(fileRequestContext, default(CancellationToken));
 
                 if (serviceResult.HasErrors)

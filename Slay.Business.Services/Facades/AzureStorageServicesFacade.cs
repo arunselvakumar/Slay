@@ -31,7 +31,7 @@
             }
         }
 
-        public async Task<CloudBlockBlob> SaveBlobInContainerAsync(FileUploadRequestContext uploadRequestContext, CancellationToken token)
+        public async Task<CloudBlockBlob> SaveBlobInContainerAsync(PostUploadRequestContext uploadRequestContext, CancellationToken token)
         {
             try
             {

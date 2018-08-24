@@ -10,7 +10,7 @@
     using Slay.Models.BusinessObjects.File;
     using Slay.Utilities.Extensions;
 
-    public sealed class FileUploadValidator : AbstractValidator<FileUploadRequestContext>
+    public sealed class FileUploadValidator : AbstractValidator<PostUploadRequestContext>
     {
         private readonly string _fileTypeShouldNotBeEmptyError = "FILE_FILETYPE_SHOULDNOTBEEMPTY_ERROR";
 
@@ -43,24 +43,24 @@
             return vaildFileTypes.Any(file => file == fileType);
         }
 
-        private bool IsSupportedFileExtension(FileUploadRequestContext uploadRequestContext, IFormFile formFile, PropertyValidatorContext validatorContext)
+        private bool IsSupportedFileExtension(PostUploadRequestContext uploadRequestContext, IFormFile formFile, PropertyValidatorContext validatorContext)
         {
             var fileName = uploadRequestContext.File.FileName;
 
             switch (uploadRequestContext.RequestType.ToLowerInvariant())
             {
                 case "image":
-                    return fileName.IsImageFile();
+                    return fileName.IsImageFileType();
                 case "audio":
-                    return fileName.IsAudioFile();
+                    return fileName.IsAudioFileType();
                 case "video":
-                    return fileName.IsVideoFile();
+                    return fileName.IsVideoFileType();
                 default:
                     return false;
             }
         }
 
-        private bool IsFileSizeExceeded(FileUploadRequestContext uploadRequestContext, IFormFile formFile, PropertyValidatorContext validatorContext)
+        private bool IsFileSizeExceeded(PostUploadRequestContext uploadRequestContext, IFormFile formFile, PropertyValidatorContext validatorContext)
         {
             var fileSize = uploadRequestContext.File.Length;
 

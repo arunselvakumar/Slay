@@ -4,7 +4,7 @@
 
     using Microsoft.AspNetCore.Http;
 
-    public sealed class FileUploadRequestContext
+    public sealed class PostUploadRequestContext
     {
         public IFormFile File { get; set; }
 

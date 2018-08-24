@@ -1,6 +1,6 @@
 ﻿namespace Slay.Models.BusinessObjects.File
 {
-    public sealed class FileUploadResponseContext
+    public sealed class PostUploadResponseContext
     {
         public string Name { get; set; }
 
