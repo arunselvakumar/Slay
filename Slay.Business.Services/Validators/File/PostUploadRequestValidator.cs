@@ -10,20 +10,20 @@
     using Slay.Models.BusinessObjects.File;
     using Slay.Utilities.Extensions;
 
-    public sealed class FileUploadValidator : AbstractValidator<PostUploadRequestContext>
+    public sealed class PostUploadRequestValidator : AbstractValidator<PostUploadRequestContext>
     {
-        private readonly string _fileTypeShouldNotBeEmptyError = "FILE_FILETYPE_SHOULDNOTBEEMPTY_ERROR";
+        private readonly string _fileTypeShouldNotBeEmptyError = "POST_FILETYPE_SHOULDNOTBEEMPTY_ERROR";
 
-        private readonly string _fileTypeShouldBeValidError = "FILE_FILETYPE_SHOULDBEVALID_ERROR";
+        private readonly string _fileTypeShouldBeValidError = "POST_FILETYPE_SHOULDBEVALID_ERROR";
 
-        private readonly string _fileTypeNotSupportedError = "FILE_FILETYPE_NOTSUPPORTED_ERROR";
+        private readonly string _fileTypeNotSupportedError = "POST_FILETYPE_NOTSUPPORTED_ERROR";
 
-        private readonly string _fileSizeShouldNotExceedSizeError = "FILE_FILESIZE_EXCEEDED_ERROR";
+        private readonly string _fileSizeShouldNotExceedSizeError = "POST_FILESIZE_EXCEEDED_ERROR";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileUploadValidator"/> class.
+        /// Initializes a new instance of the <see cref="PostUploadRequestValidator"/> class.
         /// </summary>
-        public FileUploadValidator()
+        public PostUploadRequestValidator()
         {
             this.RuleFor(request => request.RequestType).NotEmpty().WithMessage(this._fileTypeShouldNotBeEmptyError);
 
@@ -67,13 +67,13 @@
             switch (uploadRequestContext.RequestType.ToLowerInvariant())
             {
                 case "image":
-                    // 5 MB 
+                    // 5 MB = 5e+6 Bytes
                     return fileSize < 5e+6;
                 case "audio":
-                    // 30 MB
+                    // 30 MB = 3e+7 Bytes
                     return fileSize < 3e+7;
                 case "video":
-                    // 100 MB
+                    // 100 MB = 1e+8 Bytes.
                     return fileSize < 1e+8;
                 default:
                     return false;

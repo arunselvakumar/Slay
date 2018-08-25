@@ -32,6 +32,14 @@
 
         private readonly IAzureStorageServicesFacade _azureStorageServicesFacade;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PostService"/> class.
+        /// </summary>
+        /// <param name="autoMapperService">The automatic mapper service.</param>
+        /// <param name="validationsProvider">The validations provider.</param>
+        /// <param name="commentAggregationService">The comment aggregation service.</param>
+        /// <param name="azureStorageServicesFacade">The azure storage services facade.</param>
+        /// <param name="postRepository">The post repository.</param>
         public PostService(
             IMapper autoMapperService, 
             IValidationsProvider validationsProvider,
@@ -111,7 +119,7 @@
 
         public async Task<ServiceResult<PostUploadResponseContext>> UploadPostAsync(PostUploadRequestContext uploadRequestContext, CancellationToken token)
         {
-            var validationResult = await this._validationsProvider.FileUploadValidator.ValidateAsync(uploadRequestContext, token);
+            var validationResult = await this._validationsProvider.PostUploadValidator.ValidateAsync(uploadRequestContext, token);
 
             if (!validationResult.IsValid)
             {
@@ -122,7 +130,7 @@
 
             if (azureStorageResult.IsNull())
             {
-                return new ServiceResult<PostUploadResponseContext> { Errors = new[] { new Error { Code = "POST_UPLOADFAILED_ERROR" } }};
+                return new ServiceResult<PostUploadResponseContext> { Errors = new[] { new Error { Code = "POST_UPLOADFAILED_ERROR" } } };
             }
 
             var mapperResult = this._autoMapperService.Map<CloudBlockBlob, PostUploadResponseContext>(azureStorageResult);

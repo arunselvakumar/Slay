@@ -31,6 +31,7 @@
             services.AddScoped<IPostCategoryService, PostCategoryService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ICommentAggregationService, CommentAggregationService>();
+            services.AddScoped<ITemplateService, TemplateService>();
 
             services.AddScoped<IAzureStorageServicesFacade, AzureStorageServicesFacade>();
 
@@ -43,7 +44,8 @@
             services.AddTransient<IValidator<CreatePostRequestBo>, CreatePostValidator>();
             services.AddTransient<IValidator<CreateCommentRequestBo>, CreateCommentValidator>();
             services.AddTransient<IValidator<CreateCategoryRequestBo>, CreateCategoryValidator>();
-            services.AddTransient<IValidator<PostUploadRequestContext>, FileUploadValidator>();
+            services.AddTransient<IValidator<PostUploadRequestContext>, PostUploadRequestValidator>();
+            services.AddTransient<IValidator<TemplateUploadRequestContext>, TemplateUploadRequestValidator>();
         }
     }
 }
