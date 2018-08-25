@@ -93,6 +93,12 @@
                 .ForMember(fileUploadResponseContext => fileUploadResponseContext.Url, opt => opt.MapFrom(x => x.Uri.AbsoluteUri))
                 .ForMember(fileUploadResponseContext => fileUploadResponseContext.PrimaryUrl, opt => opt.MapFrom(x => x.StorageUri.PrimaryUri.AbsoluteUri))
                 .ForMember(fileUploadResponseContext => fileUploadResponseContext.SecondaryUrl, opt => opt.MapFrom(x => x.StorageUri.SecondaryUri.AbsoluteUri));
+
+            this.CreateMap<CloudBlockBlob, TemplateEntity>()
+                .ForMember(templateEntity => templateEntity.Id, opt => opt.MapFrom(x => ObjectId.GenerateNewId()))
+                .ForMember(templateEntity => templateEntity.CreatedOn, opt => opt.MapFrom(x => DateTime.UtcNow))
+                .ForMember(templateEntity => templateEntity.PrimaryUrl, opt => opt.MapFrom(x => x.StorageUri.PrimaryUri.AbsoluteUri))
+                .ForMember(templateEntity => templateEntity.SecondaryUrl, opt => opt.MapFrom(x => x.StorageUri.SecondaryUri.AbsoluteUri));
         }
     }
 }

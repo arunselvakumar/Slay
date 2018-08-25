@@ -38,6 +38,7 @@
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ITemplateRepository, TemplateRepository>();
 
             services.AddScoped<IValidationsProvider, ValidationsProvider>();
 

@@ -7,6 +7,7 @@
 
     using AutoMapper;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -37,6 +38,7 @@
         /// If file is not uploaded, then a 400 response is returned.
         /// </returns>
         [HttpPost("Upload", Name = nameof(UploadTemplateAsync))]
+        [Authorize]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> UploadTemplateAsync(IFormCollection formCollection, CancellationToken token = default(CancellationToken))
@@ -44,7 +46,7 @@
             try
             {
                 var formFile = formCollection.Files.First();
-                var templateRequestContext = new TemplateUploadRequestContext { File = formFile };
+                var templateRequestContext = new TemplateUploadRequestContext { File = formFile, User = this.User };
                 var serviceResult = await this._templateService.UploadTemplateAsync(templateRequestContext, token);
 
                 if (serviceResult.HasErrors)
