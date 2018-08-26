@@ -6,6 +6,9 @@ import { NavigationHeaderComponent } from './navigation-header/navigation-header
 import { PostListComponent } from './post-list/post-list.component';
 import { PostComponent } from './post/post.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
+import { HeaderComponent } from './header/header.component';
+import { TrendingComponent } from './trending/trending.component';
+import { FeedSuggestionsComponent } from './feed-suggestions/feed-suggestions.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +16,10 @@ import { PostDetailsComponent } from './post-details/post-details.component';
     NavigationHeaderComponent,
     PostListComponent,
     PostComponent,
-    PostDetailsComponent
+    PostDetailsComponent,
+    HeaderComponent,
+    TrendingComponent,
+    FeedSuggestionsComponent
   ],
   imports: [
     BrowserModule

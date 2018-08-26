@@ -1,0 +1,22 @@
+header {
+    background: #fff;
+}
+.header-container {
+    display: grid;
+    padding-left: 1rem;
+    grid-template-columns: max-content auto;
+    grid-template-rows: auto;
+    align-items: center
+}
+
+.header-container .title {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.header-container .segment {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 1rem;
+    min-height: 7rem;
+}
