@@ -1,9 +1,13 @@
 .trending-component-wrapper {
-    background: #DA4453;
-    color: #ffffff;
+    background: #D64545;
+    color: #FFFFFF;
     padding: 1rem;
 }
 
+.trending-component-wrapper .header {
+    margin-bottom: 1rem;
+}
+
 .trending-component-wrapper a {
-    color: #ffffff;
+    color: #FFFFFF;
 }

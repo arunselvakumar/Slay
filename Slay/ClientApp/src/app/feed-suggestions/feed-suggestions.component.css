@@ -1,3 +1,25 @@
-.description {
+.feed-suggestions-component-wrapper {
+    background: #EE4D4D;
+    color: #FFFFFF;
+    padding: 1rem;
+}
+
+.feed-suggestions-component-wrapper .header {
     margin-bottom: 1rem;
+}
+
+.feed-suggestions-component-wrapper .content .header {
+    font-weight: 700;
+    margin-bottom: 0rem;
+    line-height: 1.33em;
+}
+
+.feed-suggestions-component-wrapper .content .meta {
+    font-size: .9em;
+    color: #FFFFFF;
+    margin-bottom: 0.5rem;
+}
+
+.feed-suggestions-component-wrapper .content {
+    margin-bottom: 1rem;   
 }
