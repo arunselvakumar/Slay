@@ -1,20 +1,22 @@
 .navbar {
     display: grid;
-    grid-template-columns: repeat(5, 100px);
+    grid-template-columns: minmax(100px, max-content) minmax(500px, max-content) repeat(3, max-content);
     grid-template-rows: 5rem;
     background: #434A54;
-    margin-top: 1rem;
     margin-bottom: 1rem;
-}
-
-.navbar .nav-header {
-    background: #D64545;
-    padding-left: 1rem;
-    padding-top: 1.5rem;
 }
 
 .navbar .nav-item {
     color: #FFFFFF;
     padding-top: 1.5rem;
     padding-left: 0.5rem;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+}
+
+.navbar .nav-item .fas {
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
 }
