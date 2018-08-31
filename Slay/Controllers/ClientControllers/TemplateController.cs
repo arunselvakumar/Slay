@@ -27,6 +27,18 @@
             this._autoMapperService = autoMapperService;
             this._templateService = templateService;
         }
+
+        public async Task<IActionResult> GetTemplatesAsync([FromQuery] int skip = 0, [FromQuery] int limit = 10, CancellationToken token = default(CancellationToken))
+        {
+            try
+            {
+                return null;
+            }
+            catch (Exception)
+            {
+                return new EmptyResult();
+            }
+        }
         
         /// <summary>
         /// Uploads File to User's Blob Storage Account.
