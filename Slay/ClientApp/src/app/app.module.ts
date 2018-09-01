@@ -9,6 +9,7 @@ import { PostDetailsComponent } from './post-details/post-details.component';
 import { HeaderComponent } from './header/header.component';
 import { TrendingComponent } from './trending/trending.component';
 import { FeedSuggestionsComponent } from './feed-suggestions/feed-suggestions.component';
+import { MemePostComponentComponent } from './meme-post-component/meme-post-component.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FeedSuggestionsComponent } from './feed-suggestions/feed-suggestions.co
     PostDetailsComponent,
     HeaderComponent,
     TrendingComponent,
-    FeedSuggestionsComponent
+    FeedSuggestionsComponent,
+    MemePostComponentComponent
   ],
   imports: [
     BrowserModule

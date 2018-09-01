@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: minmax(100px, max-content) minmax(500px, max-content) repeat(3, max-content);
     grid-template-rows: 5rem;
-    background: #434A54;
+    background: #e53738;
     margin-bottom: 1rem;
 }
 
