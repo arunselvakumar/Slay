@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using Slay.Models.DataTransferObjects.Post.Links;
+    using Slay.Models.DataTransferObjects.Shared;
 
     public class CommentsListResponseDto
     {

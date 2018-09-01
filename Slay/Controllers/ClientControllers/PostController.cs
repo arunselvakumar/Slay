@@ -14,9 +14,9 @@
     using Slay.Business.ServicesContracts.Services;
     using Slay.Models.BusinessObjects.File;
     using Slay.Models.BusinessObjects.Post;
-    using Slay.Models.DataTransferObjects.Post.Links;
     using Slay.Models.DataTransferObjects.Post.Request;
     using Slay.Models.DataTransferObjects.Post.Response;
+    using Slay.Models.DataTransferObjects.Shared;
 
     /// <summary>
     /// The post controller.
@@ -111,7 +111,7 @@
                     Next = Url.Link(nameof(this.GetPostsAsync), new { skip = serviceResult.Value.Skip, limit = serviceResult.Value.Limit })
                 };
 
-                mapperResult.Data.ToList().ForEach(post => post.Links = new LinksDto { Base = this.GetBaseUrl(), Self = Url.Link(nameof(this.GetPostsAsync), new { id = post.Data.Id }) });
+                mapperResult.Data.ToList().ForEach(post => post.Links = new LinksDto { Base = this.GetBaseUrl(), Self = Url.Link(nameof(this.GetPostByIdAsync), new { id = post.Data.Id }) });
 
                 return new OkObjectResult(mapperResult);
             }
@@ -149,7 +149,7 @@
 
                 var mappedResult = this._autoMapperService.Map<PostResponseDto>(serviceResult.Value);
 
-                return this.CreatedAtRoute(nameof(this.CreatePostAsync), new { id = mappedResult.Data.Id }, mappedResult);
+                return this.CreatedAtRoute(nameof(this.GetPostByIdAsync), new { id = mappedResult.Data.Id }, mappedResult);
             }
             catch (Exception)
             {
@@ -224,11 +224,6 @@
             {
                 return new BadRequestResult();
             }
-        }
-
-        private string GetBaseUrl()
-        {
-            return Request.Scheme + "://" + Request.Host + Request.PathBase.Value.TrimEnd('/') + "/";
         }
     }
 }

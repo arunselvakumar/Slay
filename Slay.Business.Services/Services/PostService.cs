@@ -61,7 +61,7 @@
         {
             if (id.IsNullOrEmpty())
             {
-                return new ServiceResult<PostItemBo> { Errors = new[] { new Error { Code = "POSTID_MANDATORY_ERROR" } } };
+                return new ServiceResult<PostItemBo> { Errors = new[] { new Error { Code = "POST_POSTID_MANDATORY_ERROR" } } };
             }
 
             var repositoryResult = await this._postRepository.GetByIdAsync(id, token);
@@ -80,7 +80,7 @@
 
             var sortOptions = new List<SortingOptions> { sortingOptions };
 
-            var repositoryResult = await this._postRepository.GetAsync(post => post.IsDeleted == false, pagingOptions, sortOptions, token);
+            var repositoryResult = await this._postRepository.GetAsync(post => !post.IsDeleted, pagingOptions, sortOptions, token);
 
             var mapperResult = this._autoMapperService.Map<IEnumerable<PostItemBo>>(repositoryResult);
 
@@ -140,7 +140,7 @@
 
         private async Task<PostsListResponseBo> MapPostsResultsWithPageOptions(int skip, int limit, IEnumerable<PostItemBo> mapperResult, CancellationToken token)
         {
-            var postsCount = await this._postRepository.CountAsync(postEntity => postEntity.IsDeleted == false, token);
+            var postsCount = await this._postRepository.CountAsync(postEntity => !postEntity.IsDeleted, token);
 
             var postsResponseBo = new PostsListResponseBo
             {

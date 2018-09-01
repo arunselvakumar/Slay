@@ -13,7 +13,7 @@
     using Slay.Business.ServicesContracts.Services;
     using Slay.Models.BusinessObjects.Comment;
     using Slay.Models.DataTransferObjects.Comment;
-    using Slay.Models.DataTransferObjects.Post.Links;
+    using Slay.Models.DataTransferObjects.Shared;
 
     [Produces("application/json")]
     [Route("api/Post/{postId}/Comment")]

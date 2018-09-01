@@ -1,4 +1,4 @@
-﻿namespace Slay.Models.DataTransferObjects.Post.Links
+﻿namespace Slay.Models.DataTransferObjects.Shared
 {
     using Newtonsoft.Json;
 

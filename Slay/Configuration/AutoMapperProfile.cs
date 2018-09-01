@@ -12,10 +12,12 @@
     using Slay.Models.BusinessObjects.Comment;
     using Slay.Models.BusinessObjects.File;
     using Slay.Models.BusinessObjects.Post;
+    using Slay.Models.BusinessObjects.Template;
     using Slay.Models.DataTransferObjects.Category;
     using Slay.Models.DataTransferObjects.Comment;
     using Slay.Models.DataTransferObjects.Post.Request;
     using Slay.Models.DataTransferObjects.Post.Response;
+    using Slay.Models.DataTransferObjects.Template;
     using Slay.Models.Entities;
     using Slay.Models.Enums;
     using Slay.Utilities.Extensions;
@@ -27,6 +29,7 @@
             this.ConfigurePostMappers();
             this.ConfigurePostCategoryMappers();
             this.ConfigureCommentMappers();
+            this.ConfigureTemplateMappers();
             this.ConfigureFileMappers();
         }
 
@@ -85,6 +88,20 @@
             this.CreateMap<CommentsListResponseBo, CommentsListResponseDto>()
                 .ForMember(commentResponseDto => commentResponseDto.Data, opt => opt.MapFrom(x => x.Comments))
                 .ForMember(commentResponseDto => commentResponseDto.Links, opt => opt.Ignore());
+        }
+
+        private void ConfigureTemplateMappers()
+        {
+            this.CreateMap<TemplateEntity, TemplateItemBo>();
+
+            this.CreateMap<TemplateItemBo, TemplateDto>();
+            this.CreateMap<TemplateItemBo, TemplateResponseDto>()
+                .ForMember(templateResponseDto => templateResponseDto.Data, opt => opt.MapFrom(x => x))
+                .ForMember(templateResponseDto => templateResponseDto.TimeStamp, opt => opt.MapFrom(x => new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds()))
+                .ForMember(templateResponseDto => templateResponseDto.Links, opt => opt.Ignore());
+
+            this.CreateMap<TemplateListResponseBo, TemplateListResponseDto>()
+                .ForMember(templateListResponseDto => templateListResponseDto.Data, opt => opt.MapFrom(x => x.Templates));
         }
 
         private void ConfigureFileMappers()

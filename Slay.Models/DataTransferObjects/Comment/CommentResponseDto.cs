@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    using Slay.Models.DataTransferObjects.Post.Links;
+    using Slay.Models.DataTransferObjects.Shared;
 
     public sealed class CommentResponseDto
     {

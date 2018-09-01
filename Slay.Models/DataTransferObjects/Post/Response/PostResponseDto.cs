@@ -1,7 +1,6 @@
 ﻿namespace Slay.Models.DataTransferObjects.Post.Response
 {
-
-    using Slay.Models.DataTransferObjects.Post.Links;
+    using Slay.Models.DataTransferObjects.Shared;
 
     public sealed class PostResponseDto
     {

@@ -1,6 +1,6 @@
 ﻿namespace Slay.Models.DataTransferObjects.Category
 {
-    using Slay.Models.DataTransferObjects.Post.Links;
+    using Slay.Models.DataTransferObjects.Shared;
 
     public sealed class CreateCategoryResponseDto
     {
