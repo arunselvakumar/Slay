@@ -1,0 +1,54 @@
+.meme-post-container {
+    display: grid;
+    background: #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #f76564;
+    border-radius: 3px;
+    grid-template-rows: 5rem auto 3rem 3rem;
+}
+
+.meme-post-container .header {
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 5rem auto 10rem;
+}
+
+.meme-post-container .header .avatar img {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 500rem;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    margin-right: 0.25rem;
+}
+
+.meme-post-container .header .user {
+    margin-top: 2rem;
+}
+
+.meme-post-container .header .moments {
+    margin-top: 2rem;
+    margin-right: 1rem;
+    font-size: 0.9rem;
+    text-align: right;
+    color: rgba(0,0,0,.4);
+}
+
+.meme-post-container .content {
+    grid-row: 2;
+}
+
+.meme-post-container .content img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.2rem;
+}
+
+.meme-post-container .buttons-ui {
+    grid-row: 3;
+}
+
+.meme-post-container .comments-ui {
+    grid-row: 4;
+}

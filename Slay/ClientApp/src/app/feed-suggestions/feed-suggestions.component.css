@@ -1,5 +1,6 @@
 .feed-suggestions-component-wrapper {
     background: #f73d3e;
+    border-radius: 0.25rem;
     color: #FFFFFF;
     padding: 1rem;
 }

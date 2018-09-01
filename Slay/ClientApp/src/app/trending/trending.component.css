@@ -2,6 +2,7 @@
     background: #f73d3e;
     color: #FFFFFF;
     padding: 1rem;
+    border-radius: 0.25rem;
 }
 
 .trending-component-wrapper .header {
