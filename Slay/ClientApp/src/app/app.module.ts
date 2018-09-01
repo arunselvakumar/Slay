@@ -10,6 +10,7 @@ import { HeaderComponent } from './header/header.component';
 import { TrendingComponent } from './trending/trending.component';
 import { FeedSuggestionsComponent } from './feed-suggestions/feed-suggestions.component';
 import { MemePostComponentComponent } from './meme-post-component/meme-post-component.component';
+import { RightBannerAdunitComponent } from './right-banner-adunit/right-banner-adunit.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MemePostComponentComponent } from './meme-post-component/meme-post-comp
     HeaderComponent,
     TrendingComponent,
     FeedSuggestionsComponent,
-    MemePostComponentComponent
+    MemePostComponentComponent,
+    RightBannerAdunitComponent
   ],
   imports: [
     BrowserModule
