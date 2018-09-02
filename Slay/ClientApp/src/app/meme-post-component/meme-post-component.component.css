@@ -63,5 +63,12 @@
 }
 
 .meme-post-container .comments-ui {
+    padding: 0.5rem;
     grid-row: 4;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.meme-post-container .comments-ui .comments {
+    text-align: right;
 }
