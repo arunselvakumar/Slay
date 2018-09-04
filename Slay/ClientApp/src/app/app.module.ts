@@ -11,6 +11,9 @@ import { TrendingComponent } from './trending/trending.component';
 import { FeedSuggestionsComponent } from './feed-suggestions/feed-suggestions.component';
 import { MemePostComponentComponent } from './meme-post-component/meme-post-component.component';
 import { RightBannerAdunitComponent } from './right-banner-adunit/right-banner-adunit.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
+import { ProfileJumbotronComponent } from './profile/profile-jumbotron/profile-jumbotron.component';
 
 @NgModule({
   declarations: [
@@ -23,10 +26,13 @@ import { RightBannerAdunitComponent } from './right-banner-adunit/right-banner-a
     TrendingComponent,
     FeedSuggestionsComponent,
     MemePostComponentComponent,
-    RightBannerAdunitComponent
+    RightBannerAdunitComponent,
+    ProfileComponent,
+    ProfileJumbotronComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
