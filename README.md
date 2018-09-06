@@ -7,3 +7,6 @@ Adding Push Notifications to a Web App : https://developers.google.com/web/funda
 ## CSS Style Guide 
 https://github.com/airbnb/css <br>
 https://github.com/bevacqua/css <br>
+
+## Modern CSS References
+https://alligator.io/css/align-justify/ <br>
