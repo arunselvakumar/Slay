@@ -1,0 +1,19 @@
+.pc-container {
+    display: grid;
+    grid-template-columns: 200px auto 200px;
+    align-items: center;
+}
+
+.pc-container 
+.pc-profile-image-container {
+    align-self: center;
+    justify-self: center;
+}
+
+.pc-container
+.pc-profile-image-container
+.pc-profile-image {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+}
