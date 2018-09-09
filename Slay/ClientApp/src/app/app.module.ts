@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ProfileCoverComponent } from './components/profile/profile-cover/profile-cover.component';
 import { ProfileSheetComponent } from './components/profile/profile-sheet/profile-sheet.component';
 import { ProfileNavComponent } from './components/profile/profile-nav/profile-nav.component';
+import { ProfilePostsComponent } from './components/profile/profile-posts/profile-posts.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ProfileNavComponent } from './components/profile/profile-nav/profile-na
     ProfileComponent,
     ProfileCoverComponent,
     ProfileSheetComponent,
-    ProfileNavComponent
+    ProfileNavComponent,
+    ProfilePostsComponent
   ],
   imports: [
     BrowserModule,
