@@ -1,19 +1,65 @@
 .pc-container {
+    color: #434A54;
+
     display: grid;
     grid-template-columns: 200px auto 200px;
     align-items: center;
 }
 
 .pc-container 
-.pc-profile-image-container {
+.profile-image-container {
     align-self: center;
     justify-self: center;
 }
 
 .pc-container
-.pc-profile-image-container
-.pc-profile-image {
+.profile-image-container
+.profile-image {
     height: 150px;
     width: 150px;
     border-radius: 50%;
+}
+
+.pc-container
+.profile-details-container
+.profile-details {
+    display: grid;
+    grid-gap: 0.2rem;
+}
+
+.pc-container
+.profile-details-container
+.profile-details
+.profile-detail-username {
+    color: #323133;
+}
+
+.pc-container
+.profile-details-container
+.profile-details 
+.profile-detail-name {
+    text-transform: uppercase;
+}
+
+.pc-container
+.profile-details-container
+.profile-details 
+.profile-detail-name 
+.profile-detail-firstname {
+    color: #323133;
+}
+
+.pc-container
+.profile-details-container
+.profile-details 
+.profile-detail-name
+.profile-detail-lastname {
+    color: #00b899;
+}
+
+.pc-container
+.profile-details-container
+.profile-details
+.profile-detail-joineddate-title {
+    color: #323133;
 }
