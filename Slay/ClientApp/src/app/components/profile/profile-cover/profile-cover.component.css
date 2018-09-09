@@ -1,10 +1,9 @@
 .pc-container {
-    border-radius: 0.1rem;
-    border-style: solid;
-    border-width: 1px;
     opacity: 0.96;
-    background: #ffffff;
-    color: #434A54;
+    padding: 1rem;
+    background: #524cb8;
+    color: #F1F2EE;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 
     display: grid;
     grid-template-columns: 200px auto 200px;
@@ -39,13 +38,6 @@
 
 .pc-container
 .profile-details-container
-.profile-details
-.profile-detail-username {
-    color: #323133;
-}
-
-.pc-container
-.profile-details-container
 .profile-details 
 .profile-detail-name {
     text-transform: uppercase;
@@ -63,24 +55,9 @@
 .pc-container
 .profile-details-container
 .profile-details 
-.profile-detail-name 
-.profile-detail-firstname {
-    color: #323133;
-}
-
-.pc-container
-.profile-details-container
-.profile-details 
-.profile-detail-name
-.profile-detail-lastname {
-    color: #00b899;
-}
-
-.pc-container
-.profile-details-container
-.profile-details
-.profile-detail-joineddate-title {
-    color: #323133;
+.profile-detail-name-wrapper
+.profile-detail-name {
+    color: #ff0324;
 }
 
 .pc-container 
@@ -89,18 +66,4 @@
     display: grid;
     grid-gap: 10px;
     grid-template-columns: fit-content(40%) fit-content(40%) fit-content(40%);
-}
-
-.pc-container 
-.profile-details-container
-.profile-stats-wrapper
-.profile-stats-icon {
-    color: #323133;
-}
-
-.pc-container 
-.profile-details-container
-.profile-stats-wrapper
-.profile-stats-label {
-    color: #323133;
 }

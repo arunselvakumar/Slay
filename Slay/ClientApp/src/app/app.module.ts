@@ -14,6 +14,8 @@ import { RightBannerAdunitComponent } from './right-banner-adunit/right-banner-a
 import { ProfileComponent } from './components/profile/profile.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ProfileCoverComponent } from './components/profile/profile-cover/profile-cover.component';
+import { ProfileSheetComponent } from './components/profile/profile-sheet/profile-sheet.component';
+import { ProfileNavComponent } from './components/profile/profile-nav/profile-nav.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { ProfileCoverComponent } from './components/profile/profile-cover/profil
     MemePostComponentComponent,
     RightBannerAdunitComponent,
     ProfileComponent,
-    ProfileCoverComponent
+    ProfileCoverComponent,
+    ProfileSheetComponent,
+    ProfileNavComponent
   ],
   imports: [
     BrowserModule,
