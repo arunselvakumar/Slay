@@ -21,6 +21,11 @@
 }
 
 .pc-container
+.profile-details-container {
+    align-self: center;
+}
+
+.pc-container
 .profile-details-container
 .profile-details {
     display: grid;
@@ -61,5 +66,29 @@
 .profile-details-container
 .profile-details
 .profile-detail-joineddate-title {
+    color: #323133;
+}
+
+.pc-container 
+.profile-stats-container {
+    align-self: end;
+}
+
+.pc-container
+.profile-stats-container {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.pc-container
+.profile-stats-container 
+.profile-stats-label {
+    color: #00b899;
+    text-transform: uppercase;
+}
+
+.pc-container
+.profile-stats-container 
+.profile-stats-icon {
     color: #323133;
 }
