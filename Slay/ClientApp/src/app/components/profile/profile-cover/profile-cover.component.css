@@ -70,25 +70,23 @@
 }
 
 .pc-container 
-.profile-stats-container {
-    align-self: end;
+.profile-details-container
+.profile-stats-wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: fit-content(40%) fit-content(40%) fit-content(40%);
 }
 
-.pc-container
-.profile-stats-container {
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.pc-container
-.profile-stats-container 
-.profile-stats-label {
-    color: #00b899;
-    text-transform: uppercase;
-}
-
-.pc-container
-.profile-stats-container 
+.pc-container 
+.profile-details-container
+.profile-stats-wrapper
 .profile-stats-icon {
+    color: #323133;
+}
+
+.pc-container 
+.profile-details-container
+.profile-stats-wrapper
+.profile-stats-label {
     color: #323133;
 }
