@@ -50,6 +50,15 @@
 .profile-details-container
 .profile-details 
 .profile-detail-name 
+.profile-detail-hello {
+    text-transform: initial;
+    font-weight: 500;
+}
+
+.pc-container
+.profile-details-container
+.profile-details 
+.profile-detail-name 
 .profile-detail-firstname {
     color: #323133;
 }
