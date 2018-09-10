@@ -1,8 +1,9 @@
 .profile-nav-container {
-    padding: 1rem;
+    padding: 0.5rem;
     background: #ffffff;
     opacity: 0.95;
     text-align: center;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .profile-nav-container 
@@ -25,4 +26,5 @@ a {
     text-transform: uppercase;
     color: #ff0324;
     font-size: 1rem;
+    font-weight: 500;
 }
