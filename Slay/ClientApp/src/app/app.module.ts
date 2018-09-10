@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { AdsenseModule } from 'ng2-adsense';
 
 import { AppComponent } from './app.component';
 import { NavigationHeaderComponent } from './navigation-header/navigation-header.component';
@@ -18,6 +19,7 @@ import { ProfileSheetComponent } from './components/profile/profile-sheet/profil
 import { ProfileNavComponent } from './components/profile/profile-nav/profile-nav.component';
 import { ProfilePostsComponent } from './components/profile/profile-posts/profile-posts.component';
 import { ProfilePostComponent } from './components/profile/profile-post/profile-post.component';
+import { ScrapbookComponent } from './components/profile/scrapbook/scrapbook.component';
 
 @NgModule({
   declarations: [
@@ -36,11 +38,16 @@ import { ProfilePostComponent } from './components/profile/profile-post/profile-
     ProfileSheetComponent,
     ProfileNavComponent,
     ProfilePostsComponent,
-    ProfilePostComponent
+    ProfilePostComponent,
+    ScrapbookComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AdsenseModule.forRoot({
+      adClient: 'ca-pub-6185517953080782',
+      adSlot: 7259870550,
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
