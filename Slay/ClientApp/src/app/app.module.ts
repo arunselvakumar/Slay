@@ -17,6 +17,7 @@ import { ProfileCoverComponent } from './components/profile/profile-cover/profil
 import { ProfileSheetComponent } from './components/profile/profile-sheet/profile-sheet.component';
 import { ProfileNavComponent } from './components/profile/profile-nav/profile-nav.component';
 import { ProfilePostsComponent } from './components/profile/profile-posts/profile-posts.component';
+import { ProfilePostComponent } from './components/profile/profile-post/profile-post.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ProfilePostsComponent } from './components/profile/profile-posts/profil
     ProfileCoverComponent,
     ProfileSheetComponent,
     ProfileNavComponent,
-    ProfilePostsComponent
+    ProfilePostsComponent,
+    ProfilePostComponent
   ],
   imports: [
     BrowserModule,

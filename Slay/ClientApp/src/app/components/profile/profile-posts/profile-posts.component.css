@@ -1,0 +1,6 @@
+.profile-posts-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1.5rem;
+    background: #ffffff;
+}
