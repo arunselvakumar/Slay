@@ -1,13 +1,13 @@
 .pc-container {
-    opacity: 0.96;
     padding: 1rem;
-    background: #524cb8;
+    background: #ff0324;
     color: #F1F2EE;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 
     display: grid;
     grid-template-columns: 200px auto 200px;
     align-items: center;
+    border : 0px 0px 2px 0px;
+    border-color: #F1F2EE;
 }
 
 .pc-container 
@@ -57,7 +57,7 @@
 .profile-details 
 .profile-detail-name-wrapper
 .profile-detail-name {
-    color: #ff0324;
+    color: #F1F2EE;
 }
 
 .pc-container 

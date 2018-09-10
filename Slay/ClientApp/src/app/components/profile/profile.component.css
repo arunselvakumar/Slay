@@ -1,3 +1,8 @@
 .profile-component-container {
     display: grid;
 }
+
+.profile-component-container
+.profile-header-container {
+    box-shadow: 0px 10px 21px 1px rgba(255,3,36,0.25);
+}
