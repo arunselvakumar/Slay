@@ -10,6 +10,23 @@
     text-align: center;
 }
 
+.scrapbook-container
+.scrapbook-post-wrapper
+.scrap-post 
+.scrap-post-header-label {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: #544B4A;
+}
+
+.scrapbook-container
+.scrapbook-post-wrapper
+.scrap-post 
+.scrap-post-description-label {
+    font-size: 1.2rem;
+    margin: 5px 0px;
+}
+
 textarea {
     width: 100%;
     border: 1px solid rgba(34,36,38,.15);
