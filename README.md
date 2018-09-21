@@ -1,5 +1,7 @@
 # Welcome to 'Slay' Source Repo
 
+[![AUR](https://img.shields.io/aur/license/yaourt.svg)](https://github.com/arunselvakumar/Slay/blob/master/LICENSE)
+
 Designing Beautiful REST APIs : https://github.com/nbarbettini/BeautifulRestApi <br>
 Microsoft API Guidelines : https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md <br>
 Adding Push Notifications to a Web App : https://developers.google.com/web/fundamentals/codelabs/push-notifications/ <br>
