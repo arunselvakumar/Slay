@@ -15,7 +15,6 @@ import { RightBannerAdunitComponent } from './right-banner-adunit/right-banner-a
 import { ProfileComponent } from './components/profile/profile.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ProfileCoverComponent } from './components/profile/profile-cover/profile-cover.component';
-import { ProfileSheetComponent } from './components/profile/profile-sheet/profile-sheet.component';
 import { ProfileNavComponent } from './components/profile/profile-nav/profile-nav.component';
 import { ProfilePostsComponent } from './components/profile/profile-posts/profile-posts.component';
 import { ProfilePostComponent } from './components/profile/profile-post/profile-post.component';
@@ -36,7 +35,6 @@ import { ScrapComponent } from './components/profile/scrap/scrap.component';
     RightBannerAdunitComponent,
     ProfileComponent,
     ProfileCoverComponent,
-    ProfileSheetComponent,
     ProfileNavComponent,
     ProfilePostsComponent,
     ProfilePostComponent,
