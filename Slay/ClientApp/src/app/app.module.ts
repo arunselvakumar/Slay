@@ -20,6 +20,8 @@ import { ProfilePostsComponent } from './components/profile/profile-posts/profil
 import { ProfilePostComponent } from './components/profile/profile-post/profile-post.component';
 import { ScrapbookComponent } from './components/profile/scrapbook/scrapbook.component';
 import { ScrapComponent } from './components/profile/scrap/scrap.component';
+import { FollowersListComponent } from './components/profile/followers-list/followers-list.component';
+import { FollowingListComponent } from './components/profile/following-list/following-list.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { ScrapComponent } from './components/profile/scrap/scrap.component';
     ProfilePostsComponent,
     ProfilePostComponent,
     ScrapbookComponent,
-    ScrapComponent
+    ScrapComponent,
+    FollowersListComponent,
+    FollowingListComponent
   ],
   imports: [
     BrowserModule,
