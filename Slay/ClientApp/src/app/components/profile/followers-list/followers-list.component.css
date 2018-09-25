@@ -1,0 +1,34 @@
+.flc-followers-list-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 1rem;
+}
+
+.flc-followers-list-container .follower-card-wrapper {
+  display: grid;
+  grid-template-rows: auto auto;
+
+  background: #FFFFFF;
+  border: 1px solid #d4d4d5;
+  border-radius: 5px;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.flc-followers-list-container .follower-card-wrapper .card-header-wrapper {
+  display: grid;
+  grid-template-columns: auto 70px;
+}
+
+.flc-followers-list-container .follower-card-wrapper .card-header-wrapper .card-user {
+  justify-self: center;
+}
+
+.flc-followers-list-container .follower-card-wrapper .card-header-wrapper .card-user .profile-image {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+
+  grid-row: 1 / 3;
+  grid-column: 2;
+}
