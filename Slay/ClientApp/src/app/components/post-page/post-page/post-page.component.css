@@ -1,0 +1,23 @@
+.post-page-container {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 2fr;
+  height: 80vh;
+}
+
+.post-page-container .post-header {
+  text-transform: uppercase;
+  text-align: right;
+  margin: 0.5rem;
+  align-self: center;
+}
+
+.post-page-container .post-content {
+  margin: 0.5rem;
+  align-self: center;
+}
+
+.post-page-container .post-content img{
+  height: auto;
+  width: 100%;
+  align-self: center;
+}

@@ -8,11 +8,13 @@ import { FollowersListComponent } from "../components/profile/followers-list/fol
 import { HomeComponent } from '../components/dashboard/home/home.component';
 import { BlogComponent } from '../components/blog/blog/blog.component';
 import { HowtoComponent } from '../components/howto/howto/howto.component';
+import { PostPageComponent } from '../components/post-page/post-page/post-page.component';
 
 
 const rootRoutes: Routes = [
   { path: "blog", component: BlogComponent },
   { path: "howto", component: HowtoComponent },
+  { path: "post/:postId", component: PostPageComponent },
   { path: "", component: HomeComponent },
   { path: "home", redirectTo: "" },
   {
