@@ -23,6 +23,8 @@ import { ScrapComponent } from './components/profile/scrap/scrap.component';
 import { FollowersListComponent } from './components/profile/followers-list/followers-list.component';
 import { FollowingListComponent } from './components/profile/following-list/following-list.component';
 import { HomeComponent } from './components/dashboard/home/home.component';
+import { BlogComponent } from './components/blog/blog/blog.component';
+import { HowtoComponent } from './components/howto/howto/howto.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { HomeComponent } from './components/dashboard/home/home.component';
     ScrapComponent,
     FollowersListComponent,
     FollowingListComponent,
-    HomeComponent
+    HomeComponent,
+    BlogComponent,
+    HowtoComponent
   ],
   imports: [
     BrowserModule,

@@ -6,8 +6,15 @@ import { ScrapbookComponent } from "../components/profile/scrapbook/scrapbook.co
 import { FollowingListComponent } from "../components/profile/following-list/following-list.component";
 import { FollowersListComponent } from "../components/profile/followers-list/followers-list.component";
 import { HomeComponent } from '../components/dashboard/home/home.component';
+import { BlogComponent } from '../components/blog/blog/blog.component';
+import { HowtoComponent } from '../components/howto/howto/howto.component';
+
 
 const rootRoutes: Routes = [
+  { path: "blog", component: BlogComponent },
+  { path: "howto", component: HowtoComponent },
+  { path: "", component: HomeComponent },
+  { path: "home", redirectTo: "" },
   {
     path: ":userId",
     component: ProfileComponent,
@@ -20,7 +27,6 @@ const rootRoutes: Routes = [
       { path: "**", redirectTo: "" }
     ]
   },
-  { path: "", component: HomeComponent },
   { path: "**", redirectTo: "" }
 ];
 
