@@ -5,6 +5,7 @@ import { ProfilePostsComponent } from "../components/profile/profile-posts/profi
 import { ScrapbookComponent } from "../components/profile/scrapbook/scrapbook.component";
 import { FollowingListComponent } from "../components/profile/following-list/following-list.component";
 import { FollowersListComponent } from "../components/profile/followers-list/followers-list.component";
+import { HomeComponent } from '../components/dashboard/home/home.component';
 
 const rootRoutes: Routes = [
   {
@@ -19,7 +20,8 @@ const rootRoutes: Routes = [
       { path: "**", redirectTo: "" }
     ]
   },
-  { path: "", redirectTo: "home", pathMatch: "full" }
+  { path: "", component: HomeComponent },
+  { path: "**", redirectTo: "" }
 ];
 
 @NgModule({
