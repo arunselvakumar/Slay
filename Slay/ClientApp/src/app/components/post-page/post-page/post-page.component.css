@@ -20,3 +20,11 @@
   height: auto;
   width: 100%;
 }
+
+.post-page-container .post-comments-wrapper {
+  margin: 0.5rem;
+}
+
+.post-page-container .post-comments-wrapper h4 {
+  text-transform: uppercase;
+}

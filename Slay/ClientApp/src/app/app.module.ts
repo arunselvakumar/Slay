@@ -26,6 +26,7 @@ import { HomeComponent } from './components/dashboard/home/home.component';
 import { BlogComponent } from './components/blog/blog/blog.component';
 import { HowtoComponent } from './components/howto/howto/howto.component';
 import { PostPageComponent } from './components/post-page/post-page/post-page.component';
+import { CommentComponent } from './components/post-page/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { PostPageComponent } from './components/post-page/post-page/post-page.co
     HomeComponent,
     BlogComponent,
     HowtoComponent,
-    PostPageComponent
+    PostPageComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,
