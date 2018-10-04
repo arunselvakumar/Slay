@@ -13,6 +13,8 @@
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
                 .AddTestUsers(InMemoryConfiguration.Users().ToList())
@@ -23,15 +25,15 @@
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseIdentityServer();
+
+            app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
