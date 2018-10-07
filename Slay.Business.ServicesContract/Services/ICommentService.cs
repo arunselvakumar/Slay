@@ -10,17 +10,8 @@
 
     public interface ICommentService
     {
-        Task<ServiceResult<CommentItemBo>> CreateCommentAsync(
-            [NotNull] string postId,
-            string commentId,
-            [NotNull] CreateCommentRequestBo createCommentRequestBo,
-            CancellationToken token);
+        Task<ServiceResult<CommentItemBo>> CreateCommentAsync([NotNull] string postId, string commentId, [NotNull] CreateCommentRequestBo createCommentRequestBo, CancellationToken token);
 
-        Task<ServiceResult<CommentsListResponseBo>> GetCommentsAsync(
-            [NotNull] string postId,
-            string commentId,
-            int skip,
-            int limit,
-            CancellationToken token);
+        Task<ServiceResult<CommentsListResponseBo>> GetCommentsAsync([NotNull] string postId, string commentId, int skip, int limit, CancellationToken token);
     }
 }
