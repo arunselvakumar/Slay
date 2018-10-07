@@ -2,7 +2,7 @@
 {
     using Slay.Models.Entities;
 
-    public interface ITemplateRepository : IRepository<TemplateEntity>
+    public interface IUserRepository : IRepository<UserIdentityEntity>
     {
     }
 }

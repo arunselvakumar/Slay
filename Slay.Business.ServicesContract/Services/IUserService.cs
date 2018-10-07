@@ -10,8 +10,8 @@
 
     public interface IUserService
     {
-        Task<ServiceResult<UserBo>> GetFollowersList([NotNull] string userId, CancellationToken token);
+        Task<ServiceResult<UserIdentityBo>> GetFollowersList([NotNull] string userId, CancellationToken token);
 
-        Task<ServiceResult<UserBo>> GetFollowingList([NotNull] string userId, CancellationToken token);
+        Task<ServiceResult<UserIdentityBo>> GetFollowingList([NotNull] string userId, CancellationToken token);
     }
 }
