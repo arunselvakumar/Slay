@@ -9,12 +9,22 @@
 
     public sealed class UserService : IUserService
     {
-        public Task<ServiceResult<UserIdentityBo>> GetFollowersList(string userId, CancellationToken token)
+        public async Task<ServiceResult<UserIdentityBo>> GetFollowersList(string userId, CancellationToken token)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<ServiceResult<UserIdentityBo>> GetFollowingList(string userId, CancellationToken token)
+        public async Task<ServiceResult<UserIdentityBo>> GetFollowingList(string userId, CancellationToken token)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<ServiceResult<object>> FollowUser(string userId, CancellationToken token)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<ServiceResult<object>> UnfollowUser(string userId, CancellationToken token)
         {
             throw new System.NotImplementedException();
         }

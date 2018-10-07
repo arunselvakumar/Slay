@@ -6,5 +6,10 @@
         {
             return @this == null;
         }
+
+        public static bool IsNotNull(this object @this)
+        {
+            return @this != null;
+        }
     }
 }

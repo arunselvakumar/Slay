@@ -32,6 +32,7 @@
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ICommentAggregationService, CommentAggregationService>();
             services.AddScoped<ITemplateService, TemplateService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IAzureStorageServicesFacade, AzureStorageServicesFacade>();
 
@@ -39,6 +40,7 @@
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ITemplateRepository, TemplateRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<IValidationsProvider, ValidationsProvider>();
 

@@ -1,6 +1,7 @@
 ﻿namespace Slay.Models.Entities
 {
     using System;
+    using System.Collections.Generic;
 
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
@@ -21,8 +22,11 @@
         [JsonProperty(PropertyName = "email")]
         public string Email { get; set; }
 
-        [JsonProperty(PropertyName = "phonenumber")]
-        public string PhoneNumber { get; set; }
+        [JsonProperty(PropertyName = "followers")]
+        public IEnumerable<string> Followers { get; set; }
+
+        [JsonProperty(PropertyName = "following")]
+        public IEnumerable<string> Following { get; set; }
 
         [JsonProperty(PropertyName = "createdon")]
         public DateTime CreatedOn { get; set; }
