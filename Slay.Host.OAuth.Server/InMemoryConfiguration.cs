@@ -20,16 +20,19 @@
 
         public static IEnumerable<Client> Clients()
         {
-            return new[] { new Client
-                               {
-                                    ClientId = "socialnetwork",
-                                    AllowedGrantTypes = { GrantType.Implicit },
-                                    AllowedScopes = { "socialnetwork_fullaccess" },
-                                    AccessTokenType = AccessTokenType.Jwt,
-                                    RedirectUris = { "http://localhost:50366/signin-oidc" },
-                                    PostLogoutRedirectUris = { "http://localhost:50366/signout-callback-oidc" },
-                                    ClientSecrets = { new Secret("secret".ToSha256()) }
-                               } };
+            return new[]
+            {
+                new Client
+                {
+                    ClientId = "socialnetwork",
+                    AllowedGrantTypes = { GrantType.Implicit },
+                    AllowedScopes = { "socialnetwork_fullaccess" },
+                    AccessTokenType = AccessTokenType.Jwt,
+                    RedirectUris = { "http://localhost:50366/signin-oidc" },
+                    PostLogoutRedirectUris = { "http://localhost:50366/signout-callback-oidc" },
+                    ClientSecrets = { new Secret("secret".ToSha256()) }
+                }
+            };
         }
 
         public static IEnumerable<TestUser> Users()
