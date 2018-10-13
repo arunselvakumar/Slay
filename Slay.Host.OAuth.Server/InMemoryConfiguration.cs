@@ -16,7 +16,7 @@
     {
         public static IEnumerable<ApiResource> ApiResources()
         {
-            return new[] { new ApiResource { Name = "socialnetwork_fullaccess", DisplayName = "Social Network" } };
+            return new[] { new ApiResource { Name = "socialnetwork_fullaccess", DisplayName = "Social Network", Scopes = new List<Scope> { new Scope("socialnetwork_fullaccess") }} };
         }
 
         public static IEnumerable<Client> Clients()
