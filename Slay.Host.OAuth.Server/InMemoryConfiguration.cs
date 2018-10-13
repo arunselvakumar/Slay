@@ -32,7 +32,8 @@
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
                     RedirectUris = { "http://localhost:4200/assets/html/oidc/oidc-login-redirect.html" },
-                    PostLogoutRedirectUris = { "http://localhost:50366/signout-callback-oidc" },
+                    FrontChannelLogoutSessionRequired = false,
+                    PostLogoutRedirectUris = { "http://localhost:4200/?postLogout=true" },
                     ClientSecrets = { new Secret("secret".ToSha256()) },
                     AllowedCorsOrigins = new List<string>
                     {

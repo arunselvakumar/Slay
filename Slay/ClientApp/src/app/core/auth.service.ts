@@ -15,7 +15,7 @@ export class AuthService {
       redirect_uri: 'http://localhost:4200/assets/html/oidc/oidc-login-redirect.html',
       scope: 'openid socialnetwork_fullaccess',
       response_type: 'id_token token',
-      post_logout_redirect_uri: 'http://www.google.com',
+      post_logout_redirect_uri: 'http://localhost:4200/?postLogout=true',
       userStore: new WebStorageStateStore({store: window.localStorage})
     };
 
@@ -42,5 +42,9 @@ export class AuthService {
 
   getAccessToken(): string {
     return this._user ? this._user.access_token : '';
+  }
+
+  signOutRedirectCallback(): Promise<any> {
+    return this._userManager.signoutRedirectCallback();
   }
 }
