@@ -27,6 +27,8 @@ import { BlogComponent } from './components/blog/blog/blog.component';
 import { HowtoComponent } from './components/howto/howto/howto.component';
 import { PostPageComponent } from './components/post-page/post-page/post-page.component';
 import { CommentComponent } from './components/post-page/comment/comment.component';
+import {AuthService} from './core/auth.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { CommentComponent } from './components/post-page/comment/comment.compone
     CommentComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     AdsenseModule.forRoot({
@@ -63,7 +66,7 @@ import { CommentComponent } from './components/post-page/comment/comment.compone
       adSlot: 7259870550,
     })
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

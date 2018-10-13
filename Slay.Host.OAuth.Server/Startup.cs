@@ -20,7 +20,7 @@
                 .AddTestUsers(InMemoryConfiguration.Users().ToList())
                 .AddInMemoryClients(InMemoryConfiguration.Clients())
                 .AddInMemoryApiResources(InMemoryConfiguration.ApiResources())
-                .AddInMemoryIdentityResources(new List<IdentityResource> { new IdentityResource("socialnetwork", new [] { "socialnetwork" }) });
+                .AddInMemoryIdentityResources(new List<IdentityResource> { new IdentityResources.OpenId(), new IdentityResources.Profile(), new IdentityResource("socialnetwork_fullaccess", new [] { "socialnetwork_fullaccess" }) });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -4,6 +4,7 @@
 
     using IdentityModel;
 
+    using IdentityServer4;
     using IdentityServer4.Models;
     using IdentityServer4.Test;
 
@@ -15,7 +16,7 @@
     {
         public static IEnumerable<ApiResource> ApiResources()
         {
-            return new[] { new ApiResource { Name = "socialnetwork", DisplayName = "Social Network", Scopes = new List<Scope> { new Scope { Name = "socialnetwork_fullaccess" } } } };
+            return new[] { new ApiResource { Name = "socialnetwork_fullaccess", DisplayName = "Social Network" } };
         }
 
         public static IEnumerable<Client> Clients()
@@ -26,11 +27,19 @@
                 {
                     ClientId = "socialnetwork",
                     AllowedGrantTypes = { GrantType.Implicit },
-                    AllowedScopes = { "socialnetwork_fullaccess" },
+                    AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, "socialnetwork_fullaccess" },
                     AccessTokenType = AccessTokenType.Jwt,
-                    RedirectUris = { "http://localhost:50366/signin-oidc" },
+                    AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false,
+                    RedirectUris = { "http://localhost:4200/assets/html/oidc/oidc-login-redirect.html" },
                     PostLogoutRedirectUris = { "http://localhost:50366/signout-callback-oidc" },
-                    ClientSecrets = { new Secret("secret".ToSha256()) }
+                    ClientSecrets = { new Secret("secret".ToSha256()) },
+                    AllowedCorsOrigins = new List<string>
+                    {
+                        "http://127.0.0.1:4200",
+                        "http://localhost:4200",
+                        "*"
+                    }
                 }
             };
         }

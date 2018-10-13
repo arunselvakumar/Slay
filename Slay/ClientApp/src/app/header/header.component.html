@@ -11,8 +11,11 @@
         <div class="nav-item">
           <a routerLink="/howto">How To</a>
         </div>
-        <div class="nav-item">
-            <a routerLink="/contributors">Contributers</a>
+        <div *ngIf="!isLoggedIn()" class="nav-item">
+            <a (click)="login()">Login</a>
         </div>
+      <div *ngIf="isLoggedIn()" class="nav-item">
+        <a (click)="logout()">Log Out</a>
+      </div>
     </div>
 </div>
