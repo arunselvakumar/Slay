@@ -3,9 +3,9 @@
     using Slay.DalContracts.Repositories;
     using Slay.Models.Entities;
 
-    public sealed class CategoryRepository : RepositoryBase<CategoryEntity>, ICategoryRepository
+    public sealed class PostCategoryRepository : RepositoryBase<PostCategoryEntity>, IPostCategoryRepository
     {
-        public CategoryRepository()
+        public PostCategoryRepository()
             : base("Slay", "Category")
         {
         }

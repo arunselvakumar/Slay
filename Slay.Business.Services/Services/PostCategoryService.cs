@@ -1,6 +1,7 @@
 ﻿namespace Slay.Business.Services.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -19,42 +20,56 @@
     {
         private readonly IMapper _autoMapperService;
 
+        private readonly IPostCategoryRepository _postCategoryRepository;
+
         private readonly IValidationsProvider _validationsProvider;
 
-        private readonly ICategoryRepository _categoryRepository;
-
-        public PostCategoryService(IMapper autoMapperService, IValidationsProvider validationsProvider, ICategoryRepository categoryRepository)
+        public PostCategoryService(
+            IMapper autoMapperService,
+            IValidationsProvider validationsProvider,
+            IPostCategoryRepository postCategoryRepository)
         {
             this._autoMapperService = autoMapperService;
             this._validationsProvider = validationsProvider;
-            this._categoryRepository = categoryRepository;
+            this._postCategoryRepository = postCategoryRepository;
         }
 
-        public async Task<ServiceResult<CreateCategoryResponseBo>> CreateCategoryAsync(CreateCategoryRequestBo category, CancellationToken token)
+        public async Task<ServiceResult<CreateCategoryResponseBo>> CreateCategoryAsync(
+            CreateCategoryRequestBo category,
+            CancellationToken token)
         {
             var validationResult = await this._validationsProvider.CreateCategoryValidator.ValidateAsync(category, token);
 
             if (!validationResult.IsValid)
             {
-                return new ServiceResult<CreateCategoryResponseBo> { Errors = validationResult.Errors.ToServiceResultErrors() };
+                return new ServiceResult<CreateCategoryResponseBo>
+                {
+                    Errors = validationResult.Errors.ToServiceResultErrors()
+                };
             }
 
-            var repositoryResult = await this._categoryRepository.CreateAsync(this._autoMapperService.Map<CategoryEntity>(category), token);
+            var repositoryResult = await this._postCategoryRepository.CreateAsync(this._autoMapperService.Map<PostCategoryEntity>(category), token);
 
             var mapperResult = this._autoMapperService.Map<CategoryItemBo>(repositoryResult);
 
-            return new ServiceResult<CreateCategoryResponseBo> { Value = new CreateCategoryResponseBo { Data = mapperResult } };
+            return new ServiceResult<CreateCategoryResponseBo>
+            {
+                Value = new CreateCategoryResponseBo { Data = mapperResult }
+            };
         }
 
         public async Task<ServiceResult<CategoriesListResponseBo>> GetCategoriesAsync(CancellationToken token)
         {
             var sortingOptions = new List<SortingOptions> { new SortingOptions("Order") };
 
-            var repositoryResult = await this._categoryRepository.GetAsync(null, null, sortingOptions, token);
+            var repositoryResult = await this._postCategoryRepository.GetAsync(null, null, sortingOptions, token);
 
-            var mapperResult = this._autoMapperService.Map<IEnumerable<CategoryItemBo>>(repositoryResult);
+            var mapperResult = this._autoMapperService.Map<IEnumerable<CategoryItemBo>>(repositoryResult.Where(x => x.IsEnabled));
 
-            return new ServiceResult<CategoriesListResponseBo> { Value = new CategoriesListResponseBo { Categories = mapperResult } };
+            return new ServiceResult<CategoriesListResponseBo>
+            {
+                Value = new CategoriesListResponseBo { Categories = mapperResult }
+            };
         }
     }
 }

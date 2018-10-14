@@ -38,7 +38,7 @@
 
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IPostCategoryRepository, PostCategoryRepository>();
             services.AddScoped<ITemplateRepository, TemplateRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 

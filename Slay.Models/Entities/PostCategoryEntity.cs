@@ -9,7 +9,7 @@
 
     using Slay.Models.Entities.Interfaces;
 
-    public sealed class CategoryEntity : IEntity
+    public sealed class PostCategoryEntity : IEntity
     {
         [BsonId]
         [JsonProperty(PropertyName = "id")]
@@ -26,6 +26,9 @@
 
         [JsonProperty(PropertyName = "order")]
         public int Order { get; set; }
+
+        [JsonProperty(PropertyName = "isenabled")]
+        public bool IsEnabled { get; set; }
 
         [JsonProperty(PropertyName = "isdeleted")]
         public bool IsDeleted { get; set; }

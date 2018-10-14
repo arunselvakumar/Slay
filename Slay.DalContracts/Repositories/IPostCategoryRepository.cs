@@ -2,7 +2,7 @@
 {
     using Slay.Models.Entities;
 
-    public interface ICategoryRepository : IRepository<CategoryEntity>
+    public interface IPostCategoryRepository : IRepository<PostCategoryEntity>
     {
     }
 }

@@ -57,11 +57,11 @@
         private void ConfigurePostCategoryMappers()
         {
             this.CreateMap<CreateCategoryRequestDto, CreateCategoryRequestBo>();
-            this.CreateMap<CreateCategoryRequestBo, CategoryEntity>()
+            this.CreateMap<CreateCategoryRequestBo, PostCategoryEntity>()
                 .ForMember(categoryEntity => categoryEntity.CreatedOn, opt => opt.MapFrom(x => DateTime.UtcNow))
                 .ForMember(categoryEntity => categoryEntity.ModifiedOn, opt => opt.MapFrom(x => DateTime.UtcNow));
 
-            this.CreateMap<CategoryEntity, CategoryItemBo>();
+            this.CreateMap<PostCategoryEntity, CategoryItemBo>();
 
             this.CreateMap<CategoryItemBo, CategoryItemDto>();
             this.CreateMap<CategoriesListResponseBo, CategoriesListResponseDto>().ForMember(
