@@ -36,6 +36,7 @@
         private void ConfigurePostMappers()
         {
             this.CreateMap<CreatePostRequestDto, CreatePostRequestBo>()
+                .ForMember(postBo => postBo.ExpiresIn, opt => opt.MapFrom(x => new TimeSpan(x.ExpiresIn, 0, 0)))
                 .ForMember(postBo => postBo.Type, opt => opt.MapFrom(x => x.Type.ToEnum<PostTypeEnum>()));
             this.CreateMap<CreatePostRequestBo, PostEntity>()
                 .ForMember(postEntity => postEntity.CreatedOn, opt => opt.MapFrom(x => DateTime.UtcNow))
@@ -56,18 +57,18 @@
 
         private void ConfigurePostCategoryMappers()
         {
-            this.CreateMap<CreateCategoryRequestDto, CreateCategoryRequestBo>();
+            this.CreateMap<CreatePostCategoryRequestDto, CreateCategoryRequestBo>();
             this.CreateMap<CreateCategoryRequestBo, PostCategoryEntity>()
                 .ForMember(categoryEntity => categoryEntity.CreatedOn, opt => opt.MapFrom(x => DateTime.UtcNow))
                 .ForMember(categoryEntity => categoryEntity.ModifiedOn, opt => opt.MapFrom(x => DateTime.UtcNow));
 
             this.CreateMap<PostCategoryEntity, CategoryItemBo>();
 
-            this.CreateMap<CategoryItemBo, CategoryItemDto>();
-            this.CreateMap<CategoriesListResponseBo, CategoriesListResponseDto>().ForMember(
+            this.CreateMap<CategoryItemBo, PostCategoryItemDto>();
+            this.CreateMap<CategoriesListResponseBo, PostCategoriesListResponseDto>().ForMember(
                 categoriesListResponseDto => categoriesListResponseDto.Data, opt => opt.MapFrom(x => x.Categories));
 
-            this.CreateMap<CreateCategoryResponseBo, CreateCategoryResponseDto>();
+            this.CreateMap<CreateCategoryResponseBo, CreatePostCategoryResponseDto>();
         }
 
         private void ConfigureCommentMappers()

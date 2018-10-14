@@ -36,7 +36,7 @@
         /// </summary>
         /// <param name="token">The token.</param>
         /// <returns>
-        /// If categories are found, then a <see cref="CategoriesListResponseDto"/> is returned.
+        /// If categories are found, then a <see cref="PostCategoriesListResponseDto"/> is returned.
         /// Else an <see cref="EmptyResult"/> is returned
         /// </returns>
         [HttpGet(Name = nameof(GetPostCategoriesAsync))]
@@ -53,7 +53,7 @@
                     return new BadRequestObjectResult(serviceResult.Errors);
                 }
 
-                var mapperResult = this._autoMapperService.Map<CategoriesListResponseDto>(serviceResult.Value);
+                var mapperResult = this._autoMapperService.Map<PostCategoriesListResponseDto>(serviceResult.Value);
 
                 return new OkObjectResult(mapperResult);
             }
@@ -66,20 +66,20 @@
         /// <summary>
         /// Creates the category asynchronous.
         /// </summary>
-        /// <param name="category">The category.</param>
+        /// <param name="postCategory">The postCategory.</param>
         /// <param name="token">The token.</param>
         /// <returns>
-        /// If post is created, then a 201 response code with created at route is returned with <see cref="CreateCategoryResponseDto"/>.
+        /// If post is created, then a 201 response code with created at route is returned with <see cref="CreatePostCategoryResponseDto"/>.
         /// Else a 400 response is returned.
         /// </returns>
         [HttpPost(Name = nameof(CreateCategoryAsync))]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateCategoryAsync([FromBody]CreateCategoryRequestDto category, CancellationToken token = default(CancellationToken))
+        public async Task<IActionResult> CreateCategoryAsync([FromBody]CreatePostCategoryRequestDto postCategory, CancellationToken token = default(CancellationToken))
         {
             try
             {
-                var categoryRequestBo = this._autoMapperService.Map<CreateCategoryRequestBo>(category);
+                var categoryRequestBo = this._autoMapperService.Map<CreateCategoryRequestBo>(postCategory);
 
                 var serviceResult = await this._postCategoryService.CreateCategoryAsync(categoryRequestBo, token);
 
@@ -88,7 +88,7 @@
                     return new BadRequestObjectResult(serviceResult.Errors);
                 }
 
-                var mappedResult = this._autoMapperService.Map<CreateCategoryResponseDto>(serviceResult.Value);
+                var mappedResult = this._autoMapperService.Map<CreatePostCategoryResponseDto>(serviceResult.Value);
 
                 return this.CreatedAtRoute(nameof(this.CreateCategoryAsync), new { id = mappedResult.Data.Id }, mappedResult);
             }

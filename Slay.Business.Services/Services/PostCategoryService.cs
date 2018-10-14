@@ -7,7 +7,8 @@
 
     using AutoMapper;
 
-    using Slay.Business.ServicesContracts.Providers.ValidationsProviders;
+    using FluentValidation;
+
     using Slay.Business.ServicesContracts.Services;
     using Slay.DalContracts.Options;
     using Slay.DalContracts.Repositories;
@@ -22,15 +23,15 @@
 
         private readonly IPostCategoryRepository _postCategoryRepository;
 
-        private readonly IValidationsProvider _validationsProvider;
+        private readonly IValidator<CreateCategoryRequestBo> _createCategoryValidator;
 
         public PostCategoryService(
             IMapper autoMapperService,
-            IValidationsProvider validationsProvider,
+            IValidator<CreateCategoryRequestBo> createCategoryValidator,
             IPostCategoryRepository postCategoryRepository)
         {
             this._autoMapperService = autoMapperService;
-            this._validationsProvider = validationsProvider;
+            this._createCategoryValidator = createCategoryValidator;
             this._postCategoryRepository = postCategoryRepository;
         }
 
@@ -38,7 +39,7 @@
             CreateCategoryRequestBo category,
             CancellationToken token)
         {
-            var validationResult = await this._validationsProvider.CreateCategoryValidator.ValidateAsync(category, token);
+            var validationResult = await this._createCategoryValidator.ValidateAsync(category, token);
 
             if (!validationResult.IsValid)
             {

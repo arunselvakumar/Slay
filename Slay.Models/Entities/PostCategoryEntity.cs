@@ -18,9 +18,6 @@
         [JsonProperty(PropertyName = "parentid")]
         public string ParentId { get; set; }
 
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
-
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 

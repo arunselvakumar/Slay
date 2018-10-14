@@ -1,19 +1,22 @@
 ﻿namespace Slay.Models.Enums
 {
-	public enum PostTypeEnum
-	{
-		None = 0,
+    using System.Diagnostics.CodeAnalysis;
 
-		Image = 1,
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented", Justification = "Reviewed. Suppression is OK here.")]
+    public enum PostTypeEnum
+    {
+        None = 0,
 
-		Images = 2,
+        Image = 1,
 
-		Text = 3,
+        Images = 2,
 
-		Quote = 4,
+        Text = 3,
 
-		Video = 5,
+        Quote = 4,
 
-		YouTube = 6
-	}
+        Video = 5,
+
+        YouTube = 6
+    }
 }

@@ -131,7 +131,7 @@
         /// Else a 400 response is returned.
         /// </returns>
         [HttpPost(Name = nameof(CreatePostAsync))]
-        [Authorize]
+        //[Authorize]
         [ProducesResponseType(201, Type = typeof(PostDto))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostRequestDto createPostDto, CancellationToken token = default(CancellationToken))

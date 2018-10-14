@@ -1,5 +1,6 @@
 ﻿namespace Slay.Models.BusinessObjects.Post
 {
+    using System;
     using System.Collections.Generic;
 
     using Slay.Models.Enums;
@@ -15,6 +16,8 @@
         public string Category { get; set; }
 
         public bool IsAnonymous { get; set; }
+
+        public TimeSpan ExpiresIn { get; set; }
 
         public IEnumerable<string> Tags { get; set; }
 

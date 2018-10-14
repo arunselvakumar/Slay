@@ -41,6 +41,9 @@
         [JsonProperty(PropertyName = "isanonymous")]
         public bool IsAnonymous { get; set; }
 
+        [JsonProperty(PropertyName = "expiresin")]
+        public TimeSpan ExpiresIn { get; set; }
+
         [JsonProperty(PropertyName = "createdby")]
         public string CreatedBy { get; set; }
 
