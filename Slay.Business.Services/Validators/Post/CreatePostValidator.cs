@@ -68,7 +68,7 @@
         {
             var validCategories = this._postCategoryService.GetCategoriesAsync(default(CancellationToken)).Result;
 
-            return validCategories.Value.Categories.Any(category => string.Equals(category.Code, post.Category, StringComparison.InvariantCultureIgnoreCase));
+            return validCategories.Value.Categories.Any(category => string.Equals(category.Id, post.Category, StringComparison.InvariantCultureIgnoreCase));
         }
 
         private bool IsValidUrlContent(CreatePostRequestBo post)

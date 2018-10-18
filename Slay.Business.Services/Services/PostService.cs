@@ -1,6 +1,9 @@
 ﻿namespace Slay.Business.Services.Services
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -73,14 +76,21 @@
             return new ServiceResult<PostItemBo> { Value = mapperResult };
         }
 
-        public async Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(int skip, int limit, CancellationToken token)
+        public async Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(string tag, int skip, int limit, CancellationToken token)
         {
             var pagingOptions = new PagingOptions().SkipItems(skip).LimitItems(limit);
             var sortingOptions = new SortingOptions("CreatedOn");
 
             var sortOptions = new List<SortingOptions> { sortingOptions };
 
-            var repositoryResult = await this._postRepository.GetAsync(post => !post.IsDeleted, pagingOptions, sortOptions, token);
+            Expression<Func<PostEntity, bool>> condition = post => !post.IsDeleted;
+
+            if (tag.IsNotNull())
+            {
+                condition.And(post => post.Tags.Contains(tag));
+            }
+
+            var repositoryResult = await this._postRepository.GetAsync(condition, pagingOptions, sortOptions, token);
 
             var mapperResult = this._autoMapperService.Map<IEnumerable<PostItemBo>>(repositoryResult);
 

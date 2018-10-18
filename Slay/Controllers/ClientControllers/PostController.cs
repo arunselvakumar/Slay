@@ -82,6 +82,7 @@
         /// <summary>
         /// Gets the all posts based on paging.
         /// </summary>
+        /// <param name="tag">Posts Tags</param>
         /// <param name="skip">Skip Posts.</param>
         /// <param name="limit">Limits to retrieve.</param>
         /// <param name="token">Cancellation Token.</param>
@@ -91,11 +92,11 @@
         [HttpGet(Name = nameof(GetPostsAsync))]
         [ProducesResponseType(200, Type = typeof(PostsListResponseDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetPostsAsync([FromQuery] int skip = 0, [FromQuery] int limit = 10, CancellationToken token = default(CancellationToken))
+        public async Task<IActionResult> GetPostsAsync([FromQuery] string tag = null, [FromQuery] int skip = 0, [FromQuery] int limit = 10, CancellationToken token = default(CancellationToken))
         {
             try
             {
-                var serviceResult = await this._postService.GetPostsAsync(skip, limit, token);
+                var serviceResult = await this._postService.GetPostsAsync(tag, skip, limit, token);
 
                 if (serviceResult.HasErrors)
                 {

@@ -22,7 +22,7 @@ namespace Slay.Business.ServicesContracts.Services
 
         Task<ServiceResult<bool>> DeletePostAsync([NotNull] string id, CancellationToken token);
 
-        Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(int skip, int limit, CancellationToken token);
+        Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(string tag, int skip, int limit, CancellationToken token);
 
         Task<ServiceResult<PostUploadResponseContext>> UploadPostAsync([NotNull] PostUploadRequestContext uploadRequestContext, CancellationToken token);
     }
@@ -61,7 +61,7 @@ namespace Slay.Business.ServicesContracts.Services
             return default(ServiceResult<bool>);
         }
 
-        public async Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(int skip, int limit, CancellationToken token)
+        public async Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(string tag, int skip, int limit, CancellationToken token)
         {
             Contract.Requires(skip >= 0);
             Contract.Requires(limit >= 0);
