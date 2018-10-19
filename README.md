@@ -11,6 +11,7 @@ Identity Server : http://identityserver.io/ <br>
 ## CSS Style Guide 
 https://github.com/airbnb/css <br>
 https://github.com/bevacqua/css <br>
+https://glennmccomb.com/articles/useful-sass-scss-media-query-mixins-for-bootstrap/ <br>
 
 ## Modern CSS References
 https://alligator.io/css/align-justify/ <br>
