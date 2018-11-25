@@ -32,9 +32,9 @@
 
         protected RepositoryBase(string databaseId, string collectionId)
         {
-            this._host = "slay-db.documents.azure.com";
-            this._userName = "slay-db";
-            this._password = "l2Rd6jkPtgaeYFsVymFTUWSRaJJ8MCIAMqaWDLXzBLllzdAkuKFUfqvCeVbMVngfncs0fEfmE8sOQXL7bl2t0A==";
+            this._host = "one12.documents.azure.com";
+            this._userName = "one12";
+            this._password = "B3fZoQQwgcFdhJmO7cbDUQPSChyUj4kRE4Sjd2Mf0cXUJylFdAjnPwAowa0fVZ4Szwzj3VwuRZkvoaGcCbNnXA==";
 
             _databaseId = databaseId;
             _collectionId = collectionId;
@@ -48,11 +48,11 @@
         {
             try
             {
-                var foo = this.IsCollectionsExists
+                var itemsCount = this.IsCollectionsExists
                               ? await this.Collection.CountAsync(filter, cancellationToken: token)
                               : 0;
 
-                return foo;
+                return itemsCount;
             }
             catch (Exception e)
             {

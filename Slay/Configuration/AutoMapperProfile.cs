@@ -76,8 +76,8 @@
             this.CreateMap<CreateCommentRequestDto, CreateCommentRequestBo>();
             this.CreateMap<CreateCommentRequestBo, CommentEntity>()
                 .ForMember(commentEntity => commentEntity.Id, opt => opt.MapFrom(x => ObjectId.GenerateNewId()))
-                .ForMember(commentEntity => commentEntity.PostId, opt => opt.ResolveUsing((src, dst, arg3, context) => context.Options.Items["PostId"]))
-                .ForMember(commentEntity => commentEntity.ParentId, opt => opt.ResolveUsing((src, dst, arg3, context) => context.Options.Items["ParentId"]))
+                .ForMember(commentEntity => commentEntity.PostId, opt => opt.MapFrom((src, dst, arg3, context) => context.Options.Items["PostId"]))
+                .ForMember(commentEntity => commentEntity.ParentId, opt => opt.MapFrom((src, dst, arg3, context) => context.Options.Items["ParentId"]))
                 .ForMember(commentEntity => commentEntity.CreatedOn, opt => opt.MapFrom(x => DateTime.UtcNow));
 
             this.CreateMap<CommentEntity, CommentItemBo>();

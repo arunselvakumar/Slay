@@ -65,7 +65,7 @@
 
             var repositoryResult = await this._postCategoryRepository.GetAsync(null, null, sortingOptions, token);
 
-            var mapperResult = this._autoMapperService.Map<IEnumerable<CategoryItemBo>>(repositoryResult.Where(x => x.IsEnabled));
+            var mapperResult = this._autoMapperService.Map<IEnumerable<PostCategoryEntity>, IEnumerable<CategoryItemBo>>(repositoryResult);
 
             return new ServiceResult<CategoriesListResponseBo>
             {

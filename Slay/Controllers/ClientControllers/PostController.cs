@@ -92,7 +92,7 @@
         [HttpGet(Name = nameof(GetPostsAsync))]
         [ProducesResponseType(200, Type = typeof(PostsListResponseDto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetPostsAsync([FromQuery] string tag = null, [FromQuery] int skip = 0, [FromQuery] int limit = 10, CancellationToken token = default(CancellationToken))
+        public async Task<IActionResult> GetPostsAsync([FromQuery] string tag = null, [FromQuery] string page = null,[FromQuery] int skip = 0, [FromQuery] int limit = 10, CancellationToken token = default(CancellationToken))
         {
             try
             {

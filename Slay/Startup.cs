@@ -9,8 +9,6 @@ namespace Slay.Host
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.SpaServices.AngularCli;
-    using Microsoft.AspNetCore.SpaServices.Webpack;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -31,6 +29,8 @@ namespace Slay.Host
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+            
             services.AddMvc()
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                     .AddJsonOptions(options => { options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore; })
@@ -59,6 +59,8 @@ namespace Slay.Host
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            
             app.UseStaticFiles();
 
             app.UseSpaStaticFiles();
@@ -69,24 +71,7 @@ namespace Slay.Host
 
             app.UseAuthentication();
 
-            app.UseMvc(
-                routes =>
-                    {
-                        routes.MapRoute(name: "default", template: "{controller}/{action=Index}/{id?}");
-                    });
-
-            app.UseSpa(spa =>
-                {
-                    // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                    // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                    spa.Options.SourcePath = "ClientApp";
-
-                    if (env.IsDevelopment())
-                    {
-                        spa.UseAngularCliServer(npmScript: "start");
-                    }
-                });
+            app.UseMvc(routes => { routes.MapRoute(name: "default", template: "{controller}/{action=Index}/{id?}"); });
         }
     }
 }
