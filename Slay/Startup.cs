@@ -57,7 +57,11 @@ namespace Slay.Host
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                // ToDo: Uncomment for Production.
+                // app.UseHsts();
             }
+
+            // app.UseHttpsRedirection();
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             
