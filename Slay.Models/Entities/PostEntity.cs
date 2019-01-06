@@ -41,6 +41,9 @@
         [JsonProperty(PropertyName = "isanonymous")]
         public bool IsAnonymous { get; set; }
 
+        [JsonProperty(PropertyName = "isrecommended")]
+        public bool IsRecommended { get; set; }
+
         [JsonProperty(PropertyName = "expiresin")]
         public TimeSpan ExpiresIn { get; set; }
 

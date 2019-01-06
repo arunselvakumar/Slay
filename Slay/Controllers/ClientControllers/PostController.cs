@@ -96,7 +96,7 @@
         {
             try
             {
-                var serviceResult = await this._postService.GetPostsAsync(tag, skip, limit, token);
+                var serviceResult = await this._postService.GetPostsAsync(tag, page, skip, limit, token);
 
                 if (serviceResult.HasErrors)
                 {

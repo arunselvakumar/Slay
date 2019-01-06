@@ -76,8 +76,8 @@
             return new ServiceResult<PostItemBo> { Value = mapperResult };
         }
 
-        public async Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(string tag, int skip, int limit, CancellationToken token)
-        {
+        public async Task<ServiceResult<PostsListResponseBo>> GetPostsAsync(string tag, string page, int skip, int limit, CancellationToken token)
+        {           
             var pagingOptions = new PagingOptions().SkipItems(skip).LimitItems(limit);
             var sortingOptions = new SortingOptions("CreatedOn");
 
@@ -90,6 +90,14 @@
                 condition.And(post => post.Tags.Contains(tag));
             }
 
+            PageOption pageOption;
+            bool isValidPage = Enum.TryParse<PageOption>(page, true, out pageOption);
+
+            if(!isValidPage || pageOption == PageOption.Recommended)
+            {
+                condition.And(post => post.IsRecommended);
+            }
+            
             var repositoryResult = await this._postRepository.GetAsync(condition, pagingOptions, sortOptions, token);
 
             var mapperResult = this._autoMapperService.Map<IEnumerable<PostItemBo>>(repositoryResult);
@@ -161,5 +169,12 @@
 
             return postsResponseBo;
         }
+    }
+
+    public enum PageOption
+    {
+        Recommended,
+        Feed,
+        Trending        
     }
 }
